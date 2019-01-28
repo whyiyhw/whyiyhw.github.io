@@ -70,9 +70,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-2019-01-28-test-md" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-2019-01-28-安装hexo的几个问题" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/01/28/2019-01-28-test-md/" class="article-date">
+    <a href="/2019/01/28/2019-01-28-安装hexo的几个问题/" class="article-date">
   <time datetime="2019-01-28T15:21:55.000Z" itemprop="datePublished">2019-01-28</time>
 </a>
     
@@ -84,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/28/2019-01-28-test-md/">2019-01-28-test.md</a>
+      <a class="article-title" href="/2019/01/28/2019-01-28-安装hexo的几个问题/">2019-01-28-test.md</a>
     </h1>
   
 
@@ -92,11 +92,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1>
+        <h1 id="安装-hexo-静态-blog-的一些问题"><a href="#安装-hexo-静态-blog-的一些问题" class="headerlink" title="安装 hexo 静态 blog 的一些问题"></a>安装 hexo 静态 blog 的一些问题</h1><h2 id="npm-和-yarn-的混用"><a href="#npm-和-yarn-的混用" class="headerlink" title="npm 和 yarn 的混用"></a>npm 和 yarn 的混用</h2><pre><code>- hexo new [layout] &lt;title&gt;  发布失效
+    - 全局安装 hexo 的时候失效 npm 有毒 
+    - yarn add hexo -S
+- yarn add hexo-deployer-git -S  发布工具
+- yarn add  hexo-renderer-marked  -S
+- yarn add hexo-server -S 本地起服务  hexo server -p 5000
+</code></pre><h2 id="配置Deployment"><a href="#配置Deployment" class="headerlink" title="配置Deployment"></a>配置Deployment</h2><pre><code>- 本地记住了 git 账号 所以直接使用 这里空格有坑
+- deploy:
+    - type: git
+    - repository: https://github.com/whyiyhw/whyiyhw.github.io.git
+    - branch: master
+</code></pre><h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><pre><code>- hexo d -g 前面安装正常 发布就没问题
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://whyiyhw.github.io/2019/01/28/2019-01-28-test-md/" data-id="cjrghj10j00009ovxrkqqhdrm" class="article-share-link">Share</a>
+      <a data-url="https://whyiyhw.github.io/2019/01/28/2019-01-28-安装hexo的几个问题/" data-id="cjrgipoxh000064vxlh4cu22n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +194,7 @@
       <ul>
         
           <li>
-            <a href="/2019/01/28/2019-01-28-test-md/">2019-01-28-test.md</a>
+            <a href="/2019/01/28/2019-01-28-安装hexo的几个问题/">2019-01-28-test.md</a>
           </li>
         
           <li>

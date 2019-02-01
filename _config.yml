@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Blog
-subtitle: record relife
-description: about some used things
-keywords: blog LeetCode php golang
+title: Yiの鸟巢
+subtitle: 人生如逆旅,飞花默不语
+description: 偶尔会衔回些故事,希望能感动自己
+keywords: blog life 
 author: YI
 language: zh-Hans
 timezone: PRC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://whyiyhw.github.io
+url: https://blogxy.cn
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -74,6 +74,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
+plugins: hexo-generate-feed
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +82,9 @@ deploy:
   type: git
   repository: https://github.com/whyiyhw/whyiyhw.github.io.git
   branch: master
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000

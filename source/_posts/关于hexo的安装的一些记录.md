@@ -15,8 +15,10 @@ tags:
   - `hexo new post "关于hexo的安装的一些记录"`
   - `yarn add hexo-server --save`
   - `hexo server`
+  - `hexo generate --deploy`
 ## hexo 进阶next
 ```
 	mkdir themes/next
 	git clone https://github.com/iissnan/hexo-theme-next themes/next
+  // 主要参考 : https://www.jianshu.com/p/9f0e90cc32c2
 ```

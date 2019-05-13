@@ -140,6 +140,7 @@ tags:
 - `systemctl daemon-reload`
 - `systemctl restart docker`
 - 运行生成一个 php5.4 的容器
+
   ```shell
   docker run -d \
   -v /dev/www/php/:/var/www/html \
@@ -230,3 +231,66 @@ kill -USR2 1
 
 - 如果是在外面也可以：docker exec -it 容器id或名称 kill -USR2 1
 - 或者重启容器  docker restart 容器id或名称
+
+## 安装 swoole
+
+- `yum install git -y`
+- `git clone https://gitee.com/swoole/swoole.git`
+- `wget https://github.com/redis/hiredis/archive/v0.14.0.zip`
+- `yun install -y unzip`
+- `unzip v0.14.0.zip`
+- `cd hiredis-0.14.0`
+- `make -j`
+- `yum install openssl-devel`
+
+```shell
+./configure \
+--with-php-config=/usr/bin/php-config \
+--enable-openssl  \
+--enable-http2  \
+--enable-async-redis \
+--enable-sockets \
+--enable-mysqlnd && make clean && make && sudo make install
+```
+
+```shell
+cd /etc/php.d/
+cp sockets.ini ./swoole.ini
+ls
+vim swoole.ini 修改为 swoole
+systemctl restart php-fpm
+```
+
+```shell
+[root@localhost swoole]# php --ri swoole
+
+swoole
+
+Swoole => enabled
+Author => Swoole Team <team@swoole.com>
+Version => 4.4.0-alpha
+Built => May 10 2019 20:30:06
+coroutine => enabled
+epoll => enabled
+eventfd => enabled
+signalfd => enabled
+cpu_affinity => enabled
+spinlock => enabled
+rwlock => enabled
+sockets => enabled
+openssl => OpenSSL 1.0.2k-fips  26 Jan 2017
+http2 => enabled
+pcre => enabled
+zlib => enabled
+mutex_timedlock => enabled
+pthread_barrier => enabled
+futex => enabled
+mysqlnd => enabled
+async_redis => enabled
+
+Directive => Local Value => Master Value
+swoole.enable_coroutine => On => On
+swoole.display_errors => On => On
+swoole.use_shortname => On => On
+swoole.unixsock_buffer_size => 8388608 => 8388608
+```

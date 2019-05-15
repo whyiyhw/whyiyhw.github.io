@@ -15,3 +15,20 @@ Compsoer\ClassLoader 会优先查看 autoload_classmap 中所有生成的注�
 composer 就会提前加载需要的类并提前返回。
 这样大大减少了 IO 和深层次的 loop
 ```
+
+### 问题点 `You made a reference to a non-existent script @php artisan package:discover`
+
+```shell
+composer -V
+Composer version 1.2.1 2016-09-12 11:27:19
+```
+
+- 解决方法，升级 composer 版本
+- `composer selfupdate`
+
+```shell
+
+Updating to version 1.6.3 (stable channel).
+    Downloading: 100%
+Use composer self-update --rollback to return to version 1.2.1
+```

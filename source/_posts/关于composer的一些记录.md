@@ -1,8 +1,9 @@
 ---
 title: 关于composer的一些记录
 date: 2019-05-15 10:33:38
+categories: php后端
 tags:
-categories:
+- composer
 ---
 
 - `composer dump-autoload -o`

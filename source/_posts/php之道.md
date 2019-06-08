@@ -1,8 +1,9 @@
 ---
 title: php之道
 date: 2019-05-14 11:53:24
+categories: php后端
 tags:
-categories:
+- php
 ---
 
 ## PHPer web 技能点

@@ -100,7 +100,7 @@ tags:
   - `./configure --with-php-config=/usr/bin/php-config`(这个根据 `php-config` 实际情况来)
   - `make && make install`
   - `vim /etc/php.d/redis.ini` 这个根据实际情况去决定 是改 `php.ini` 还是别的什么
-  - 写入 `extension=gd.so`
+  - 写入 `extension=redis.so`
   - `systemctl restart php-fpm` 就 ok 了
 
 ## php与nginx 链接起来
@@ -234,14 +234,13 @@ kill -USR2 1
 
 ## 安装 swoole
 
-- `yum install git -y`
+- `yum install git openssl-devel -y`
 - `git clone https://gitee.com/swoole/swoole.git`
 - `wget https://github.com/redis/hiredis/archive/v0.14.0.zip`
 - `yun install -y unzip`
 - `unzip v0.14.0.zip`
 - `cd hiredis-0.14.0`
 - `make -j`
-- `yum install openssl-devel`
 
 ```shell
 ./configure \
@@ -294,3 +293,19 @@ swoole.display_errors => On => On
 swoole.use_shortname => On => On
 swoole.unixsock_buffer_size => 8388608 => 8388608
 ```
+
+## docker 安装 mysql 服务
+
+- dokcer pull mysql:5.7
+- mkdir -p /data/mysql/datadir #用于挂载mysql数据文件
+- mkdir -p /data/mysql/conf.d #用于挂载mysql配置文件
+  
+  ```shell
+  docker run -d \
+  --name mysql5.7 -p 3306:3306 \
+  -v /data/mysql/datadir:/var/lib/mysql \
+  -v /data/mysql/conf.d:/etc/mysql/conf.d \
+  -e MYSQL_ROOT_PASSWORD=123456  mysql:5.7
+  ```
+  
+- `-e`：设置环境变量，此处指定 `root` 密码

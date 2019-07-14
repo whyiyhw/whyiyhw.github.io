@@ -11,7 +11,7 @@ categories: program language
   - `jdk` 包含了 `javac` `jre` `debugging` `tools` `javap`
 - `javeSE`(java标准版本) `JAVAEE`(java商业版) 与 `JAVAME`(设备专用) 一般分为这三块
 
-### 第一个java程序
+### 第一个 java 程序
 
 ```java
 public class hello {
@@ -32,7 +32,7 @@ public class hello {
   - 如何打开 `package explorer` 在 `windows` 里面的 `show view` 下的 `package explorer`
 
 ### 注释
-  
+
 - // 单行注释
 - /* 多行注释 */
 - /** 文档注释 */
@@ -47,6 +47,7 @@ public class hello {
 ### 变量
 
 - 变量名称
+  
   - 见标识符
 - 变量类型
 - 变量作用域
@@ -67,6 +68,7 @@ public class hello {
       boolean|false
 
   - 静态变量
+    
     - 使用 static 定义，从属于==类==，生命周期伴随类始终，从类加载到卸载
 - 变量声明 与 初始化
   - int ss 声明
@@ -240,3 +242,38 @@ double|8字节 64位|-1.798E308 ~ 1.798E308
 - `double x = 3.14;` `int nx = (int)x`
 
 ### 流程控制
+
+#### 顺序结构
+
+#### 选择结构
+
+- if 单选择结构
+- if else 双选择结构
+- if else if else 多选择结构
+	- else if 中间必须加空格	
+- switch 多选择结构
+	- 跟php没什么区别	
+	- switch中case标签在jdk1.5以前必须是整数（long类型除外）或者，枚举，不能是字符串
+	- 在jdk1.7以后允许使用字符串（String）
+
+#### 循环结构
+	
+- while(布尔表达式){ 循环体 }
+- do{ 循环体 }while(布尔表达式)
+- for(赋值,赋值;比较条件,默认值){ 循环体 }
+	- 支持逗号隔开的多重初始化
+	- 赋值的作用域仅限于循环内部使用 
+- break / continue
+	- 带标签的break 
+	```
+		int i =1;
+		outime:while(i<=100) {
+			while(i<=100) {
+				if(i == 22) {
+					break outime;
+				}
+				i++;
+			}
+		}
+	```
+	- 没有 goto 语法，标签仅限于一个循环（单/嵌套）体内部使用

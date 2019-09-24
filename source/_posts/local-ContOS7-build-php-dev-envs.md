@@ -6,10 +6,10 @@ tags:
 - php
 ---
 
-## ContOS7 php 多环境的配置
+## `ContOS7 php` 多环境的配置
 
 ### 使用最小化安装之后的第一个问题，内外网不通
-  
+
 - `vi /etc/sysconfig/network-scripts/ifcfg-ens33`
 - 修改 `ONBOOT=yes` 后 `systemctl restart network.service`
 - 重启主机，如果此时内外网通了但是 `yum list` 失败，主要是服务不可达，考虑为 `DNS` 的原因
@@ -27,7 +27,7 @@ tags:
   ```
 
 ## 一些准备工作
-  
+
 - `yum install vim -y && yum install net-tools -y`   习惯了 `vim` 加上一个网络分析小工具
 - `yum install gcc gcc-c++ httpd-tools autoconf pcre pcre-devel make automake -y` 安装一些编译测试工具
 - `systemctl stop firewalld.service && systemctl disable firewalld.service` 关闭并禁用 防火墙
@@ -36,7 +36,7 @@ tags:
 - 下面的 `selinuxtype` 要是改成 `disable` 建议删了重装会快一些
 - 不然 `selinux` 可能会导致你的网络端口不可访问
 
-## 安装 nginx
+## 安装 `nginx`
 
 - [参考](http://nginx.org/en/linux_packages.html#RHEL-CentOS)
 - `vim /etc/yum.repos.d/nginx.repo` 创建 `yum` 源文件
@@ -77,7 +77,7 @@ tags:
 - 然后输入 `IP` 到浏览器访问成功
 - 默认配置位置 `/etc/nginx/nginx.conf` `/etc/nginx/conf.d/default.conf`
 
-## 安装 PHP
+## 安装 `PHP`
 
 - [参考](https://webtatic.com/packages/php72/)
 
@@ -101,9 +101,9 @@ tags:
   - `make && make install`
   - `vim /etc/php.d/redis.ini` 这个根据实际情况去决定 是改 `php.ini` 还是别的什么
   - 写入 `extension=redis.so`
-  - `systemctl restart php-fpm` 就 ok 了
+  - `systemctl restart php-fpm` 就 `ok` 了
 
-## php与nginx 链接起来
+## `php`与`nginx` 链接起来
 
   ```shell
   [root@localhost ~]# cd dev
@@ -130,8 +130,8 @@ tags:
 
 - `nginx -t && nginx -s reload`
 
-## 使用docker 构建 php5.4 环境
-  
+## 使用`docker `构建 `php5.4` 环境
+
 - 更换镜像，使用阿里云的镜像加速
 - `https://cr.console.aliyun.com/#/accelerator`
 - `vim /etc/docker/daemon.json`
@@ -139,7 +139,7 @@ tags:
 - `"registry-mirrors": ["https://xxxxx.mirror.aliyuncs.com"]`
 - `systemctl daemon-reload`
 - `systemctl restart docker`
-- 运行生成一个 php5.4 的容器
+- 运行生成一个` php5.4` 的容器
 
   ```shell
   docker run -d \
@@ -162,7 +162,7 @@ tags:
 bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zend_test zip
 ```
 
-### docker Debian 换源安装 gd 库
+### docker `Debian` 换源安装` gd` 库
 
 ```shell
 cd /etc/apt && cp sources.list ./sources.list.bak
@@ -196,7 +196,7 @@ docker-php-ext-install gd
 // 这样就在docker容器内完美安装了gd库
 ```
 
-- 装 redis 扩展
+- 装 `redis` 扩展
 
 ```shell
 curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz
@@ -218,7 +218,7 @@ docker-php-ext-install redis
 - 这里由于是在容器内执行所以修改路径为这个
 - 设置 `phpstrom` 的 `sftp` 自动上传到 本地虚拟机
 
-- ps aux|grep php
+- `ps aux|grep php`
 
 ```shell
 1 root 0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)
@@ -232,33 +232,43 @@ kill -USR2 1
 - 如果是在外面也可以：docker exec -it 容器id或名称 kill -USR2 1
 - 或者重启容器  docker restart 容器id或名称
 
-## 安装 swoole
+## 安装  `swoole`
 
 - `yum install git openssl-devel -y`
 - `git clone https://gitee.com/swoole/swoole.git`
-- `wget https://github.com/redis/hiredis/archive/v0.14.0.zip`
-- `yun install -y unzip`
-- `unzip v0.14.0.zip`
-- `cd hiredis-0.14.0`
-- `make -j`
+- 高版本
+  - `cd swoole`
+  - `git checkout v4.4.6`
+  - `./configure --enable-openssl --enable-mysqlnd --enable-sockets`
+  - `make clean && make && sudo make install`
+  - `cd /etc/php.d/`
+  - `cp sockets.ini ./swoole.ini`
+  - `vim swoole.ini 修改为 swoole`
+  - `systemctl restart php-fpm`
+- 低版本
+  - `wget https://github.com/redis/hiredis/archive/v0.14.0.zip`
+  - `yun install -y unzip`
+  - `unzip v0.14.0.zip`
+  - `cd hiredis-0.14.0`
+  - `make -j`
 
-```shell
-./configure \
---with-php-config=/usr/bin/php-config \
---enable-openssl  \
---enable-http2  \
---enable-async-redis \
---enable-sockets \
---enable-mysqlnd && make clean && make && sudo make install
-```
+    ```shell
+    ./configure \
+    --with-php-config=/usr/bin/php-config \
+    --enable-openssl  \
+    --enable-http2  \
+    --enable-async-redis \
+    --enable-sockets \
+    --enable-mysqlnd && make clean && make && sudo make install
+    ```
 
-```shell
-cd /etc/php.d/
-cp sockets.ini ./swoole.ini
-ls
-vim swoole.ini 修改为 swoole
-systemctl restart php-fpm
-```
+    ```shell
+    cd /etc/php.d/
+    cp sockets.ini ./swoole.ini
+    ls
+    vim swoole.ini 修改为 swoole
+    systemctl restart php-fpm
+    ```
 
 ```shell
 [root@localhost swoole]# php --ri swoole
@@ -294,11 +304,11 @@ swoole.use_shortname => On => On
 swoole.unixsock_buffer_size => 8388608 => 8388608
 ```
 
-## docker 安装 mysql 服务
+## `docker`  安装 `mysql `服务
 
-- dokcer pull mysql:5.7
-- mkdir -p /data/mysql/datadir #用于挂载mysql数据文件
-- mkdir -p /data/mysql/conf.d #用于挂载mysql配置文件
+- `dokcer pull mysql:5.7`
+- `mkdir -p /data/mysql/datadir` #用于挂载`mysql`数据文件
+- `mkdir -p /data/mysql/conf.d` #用于挂载`mysql`配置文件
   
   ```shell
   docker run -d \

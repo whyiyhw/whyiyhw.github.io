@@ -1,0 +1,984 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="golang base (two), blog life">
+    <meta name="description" content="map
+声明
+
+12345678910// 直接声明并赋值m := map[string]int&amp;#123;&#34;one&#34;:1,&#34;two&#34;:2,&#34;three&#34;:3&amp;#125;t.Log(m, len(m))//map[one:1 two:2 t">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>golang base (two) | Yiの鸟巢</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Yiの鸟巢</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Yiの鸟巢</div>
+        <div class="logo-desc">
+            
+            偶尔会衔回些故事,希望能感动自己
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/whyiyhw" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/whyiyhw" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        golang base (two)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/golang/">
+                                <span class="chip bg-color">golang</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/golang/" class="post-category">
+                                golang
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-06-08
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-07-22
+                </div>
+                
+
+                
+
+                
+				
+                
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><ul>
+<li>声明</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接声明并赋值</span></span><br><span class="line">m := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">"one"</span>:<span class="number">1</span>,<span class="string">"two"</span>:<span class="number">2</span>,<span class="string">"three"</span>:<span class="number">3</span>&#125;</span><br><span class="line">t.Log(m, <span class="built_in">len</span>(m))<span class="comment">//map[one:1 two:2 three:3] len 3</span></span><br><span class="line"><span class="comment">// 声明并赋予零值</span></span><br><span class="line">m1 := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">m1[<span class="string">"one"</span>] = <span class="number">1</span></span><br><span class="line">t.Log(m1, <span class="built_in">len</span>(m1))<span class="comment">//map[one:1] len 1</span></span><br><span class="line"><span class="comment">// slice map</span></span><br><span class="line">m2 :=<span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>,<span class="number">5</span><span class="comment">/*cap 实际上预先设定了5的容量*/</span>)<span class="comment">// map 类型 ,len</span></span><br><span class="line">t.Log(m2,<span class="built_in">len</span>(m2))<span class="comment">//map[] len 0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>访问不存在的key</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">m3 := <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">t.Log(m3[<span class="number">1</span>]) <span class="comment">// 0</span></span><br><span class="line">m3[<span class="number">2</span>] = <span class="number">0</span></span><br><span class="line">t.Log(m3[<span class="number">2</span>]) <span class="comment">// 0</span></span><br><span class="line">m3[<span class="number">3</span>] = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 判断存在或者为 零值</span></span><br><span class="line"><span class="keyword">if</span> v, ok := m3[<span class="number">3</span>]; ok &#123;</span><br><span class="line">    t.Log(v, <span class="string">"key 3 is exist."</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    t.Log(<span class="string">"KEY 3 is not existing."</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在访问 不存在的 key 的时候 会返回对应的零值 而不是异常</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>遍历</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">"one"</span>: <span class="number">1</span>, <span class="string">"two"</span>: <span class="number">2</span>, <span class="string">"three"</span>: <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line">    t.Log(k, <span class="string">"=&gt;"</span>, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>map 实现工厂模式</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">m := <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="function"><span class="keyword">func</span><span class="params">(op <span class="keyword">int</span>)</span> <span class="title">int</span></span>&#123;&#125;<span class="comment">//</span></span><br><span class="line">m[<span class="number">1</span>] = <span class="function"><span class="keyword">func</span><span class="params">(op <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> op</span><br><span class="line">&#125;</span><br><span class="line">m[<span class="number">2</span>] = <span class="function"><span class="keyword">func</span><span class="params">(op <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> op * op</span><br><span class="line">&#125;</span><br><span class="line">m[<span class="number">3</span>] = <span class="function"><span class="keyword">func</span><span class="params">(op <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> op *op* op</span><br><span class="line">&#125;</span><br><span class="line">t.Log(m[<span class="number">1</span>](<span class="number">2</span>),m[<span class="number">2</span>](<span class="number">2</span>),m[<span class="number">3</span>](<span class="number">2</span>))<span class="comment">// 2 4 8</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>用 <code>map</code> 实现 <code>set</code> 的功能</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 元素是唯一的</span></span><br><span class="line"><span class="comment">// 1) 添加元素</span></span><br><span class="line"><span class="comment">// 2) 判断元素是否存在</span></span><br><span class="line"><span class="comment">// 3) 删除元素</span></span><br><span class="line"><span class="comment">// 4) 元素个数</span></span><br><span class="line">    mySet := <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">bool</span>&#123;&#125;</span><br><span class="line">    mySet[<span class="number">1</span>] = <span class="literal">true</span></span><br><span class="line">    mySet[<span class="number">3</span>] = <span class="literal">true</span></span><br><span class="line">    n:= <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> mySet[n]&#123;</span><br><span class="line">        t.Logf(<span class="string">"%d is existing"</span>,n)</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        t.Logf(<span class="string">"%d is not existing"</span>,n)</span><br><span class="line">        t.Log(mySet[n])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    t.Log(<span class="built_in">len</span>(mySet))</span><br><span class="line">    <span class="built_in">delete</span>(mySet, n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> mySet[n]&#123;</span><br><span class="line">        t.Logf(<span class="string">"%d is existing"</span>,n)</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        t.Logf(<span class="string">"%d is not existing"</span>,n)</span><br><span class="line">        t.Log(mySet[n])</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li><code>string</code> 是数据类型,不是引用或是指针类型,零值为空字符串</li>
+<li><code>string</code> 是 只读的 <code>byte</code> <code>slice</code> , <code>len</code> 函数可以展示它所包含的 <code>byte</code></li>
+<li><code>string</code> 的 <code>byte</code> 数组可以存放任何数据</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s <span class="keyword">string</span></span><br><span class="line">t.Log(s)<span class="comment">// ""</span></span><br><span class="line">s = <span class="string">"hello"</span></span><br><span class="line"><span class="comment">// s[1] = '2'//can't assign s[1]</span></span><br><span class="line">t.Log(<span class="built_in">len</span>(s))<span class="comment">// 5</span></span><br><span class="line">s = <span class="string">"\xE4\xB8\xA5"</span></span><br><span class="line">t.Log(s,<span class="built_in">len</span>(s))<span class="comment">// 严 3 len 是 byte 长度</span></span><br><span class="line"><span class="comment">// Unicode 是一种字符集（code point) 只规定了对应关系，没有规定怎么实现</span></span><br><span class="line"><span class="comment">// UTF8 是 unicode 的存储实现（转换为字节序列的规则）</span></span><br><span class="line"></span><br><span class="line">s =<span class="string">"中"</span></span><br><span class="line">t.Log(<span class="built_in">len</span>(s))<span class="comment">// byte 数 3</span></span><br><span class="line"></span><br><span class="line">c:=[]<span class="keyword">rune</span>(s)</span><br><span class="line">t.Log(<span class="built_in">len</span>(c))<span class="comment">// 1</span></span><br><span class="line">t.Log(<span class="string">"rune size :"</span>, unsafe.Sizeof(c))<span class="comment">// 24 3*8 就是 3 byte 24字节</span></span><br><span class="line"></span><br><span class="line">t.Logf(<span class="string">"中 unicode %x"</span>,c[<span class="number">0</span>])</span><br><span class="line">t.Logf(<span class="string">"中 UTF8 %x"</span>,s)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历string的时候，实际自动把string转成了rune再遍历。</span></span><br><span class="line"><span class="comment">// 而不是根据 len(string)的byte数组个数</span></span><br><span class="line">s = <span class="string">"中华人民共和国"</span></span><br><span class="line"><span class="keyword">for</span> _,v := <span class="keyword">range</span> s &#123;</span><br><span class="line">    t.Logf(<span class="string">"%[1]c %[1]x"</span>,v)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// strings strconv</span></span><br><span class="line"><span class="comment">// 字符串分割 string</span></span><br><span class="line">s = <span class="string">"A,B,C"</span></span><br><span class="line">parts := strings.Split(s,<span class="string">","</span>)<span class="comment">// []string 的切片</span></span><br><span class="line">t.Logf(<span class="string">"%T"</span>, parts)</span><br><span class="line"><span class="keyword">for</span> _,v := <span class="keyword">range</span> parts&#123;</span><br><span class="line">    t.Logf(<span class="string">"%T"</span>, v)<span class="comment">// string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 合并</span></span><br><span class="line">t.Log(strings.Join(parts,<span class="string">"-"</span>))</span><br><span class="line"><span class="comment">// 转换</span></span><br><span class="line">s1 := strconv.Itoa(<span class="number">10</span>)<span class="comment">// Itoa AtoI</span></span><br><span class="line">t.Log(<span class="string">"str "</span>+ s1)</span><br><span class="line"><span class="keyword">if</span> s2,err := strconv.Atoi(s1);err == <span class="literal">nil</span>&#123;</span><br><span class="line">    t.Log(<span class="number">10</span>+s2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>函数是一等公民<ul>
+<li>函数有多个返回值</li>
+<li>所有参数都是值传递：<code>slice</code> <code>map</code> <code>channel</code> 会有传引用的错觉</li>
+<li>函数可以作为变量的值</li>
+<li>函数可以作为参数和返回值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 支持多返回值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">returnMultiValues</span><span class="params">()</span> <span class="params">(a, b <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> rand.Intn(<span class="number">10</span>), rand.Intn(<span class="number">20</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以作为参数与返回值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">timeSpent</span><span class="params">(inner <span class="keyword">func</span>(op <span class="keyword">int</span>)</span> <span class="title">int</span>) <span class="params">(<span class="keyword">func</span>(op <span class="keyword">int</span>)</span> <span class="title">int</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">        start := time.Now()</span><br><span class="line">        ret := inner(n)</span><br><span class="line">        fmt.Println(<span class="string">"time Spent:"</span>,time.Since(start).Seconds())</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">slowFun</span><span class="params">(op <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    time.Sleep(time.Second*<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span>  op</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestFn</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    i, l := returnMultiValues()</span><br><span class="line">    t.Log(i, l)</span><br><span class="line"></span><br><span class="line">    tsSF := timeSpent(slowFun)</span><br><span class="line">    t.Log(tsSF(<span class="number">10</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可变长参数与-defer"><a href="#可变长参数与-defer" class="headerlink" title="可变长参数与 defer"></a>可变长参数与 <code>defer</code></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可变长参数 参数类型一致</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Sum</span><span class="params">(ops ...<span class="keyword">int</span>)</span><span class="params">(res <span class="keyword">int</span>)</span></span>&#123;</span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _,v := <span class="keyword">range</span> ops&#123;</span><br><span class="line">        res += v</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestFn1</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">    t.Log(Sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>))</span><br><span class="line">    t.Log(Sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Clear</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">"errs"</span>)</span><br><span class="line">    fmt.Println(<span class="string">"close"</span>)</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"err"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Clear2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">"errs2"</span>)</span><br><span class="line">    fmt.Println(<span class="string">"close2"</span>)</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"err"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestDefer</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">defer</span> Clear()</span><br><span class="line">    <span class="keyword">defer</span> Clear2()</span><br><span class="line">    fmt.Println(<span class="string">"Start"</span>)</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"err"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行顺序为</span></span><br><span class="line"><span class="comment">// Start close2 errs2 close errs</span></span><br><span class="line"><span class="comment">// defer 类似于栈结构 先进后出</span></span><br><span class="line"><span class="comment">// 在 defer 中引发 panic 只会导致当前的 defer 体里面的程序中断</span></span><br></pre></td></tr></table></figure>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h3 id="封装数据和行为（方法）"><a href="#封装数据和行为（方法）" class="headerlink" title="封装数据和行为（方法）"></a>封装数据和行为（方法）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据封装</span></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">    Id   <span class="keyword">string</span></span><br><span class="line">    Name <span class="keyword">string</span></span><br><span class="line">    Age  <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestCreateEmployeeObj</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">    e:= Employee&#123;<span class="string">"0"</span>,<span class="string">"张三"</span>,<span class="number">23</span>&#125;</span><br><span class="line">    e1 := Employee&#123;Id:<span class="string">"张三"</span>,Name:<span class="string">"李四"</span>,Age:<span class="number">25</span>&#125;</span><br><span class="line">    e2 := <span class="built_in">new</span>(Employee) <span class="comment">// 返回的是一个指针</span></span><br><span class="line">    e2.Age = <span class="number">29</span></span><br><span class="line">    e2.Name = <span class="string">"王五"</span></span><br><span class="line">    e2.Id = <span class="string">"3"</span></span><br><span class="line">    t.Log(e)</span><br><span class="line">    t.Log(e1)</span><br><span class="line">    t.Log(e2)</span><br><span class="line">    t.Logf(<span class="string">"e is %T"</span>, e)</span><br><span class="line">    t.Logf(<span class="string">"e2 is %T"</span>, e2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    main_test.go:437: &#123;0 张三 23&#125;</span></span><br><span class="line"><span class="comment">//    main_test.go:438: &#123;张三 李四 25&#125;</span></span><br><span class="line"><span class="comment">//    main_test.go:439: &amp;&#123;3 王五 29&#125;</span></span><br><span class="line"><span class="comment">//    main_test.go:440: e is main.Employee</span></span><br><span class="line"><span class="comment">//    main_test.go:441: e2 is *main.Employee</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 行为封装</span></span><br><span class="line"><span class="comment">// 通过引用去使用这个方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *Employee)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"Address is %x\n"</span>, unsafe.Pointer(&amp;e.Name))</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"ID:%s-Name:%s-Age:%d"</span>, e.Id, e.Name, e.Age)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过值拷贝去使用这个方法 这种会带来更大的内存消耗</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e Employee)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"Address is %x\n"</span>, unsafe.Pointer(&amp;e.Name))</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"ID:%s-Name:%s-Age:%d"</span>, e.Id, e.Name, e.Age)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口的定义"><a href="#接口的定义" class="headerlink" title="接口的定义"></a>接口的定义</h3><ul>
+<li>非入侵的，实现不依赖接口定义</li>
+<li>所以接口的定义可以包含在接口使用者包内</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Programmer <span class="keyword">interface</span> &#123;</span><br><span class="line">    WriterHelloWorld() <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span>  GoProgrammer <span class="keyword">struct</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(to *GoProgrammer)</span> <span class="title">WriterHelloWorld</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"fmt.Println(\"hello world!\")"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestClient</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p Programmer</span><br><span class="line">    p = <span class="built_in">new</span>(GoProgrammer)</span><br><span class="line">    t.Log(p.WriterHelloWorld())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口变量"><a href="#接口变量" class="headerlink" title="接口变量"></a>接口变量</h3><ul>
+<li>声明 <code>var prog Coder = &amp;GoPaogrammer{}</code></li>
+<li>prog 由两部分组成<ul>
+<li><code>type GoPaogrammer struct{}</code> 数据类型</li>
+<li><code>&amp;GoPaogrammer{}</code> 数据实例</li>
+</ul>
+</li>
+</ul>
+<h3 id="继承与组合"><a href="#继承与组合" class="headerlink" title="继承与组合"></a>继承与组合</h3><ul>
+<li>golang 中组合的成分高于继承,甚至可以说没有一般语言的继承概念</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Pet <span class="keyword">struct</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Pet)</span> <span class="title">Speck</span><span class="params">()</span></span>  &#123;</span><br><span class="line">    fmt.Println(<span class="string">"..."</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Pet)</span> <span class="title">SpeckTo</span><span class="params">(host <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    p.Speck()</span><br><span class="line">    fmt.Println(<span class="string">" "</span>, host)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">//p *Pet // 复合</span></span><br><span class="line">    Pet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d *Dog)</span> <span class="title">Speck</span><span class="params">()</span></span>  &#123;</span><br><span class="line">    fmt.Println(<span class="string">"www"</span>)</span><br><span class="line">    d.SpeckTo(<span class="string">"laowan"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//func (d *Dog) SpeckTo(host string) &#123;</span></span><br><span class="line"><span class="comment">//  //d.SpeckTo(host)</span></span><br><span class="line"><span class="comment">//  d.Speck()</span></span><br><span class="line"><span class="comment">//  fmt.Println(host)</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestInherit</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">    <span class="comment">// var dog Pet = new(Dog) 不能使用 Dog 去作为 Pat 类型</span></span><br><span class="line">    <span class="keyword">var</span> dog = <span class="built_in">new</span>(Dog)</span><br><span class="line">    <span class="comment">//dog.SpeckTo("张三") // ... 张三 匿名变量 只能调用 变量自己的方法</span></span><br><span class="line">    dog.Speck() <span class="comment">//www ... lanwan</span></span><br><span class="line">    <span class="comment">// 子类可以调用 匿名变量的方法但是这不算是完整意义上的继承</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关于继承这部分 跟 php 差距很大，与其说是继承，我更加倾向于说这是 组合</span></span><br><span class="line">    <span class="comment">// 类似于 php 中的 traits 但又不像，因为匿名变量分界线很清楚，</span></span><br><span class="line">    <span class="comment">// traits 是可以在被使用后 根据使用者的情况展示不同的特性</span></span><br><span class="line">    <span class="comment">// 是你的就是你的，是我的就是我的，你用我的，那就是我的，上层不能使用下层的方法</span></span><br><span class="line">    <span class="comment">// 下层在使用上层的方法时候，可以理解为全在上层使用</span></span><br></pre></td></tr></table></figure>
+<h3 id="接口与多态"><a href="#接口与多态" class="headerlink" title="接口与多态"></a>接口与多态</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Code <span class="keyword">string</span></span><br><span class="line"><span class="keyword">type</span> Programmer <span class="keyword">interface</span> &#123;</span><br><span class="line">    WriterHelloWorld() Code</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> GoProgrammer <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(to *GoProgrammer)</span> <span class="title">WriterHelloWorld</span><span class="params">()</span> <span class="title">Code</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"fmt.Println(\"hello world!\")"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> JavaProgrammer <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(to *JavaProgrammer)</span> <span class="title">WriterHelloWorld</span><span class="params">()</span> <span class="title">Code</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"fmt.Println(\"hello world!\")"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WriterFirstProgrammer</span><span class="params">(programmer Programmer)</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"%T %v\n"</span>, programmer, programmer.WriterHelloWorld())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestPolymorphism</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    goProg := <span class="built_in">new</span>(GoProgrammer)<span class="comment">// 指针</span></span><br><span class="line">    javaProg := <span class="built_in">new</span>(JavaProgrammer)<span class="comment">// 指针</span></span><br><span class="line">    WriterFirstProgrammer(goProg)</span><br><span class="line">    WriterFirstProgrammer(javaProg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="空接口与断言"><a href="#空接口与断言" class="headerlink" title="空接口与断言"></a>空接口与断言</h3><ul>
+<li>空接口可以表示任何类型</li>
+<li><p>通过断言来将空接口转换为指定类型</p>
+<ul>
+<li>v,ok := p.(int) // ok=true 时为转换成功</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DoSomething</span><span class="params">(p <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">  <span class="comment">//if i,ok := p.(int);ok&#123;</span></span><br><span class="line">  <span class="comment">// fmt.Println("Integer", i)</span></span><br><span class="line">  <span class="comment">// return</span></span><br><span class="line">  <span class="comment">//&#125;</span></span><br><span class="line">  <span class="comment">//if i,ok := p.(string);ok&#123;</span></span><br><span class="line">  <span class="comment">// fmt.Println("String", i)</span></span><br><span class="line">  <span class="comment">// return</span></span><br><span class="line">  <span class="comment">//&#125;</span></span><br><span class="line">  <span class="keyword">switch</span> i := p.(<span class="keyword">type</span>) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="keyword">int</span>:</span><br><span class="line">      fmt.Println(<span class="string">"Integer"</span>, i)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">  <span class="keyword">case</span> <span class="keyword">string</span>:</span><br><span class="line">      fmt.Println(<span class="string">"String"</span>, i)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">      fmt.Println(<span class="string">"unKnow Type"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestDoSomething</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">  DoSomething(<span class="number">10</span>)</span><br><span class="line">  DoSomething(<span class="string">"10"</span>)</span><br><span class="line">  DoSomething(<span class="string">'1'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Go接口最佳实践"><a href="#Go接口最佳实践" class="headerlink" title="Go接口最佳实践"></a>Go接口最佳实践</h3><ul>
+<li><p>倾向于使用小的接口定义，很多接口只包含一个方法（对于实现者负担更新 single Interface）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Reader <span class="keyword">interface</span>&#123;</span><br><span class="line">    Read(p []<span class="keyword">byte</span>)(n <span class="keyword">int</span>, err error)</span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">type</span> Writer <span class="keyword">interface</span>&#123;</span><br><span class="line">    Write(p []<span class="keyword">byte</span>)(n <span class="keyword">int</span>, err error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>较大的接口定义，可以由多个小接口定义组合而成</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ReadWriter <span class="keyword">interface</span>&#123;</span><br><span class="line">    Reader</span><br><span class="line">    Writer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只依赖必要功能的最小接口(会使方法的复用性更强)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">StoreData</span><span class="params">(reader Reader)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn" rel="external nofollow noreferrer">YI</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn/2019/06/08/golang-base-two/">https://blogxy.cn/2019/06/08/golang-base-two/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://blogxy.cn" target="_blank">YI</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/golang/">
+                                    <span class="chip bg-color">golang</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/06/09/golang-base-three/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="golang base (three)">
+                        
+                        <span class="card-title">golang base (three)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            error 处理
+没有异常机制
+error 类型实现了 error 接口
+123type error interface&#123;    Error string&#125;
+
+可以通过 errors.New 来快速创建错误实例
+1234
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-06-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/golang/" class="post-category">
+                                    golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/golang/">
+                        <span class="chip bg-color">golang</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/05/15/%E5%85%B3%E4%BA%8Ecomposer%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="关于composer的一些记录">
+                        
+                        <span class="card-title">关于composer的一些记录</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+composer dump-autoload -o
+
+123456Compsoer\ClassLoader 会优先查看 autoload_classmap 中所有生成的注册类。如果在classmap 中没有发现再 fallback 到 p
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/php%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    php后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/composer/">
+                        <span class="chip bg-color">composer</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://blogxy.cn" target="_blank">YI</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/whyiyhw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

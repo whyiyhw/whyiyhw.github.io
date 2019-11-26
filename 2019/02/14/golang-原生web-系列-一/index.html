@@ -1,0 +1,946 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="golang 原生web 系列(一), blog life">
+    <meta name="description" content="原生 golang 构建 web 服务12345678910111213141516171819202122232425262728package mainimport (	&#34;fmt&#34;	&#34;log&#34;	&#34;net/http&#34;	&#34;strings&#34;)">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>golang 原生web 系列(一) | Yiの鸟巢</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Yiの鸟巢</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Yiの鸟巢</div>
+        <div class="logo-desc">
+            
+            偶尔会衔回些故事,希望能感动自己
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/whyiyhw" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/whyiyhw" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        golang 原生web 系列(一)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/golang/">
+                                <span class="chip bg-color">golang</span>
+                            </a>
+                        
+                            <a href="/tags/web/">
+                                <span class="chip bg-color">web</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/golang-Web/" class="post-category">
+                                golang Web
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-02-14
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-05-09
+                </div>
+                
+
+                
+
+                
+				
+                
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="原生-golang-构建-web-服务"><a href="#原生-golang-构建-web-服务" class="headerlink" title="原生 golang 构建 web 服务"></a>原生 golang 构建 web 服务</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayHello</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	r.ParseForm()       <span class="comment">// 解析参数 默认不会解析参数</span></span><br><span class="line">	fmt.Println(r.Form) <span class="comment">// 输出参数</span></span><br><span class="line">	fmt.Println(r.Form[<span class="string">"url_long"</span>])</span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> r.Form &#123;</span><br><span class="line">		fmt.Println(<span class="string">"key :"</span>, k)</span><br><span class="line">		fmt.Println(<span class="string">"value :"</span>, strings.Join(v, <span class="string">""</span>))</span><br><span class="line">	&#125;</span><br><span class="line">	write := <span class="string">"访问方法是:"</span> + r.Method + <span class="string">"&lt;br /&gt;"</span></span><br><span class="line">	write += <span class="string">"请求变量是:"</span> + r.URL.Path</span><br><span class="line">	fmt.Fprintf(w, write) <span class="comment">// 这个写入到客户端</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/"</span>, sayHello) <span class="comment">// 设定访问路由</span></span><br><span class="line">	<span class="keyword">if</span> err := http.ListenAndServe(<span class="string">":9090"</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">"ListenAndServer : "</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="原生-php-构建web-服务"><a href="#原生-php-构建web-服务" class="headerlink" title="原生 php 构建web 服务"></a>原生 php 构建web 服务</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$_SERVER = <span class="keyword">array</span>();</span><br><span class="line"><span class="comment">//创建一个tcp套接字,并监听8088端口</span></span><br><span class="line"><span class="keyword">if</span> ($web = stream_socket_server(<span class="string">'0.0.0.0:9090'</span>, $errno, $errstr)) &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        $conn = @stream_socket_accept($web);</span><br><span class="line">        <span class="keyword">if</span> ($conn) &#123;</span><br><span class="line">            $_SERVER = <span class="keyword">array</span>();</span><br><span class="line">            decode(fgets($conn));</span><br><span class="line">            fwrite($conn, encode(<span class="string">"访问方法是:"</span> . $_SERVER[<span class="string">'REQUEST_METHOD'</span>] . <span class="string">"\n&lt;br /&gt;请求变量是:"</span> . $_SERVER[<span class="string">'QUERY_STRING'</span>]));</span><br><span class="line">            fclose($conn);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>($errstr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//http协议解码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decode</span><span class="params">($info)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $_SERVER;</span><br><span class="line">    <span class="keyword">list</span>($header,) = explode(<span class="string">"\r\n\r\n"</span>, $info);</span><br><span class="line">    <span class="comment">//将请求头变为数组</span></span><br><span class="line">    $header = explode(<span class="string">"\r\n"</span>, $header);</span><br><span class="line">    $data = explode(<span class="string">' '</span>, $header[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">if</span> ($data[<span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">list</span>($_SERVER[<span class="string">'REQUEST_METHOD'</span>], $_SERVER[<span class="string">'REQUEST_URI'</span>], $_SERVER[<span class="string">'SERVER_PROTOCOL'</span>]) = $data;</span><br><span class="line">        $_SERVER[<span class="string">'QUERY_STRING'</span>] = parse_url($_SERVER[<span class="string">'REQUEST_URI'</span>], PHP_URL_QUERY);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $_SERVER[<span class="string">'REQUEST_METHOD'</span>] = <span class="string">''</span>;</span><br><span class="line">        $_SERVER[<span class="string">'QUERY_STRING'</span>] = <span class="string">''</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//http协议加密</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $content = <span class="string">""</span>;</span><br><span class="line">    $content .= <span class="string">"HTTP/1.1 200 OK\r\n"</span>;</span><br><span class="line">    $content .= <span class="string">"Server: php_web/1.0.0\r\n"</span>;</span><br><span class="line">    $content .= <span class="string">"Content-Type:text/html;charset=utf-8\r\n"</span>;</span><br><span class="line">    $content .= <span class="string">"Content-Length: "</span> . strlen($str) . <span class="string">"\r\n\r\n&#123;$str&#125;"</span>;</span><br><span class="line">    <span class="keyword">return</span> $content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>从以上的两种构建方式,可以看出 php 和 go 的原生对于 web 服务的封装</li>
+<li>golang 很显然 是 http包 对 请求进行了封装,但是 底层两者在处理请求上并没有什么区别<h3 id="对于web服务器的分析"><a href="#对于web服务器的分析" class="headerlink" title="对于web服务器的分析"></a>对于web服务器的分析</h3></li>
+<li>大致可以抽象为 一下的四点<ul>
+<li>Request：用户请求的信息，用来解析用户的请求信息，包括post、get、cookie、url等信息</li>
+<li>Response：服务器需要反馈给客户端的信息</li>
+<li>Conn：用户的每次请求链接</li>
+<li>Handler：处理请求和生成返回信息的处理逻辑</li>
+</ul>
+</li>
+<li>我们所有的工作 都是 对于上面四点的封装</li>
+<li>从简易的 php web 服务器 构成来看<ul>
+<li>如何监听端口?</li>
+<li>如何接收客户端请求?</li>
+<li>如何分配handle?</li>
+<li>这三点 是我们要处理的</li>
+</ul>
+</li>
+<li>golang 使用了 http.ListenAndServe() 来实现端口监听<ul>
+<li>根据源码可知, 底层就是初始化一个server对象，然后调用了 net.Listen(“tcp”, addr) ，也就是底层用TCP协议<br>搭建了一个服务，然后监控我们设置的端口。<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"># 第一步 构建了一个Server结构体的引用</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListenAndServe</span><span class="params">(addr <span class="keyword">string</span>, handler Handler)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	server := &amp;Server&#123;Addr: addr, Handler: handler&#125;</span><br><span class="line">	<span class="keyword">return</span> server.ListenAndServe()</span><br><span class="line">&#125;</span><br><span class="line"># 第二步 关闭服务 根据端口 开启一个 tcp 监听</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(srv *Server)</span> <span class="title">ListenAndServe</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> srv.shuttingDown() &#123;</span><br><span class="line">		<span class="keyword">return</span> ErrServerClosed</span><br><span class="line">	&#125;</span><br><span class="line">	addr := srv.Addr</span><br><span class="line">	<span class="keyword">if</span> addr == <span class="string">""</span> &#123;</span><br><span class="line">		addr = <span class="string">":http"</span></span><br><span class="line">	&#125;</span><br><span class="line">	ln, err := net.Listen(<span class="string">"tcp"</span>, addr)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> srv.Serve(tcpKeepAliveListener&#123;ln.(*net.TCPListener)&#125;)</span><br><span class="line">&#125;</span><br><span class="line"># 第三步 处理 请求</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(srv *Server)</span> <span class="title">Serve</span><span class="params">(l net.Listener)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> fn := testHookServerServe; fn != <span class="literal">nil</span> &#123;</span><br><span class="line">		fn(srv, l) <span class="comment">// call hook with unwrapped listener</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	l = &amp;onceCloseListener&#123;Listener: l&#125;</span><br><span class="line">	<span class="keyword">defer</span> l.Close()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err := srv.setupHTTP2_Serve(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> !srv.trackListener(&amp;l, <span class="literal">true</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> ErrServerClosed</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> srv.trackListener(&amp;l, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> tempDelay time.Duration     <span class="comment">// how long to sleep on accept failure</span></span><br><span class="line">	baseCtx := context.Background() <span class="comment">// base is always background, per Issue 16220</span></span><br><span class="line">	ctx := context.WithValue(baseCtx, ServerContextKey, srv)</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		rw, e := l.Accept()</span><br><span class="line">		<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">select</span> &#123;</span><br><span class="line">			<span class="keyword">case</span> &lt;-srv.getDoneChan():</span><br><span class="line">				<span class="keyword">return</span> ErrServerClosed</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> ne, ok := e.(net.Error); ok &amp;&amp; ne.Temporary() &#123;</span><br><span class="line">				<span class="keyword">if</span> tempDelay == <span class="number">0</span> &#123;</span><br><span class="line">					tempDelay = <span class="number">5</span> * time.Millisecond</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					tempDelay *= <span class="number">2</span></span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> max := <span class="number">1</span> * time.Second; tempDelay &gt; max &#123;</span><br><span class="line">					tempDelay = max</span><br><span class="line">				&#125;</span><br><span class="line">				srv.logf(<span class="string">"http: Accept error: %v; retrying in %v"</span>, e, tempDelay)</span><br><span class="line">				time.Sleep(tempDelay)</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> e</span><br><span class="line">		&#125;</span><br><span class="line">		tempDelay = <span class="number">0</span></span><br><span class="line">		c := srv.newConn(rw)</span><br><span class="line">		c.setState(c.rwc, StateNew) <span class="comment">// before Serve can return</span></span><br><span class="line">		<span class="keyword">go</span> c.serve(ctx)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn" rel="external nofollow noreferrer">YI</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn/2019/02/14/golang-%E5%8E%9F%E7%94%9Fweb-%E7%B3%BB%E5%88%97-%E4%B8%80/">https://blogxy.cn/2019/02/14/golang-%E5%8E%9F%E7%94%9Fweb-%E7%B3%BB%E5%88%97-%E4%B8%80/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://blogxy.cn" target="_blank">YI</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/golang/">
+                                    <span class="chip bg-color">golang</span>
+                                </a>
+                            
+                                <a href="/tags/web/">
+                                    <span class="chip bg-color">web</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/05/07/%E5%85%B3%E4%BA%8E%E5%9C%A8windows%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C-laravel-artisan-%E5%91%BD%E4%BB%A4%E8%A1%8C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="关于在windows服务器上使用定时任务执行 laravel artisan 命令行">
+                        
+                        <span class="card-title">关于在windows服务器上使用定时任务执行 laravel artisan 命令行</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            关于在windows服务器上使用定时任务执行 laravel artisan 命令行
+需解决的问题
+
+公司windows 服务器上 的 laravel 项目需要定时去更新一批数据（频率不高）
+
+
+解决思路 
+
+
+可以使用 golang 去完
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-05-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/php/" class="post-category">
+                                    php
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/bat/">
+                        <span class="chip bg-color">bat</span>
+                    </a>
+                    
+                    <a href="/tags/laravel/">
+                        <span class="chip bg-color">laravel</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/02/12/%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3css-%E4%B8%80/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="重新理解css(一)">
+                        
+                        <span class="card-title">重新理解css(一)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CSS- 全称 层叠样式表 Cascading Style Sheet
+选择器- 分类和权重
+    - 元素选择器   a{}
+    - 伪元素选择器 ::before{}
+    - 类选择器    .link{}
+    - 属性选
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-02-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3/" class="post-category">
+                                    前端相关
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/css/">
+                        <span class="chip bg-color">css</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://blogxy.cn" target="_blank">YI</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/whyiyhw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="local ContOS7 build php dev envs, blog life">
+    <meta name="description" content="ContOS7 php 多环境的配置使用最小化安装之后的第一个问题，内外网不通
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+修改 ONBOOT=yes 后 systemctl restart ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>local ContOS7 build php dev envs | Yiの鸟巢</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Yiの鸟巢</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Yiの鸟巢</div>
+        <div class="logo-desc">
+            
+            偶尔会衔回些故事,希望能感动自己
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/whyiyhw" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/whyiyhw" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        local ContOS7 build php dev envs
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/php/">
+                                <span class="chip bg-color">php</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/docker-nginx/" class="post-category">
+                                docker nginx
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-05-09
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-10-10
+                </div>
+                
+
+                
+
+                
+				
+                
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="ContOS7-php-多环境的配置"><a href="#ContOS7-php-多环境的配置" class="headerlink" title="ContOS7 php 多环境的配置"></a><code>ContOS7 php</code> 多环境的配置</h2><h3 id="使用最小化安装之后的第一个问题，内外网不通"><a href="#使用最小化安装之后的第一个问题，内外网不通" class="headerlink" title="使用最小化安装之后的第一个问题，内外网不通"></a>使用最小化安装之后的第一个问题，内外网不通</h3><ul>
+<li><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></li>
+<li>修改 <code>ONBOOT=yes</code> 后 <code>systemctl restart network.service</code></li>
+<li>重启主机，如果此时内外网通了但是 <code>yum list</code> 失败，主要是服务不可达，考虑为 <code>DNS</code> 的原因</li>
+<li><p>修改 <code>vi /etc/resolv.conf</code> 修改 <code>dns</code> 为 <code>nameserver 8.8.8.8</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum update # 成功</span><br><span class="line">yum install wget -y # 装一个下载工具</span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup # 备份</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo # 添加阿里源</span><br><span class="line">yum clean all # 清除缓存</span><br><span class="line">yum makecache # 生成缓存</span><br><span class="line">yum update -y # 更新</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="一些准备工作"><a href="#一些准备工作" class="headerlink" title="一些准备工作"></a>一些准备工作</h2><ul>
+<li><code>yum install vim -y &amp;&amp; yum install net-tools -y</code>   习惯了 <code>vim</code> 加上一个网络分析小工具</li>
+<li><code>yum install gcc gcc-c++ httpd-tools autoconf pcre pcre-devel make automake -y</code> 安装一些编译测试工具</li>
+<li><code>systemctl stop firewalld.service &amp;&amp; systemctl disable firewalld.service</code> 关闭并禁用 防火墙</li>
+<li><code>vim /etc/selinux/config</code></li>
+<li>修改 <code>SELINUX=disabled</code> 千万不要改错位置  </li>
+<li>下面的 <code>selinuxtype</code> 要是改成 <code>disable</code> 建议删了重装会快一些</li>
+<li>不然 <code>selinux</code> 可能会导致你的网络端口不可访问</li>
+</ul>
+<h2 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 <code>nginx</code></h2><ul>
+<li><a href="http://nginx.org/en/linux_packages.html#RHEL-CentOS" target="_blank" rel="noopener">参考</a></li>
+<li><code>vim /etc/yum.repos.d/nginx.repo</code> 创建 <code>yum</code> 源文件</li>
+<li><p>根据官方提示修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>yum list|grep nginx</code> 能够看到 <code>nginx</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum list|grep nginx</span><br><span class="line">nginx.x86_64                                1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-debug.x86_64                          1:1.8.0-1.el7.ngx          nginx</span><br><span class="line">nginx-debuginfo.x86_64                      1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-geoip.x86_64                   1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-geoip-debuginfo.x86_64         1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-image-filter.x86_64            1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-image-filter-debuginfo.x86_64  1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-njs.x86_64                     1:1.16.0.0.3.1-1.el7.ngx   nginx</span><br><span class="line">nginx-module-njs-debuginfo.x86_64           1:1.16.0.0.3.1-1.el7.ngx   nginx</span><br><span class="line">nginx-module-perl.x86_64                    1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-perl-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-xslt.x86_64                    1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-module-xslt-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx</span><br><span class="line">nginx-nr-agent.noarch                       2.0.0-12.el7.ngx           nginx</span><br><span class="line">pcp-pmda-nginx.x86_64                       4.1.0-5.el7_6              updates</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>yum install nginx -y</code> 安装 <code>nginx</code></p>
+</li>
+<li><code>systemctl enable nginx</code> 开机自启 <code>nginx</code></li>
+<li><code>systemctl start nginx</code> 启动 <code>nginx</code></li>
+<li>然后输入 <code>IP</code> 到浏览器访问成功</li>
+<li>默认配置位置 <code>/etc/nginx/nginx.conf</code> <code>/etc/nginx/conf.d/default.conf</code></li>
+</ul>
+<h2 id="安装-PHP"><a href="#安装-PHP" class="headerlink" title="安装 PHP"></a>安装 <code>PHP</code></h2><ul>
+<li><p><a href="https://webtatic.com/packages/php72/" target="_blank" rel="noopener">参考</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release</span><br><span class="line">rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 <code>php</code> 全扩展 <code>yum install mod_php72w php72w-bcmath php72w-cli php72w-common php72w-dba php72w-devel php72w-embedded php72w-enchant php72w-fpm php72w-gd  php72w-imap php72w-interbase php72w-imap php72w-intl php72w-ldap php72w-mbstring php72w-mysqlnd php72w-odbc php72w-opcache php72w-pdo php72w-pdo_dblib php72w-pear php72w-pecl-apcu php72w-pecl-imagick php72w-pecl-mongodb php72w-pgsql php72w-phpdbg php72w-process php72w-pspell php72w-recode php72w-snmp php72w-soap php72w-sodium php72w-tidy php72w-xml php72w-xmlrpc -y</code></p>
+</li>
+<li>配置文件位置 <code>/etc/php.ini</code></li>
+<li><code>php -m</code> 就可以查看装了哪些扩展 嗯 基本都开了</li>
+<li><code>systemctl start php-fpm</code> 虽然是一台机器但我们还是用 <code>php-fpm</code> 模式,便于后期加入 <code>docker</code> 的扩展 也可以使用 <code>.sock</code> 的模块加载模式 理论上会快一些</li>
+<li><p><code>systemctl enable php-fpm</code> 开机自启</p>
+</li>
+<li><p>发现一个坑，并没有 <code>redis</code> 扩展 原生进行编译扩展</p>
+<ul>
+<li><code>wget http://pecl.php.net/get/redis-4.2.0.tgz</code></li>
+<li><code>tar zxvf redis-4.2.0.tgz</code></li>
+<li><code>cd redis-4.2.0</code></li>
+<li><code>/usr/bin/phpize</code>(这个根据 <code>phpize</code> 实际情况来)</li>
+<li><code>./configure --with-php-config=/usr/bin/php-config</code>(这个根据 <code>php-config</code> 实际情况来)</li>
+<li><code>make &amp;&amp; make install</code></li>
+<li><code>vim /etc/php.d/redis.ini</code> 这个根据实际情况去决定 是改 <code>php.ini</code> 还是别的什么</li>
+<li>写入 <code>extension=redis.so</code></li>
+<li><code>systemctl restart php-fpm</code> 就 <code>ok</code> 了</li>
+</ul>
+</li>
+</ul>
+<h2 id="php与nginx-链接起来"><a href="#php与nginx-链接起来" class="headerlink" title="php与nginx 链接起来"></a><code>php</code>与<code>nginx</code> 链接起来</h2>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd dev</span><br><span class="line">[root@localhost dev]# mkdir -p www/php/test/</span><br><span class="line">[root@localhost dev]# cd www/php/test/</span><br><span class="line">[root@localhost test]# echo "&lt;?php phpinfo();" &gt;&gt; ./index.php</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>vim /etc/nginx/conf.d/default.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">      root   /dev/www/php/test;</span><br><span class="line">      index index.php  index.html index.htm;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location ~* \.php$ &#123;</span><br><span class="line">      fastcgi_index   index.php;</span><br><span class="line">      fastcgi_pass    127.0.0.1:9000;</span><br><span class="line">      include         fastcgi_params;</span><br><span class="line">      fastcgi_param SCRIPT_FILENAME /dev/www/php/test$fastcgi_script_name;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>nginx -t &amp;&amp; nginx -s reload</code></p>
+</li>
+</ul>
+<h2 id="使用docker构建-php5-4-环境"><a href="#使用docker构建-php5-4-环境" class="headerlink" title="使用docker构建 php5.4 环境"></a>使用<code>docker</code>构建 <code>php5.4</code> 环境</h2><ul>
+<li>更换镜像，使用阿里云的镜像加速</li>
+<li><code>https://cr.console.aliyun.com/#/accelerator</code></li>
+<li><code>vim /etc/docker/daemon.json</code></li>
+<li>修改成自己的镜像加速</li>
+<li><code>&quot;registry-mirrors&quot;: [&quot;https://xxxxx.mirror.aliyuncs.com&quot;]</code></li>
+<li><code>systemctl daemon-reload</code></li>
+<li><code>systemctl restart docker</code></li>
+<li><p>运行生成一个<code>php5.4</code> 的容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-v /dev/www/php/:/var/www/html \</span><br><span class="line">-p 9001:9000 \</span><br><span class="line">--name phpfpm54 --privileged=true php:5.4-fpm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="docker-中-扩展安装"><a href="#docker-中-扩展安装" class="headerlink" title="docker 中 扩展安装"></a>docker 中 扩展安装</h2><ul>
+<li><code>docker exec -ti phpfpm54 /bin/bash</code></li>
+<li><code>-ti</code> 打开图形界面</li>
+<li><code>/bin/bash</code> 执行 这个命令</li>
+<li><code>exec</code> 可以在 不 <code>exit</code> 的情况下进行附加操作</li>
+<li>进去后需要 <code>apt-get update</code> 里面是 <code>debian9</code> 系统</li>
+<li><code>docker-php-ext-install pdo_mysql</code> 来装 <code>pdo_mysql</code> 扩展</li>
+<li>以下这些扩展都可以安装 不过好多有坑0.0</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zend_test zip</span><br></pre></td></tr></table></figure>
+<h3 id="docker-Debian-换源安装gd-库"><a href="#docker-Debian-换源安装gd-库" class="headerlink" title="docker Debian 换源安装gd 库"></a>docker <code>Debian</code> 换源安装<code>gd</code> 库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/apt &amp;&amp; cp sources.list ./sources.list.bak</span><br><span class="line">apt-get install vim</span><br><span class="line"></span><br><span class="line">vim sources.list</span><br><span class="line">deb http://mirrors.163.com/debian/ stretch main non-free contrib</span><br><span class="line">deb http://mirrors.163.com/debian/ stretch-updates main non-free contrib</span><br><span class="line">deb http://mirrors.163.com/debian/ stretch-backports main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch-updates main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch-backports main non-free contrib</span><br><span class="line"></span><br><span class="line">//如果连apt-get update都做不到   可以先 rm sources.list 再创一个新的</span><br><span class="line">echo "deb http://mirrors.163.com/debian/ stretch main non-free contrib</span><br><span class="line">deb http://mirrors.163.com/debian/ stretch-updates main non-free contrib</span><br><span class="line">deb http://mirrors.163.com/debian/ stretch-backports main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch-updates main non-free contrib</span><br><span class="line">deb-src http://mirrors.163.com/debian/ stretch-backports main non-free contrib" &gt;&gt; sources.list</span><br><span class="line">//将源更换为上述  新的源</span><br><span class="line"></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install libfreetype6-dev -y</span><br><span class="line">apt-get install libpng-dev -y</span><br><span class="line">apt-get install libjpeg62-turbo-dev -y</span><br><span class="line">//如果源没出问题 上述应该都能安装</span><br><span class="line">docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include</span><br><span class="line">//先编译gd库的扩展</span><br><span class="line">docker-php-ext-install gd</span><br><span class="line">// 这样就在docker容器内完美安装了gd库</span><br></pre></td></tr></table></figure>
+<ul>
+<li>装 <code>redis</code> 扩展</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz</span><br><span class="line"></span><br><span class="line">tar xfz /tmp/redis.tar.gz</span><br><span class="line"></span><br><span class="line">rm -r /tmp/redis.tar.gz</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/src/php/ext</span><br><span class="line"></span><br><span class="line">mv phpredis-3.1.3 /usr/src/php/ext/redis</span><br><span class="line"></span><br><span class="line">docker-php-ext-install redis</span><br></pre></td></tr></table></figure>
+<ul>
+<li>退出测试</li>
+<li><code>vim /etc/nginx/conf.d/default.conf</code></li>
+<li>修改 <code>fastcgi_param SCRIPT_FILENAME /var/www/html/test$fastcgi_script_name;</code></li>
+<li>这里由于是在容器内执行所以修改路径为这个</li>
+<li><p>设置 <code>phpstrom</code> 的 <code>sftp</code> 自动上传到 本地虚拟机</p>
+</li>
+<li><p><code>ps aux|grep php</code></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1 root 0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)</span><br><span class="line">7 www-data 0:00 php-fpm: pool www</span><br><span class="line">8 www-data 0:00 php-fpm: pool www</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 发现id 1就是php了，给它个信号让它重启即可，执行命令如下：</span></span><br><span class="line">kill -USR2 1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果是在外面也可以：docker exec -it 容器id或名称 kill -USR2 1</li>
+<li>或者重启容器  docker restart 容器id或名称</li>
+</ul>
+<h2 id="安装-swoole"><a href="#安装-swoole" class="headerlink" title="安装  swoole"></a>安装  <code>swoole</code></h2><ul>
+<li><code>yum install git openssl-devel -y</code></li>
+<li><code>git clone https://gitee.com/swoole/swoole.git</code></li>
+<li>高版本<ul>
+<li><code>cd swoole</code></li>
+<li><code>git checkout v4.4.6</code></li>
+<li><code>./configure --enable-openssl --enable-mysqlnd --enable-sockets</code></li>
+<li><code>make clean &amp;&amp; make &amp;&amp; sudo make install</code></li>
+<li><code>cd /etc/php.d/</code></li>
+<li><code>cp sockets.ini ./swoole.ini</code></li>
+<li><code>vim swoole.ini 修改为 swoole</code></li>
+<li><code>systemctl restart php-fpm</code></li>
+</ul>
+</li>
+<li><p>低版本</p>
+<ul>
+<li><code>wget https://github.com/redis/hiredis/archive/v0.14.0.zip</code></li>
+<li><code>yun install -y unzip</code></li>
+<li><code>unzip v0.14.0.zip</code></li>
+<li><code>cd hiredis-0.14.0</code></li>
+<li><p><code>make -j</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--with-php-config=/usr/bin/php-config \</span><br><span class="line">--enable-openssl  \</span><br><span class="line">--enable-http2  \</span><br><span class="line">--enable-async-redis \</span><br><span class="line">--enable-sockets \</span><br><span class="line">--enable-mysqlnd &amp;&amp; make clean &amp;&amp; make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/php.d/</span><br><span class="line">cp sockets.ini ./swoole.ini</span><br><span class="line">ls</span><br><span class="line">vim swoole.ini 修改为 swoole</span><br><span class="line">systemctl restart php-fpm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost swoole]# php --ri swoole</span><br><span class="line"></span><br><span class="line">swoole</span><br><span class="line"></span><br><span class="line">Swoole =&gt; enabled</span><br><span class="line">Author =&gt; Swoole Team &lt;team@swoole.com&gt;</span><br><span class="line">Version =&gt; 4.4.0-alpha</span><br><span class="line">Built =&gt; May 10 2019 20:30:06</span><br><span class="line">coroutine =&gt; enabled</span><br><span class="line">epoll =&gt; enabled</span><br><span class="line">eventfd =&gt; enabled</span><br><span class="line">signalfd =&gt; enabled</span><br><span class="line">cpu_affinity =&gt; enabled</span><br><span class="line">spinlock =&gt; enabled</span><br><span class="line">rwlock =&gt; enabled</span><br><span class="line">sockets =&gt; enabled</span><br><span class="line">openssl =&gt; OpenSSL 1.0.2k-fips  26 Jan 2017</span><br><span class="line">http2 =&gt; enabled</span><br><span class="line">pcre =&gt; enabled</span><br><span class="line">zlib =&gt; enabled</span><br><span class="line">mutex_timedlock =&gt; enabled</span><br><span class="line">pthread_barrier =&gt; enabled</span><br><span class="line">futex =&gt; enabled</span><br><span class="line">mysqlnd =&gt; enabled</span><br><span class="line">async_redis =&gt; enabled</span><br><span class="line"></span><br><span class="line">Directive =&gt; Local Value =&gt; Master Value</span><br><span class="line">swoole.enable_coroutine =&gt; On =&gt; On</span><br><span class="line">swoole.display_errors =&gt; On =&gt; On</span><br><span class="line">swoole.use_shortname =&gt; On =&gt; On</span><br><span class="line">swoole.unixsock_buffer_size =&gt; 8388608 =&gt; 8388608</span><br></pre></td></tr></table></figure>
+<h2 id="docker-安装-mysql服务"><a href="#docker-安装-mysql服务" class="headerlink" title="docker  安装 mysql服务"></a><code>docker</code>  安装 <code>mysql</code>服务</h2><ul>
+<li><code>dokcer pull mysql:5.7</code></li>
+<li><code>mkdir -p /data/mysql/datadir</code> #用于挂载<code>mysql</code>数据文件</li>
+<li><p><code>mkdir -p /data/mysql/conf.d</code> #用于挂载<code>mysql</code>配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--name mysql5.7 -p 3306:3306 \</span><br><span class="line">-v /data/mysql/datadir:/var/lib/mysql \</span><br><span class="line">-v /data/mysql/conf.d:/etc/mysql/conf.d \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456  mysql:5.7</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-e</code>：设置环境变量，此处指定 <code>root</code> 密码</p>
+</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn" rel="external nofollow noreferrer">YI</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn/2019/05/09/local-ContOS7-build-php-dev-envs/">https://blogxy.cn/2019/05/09/local-ContOS7-build-php-dev-envs/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://blogxy.cn" target="_blank">YI</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/php/">
+                                    <span class="chip bg-color">php</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/05/14/php%E4%B9%8B%E9%81%93/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="php之道">
+                        
+                        <span class="card-title">php之道</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            PHPer web 技能点
+后端技能点
+
+必需技能
+git-版本控制
+ssh-安全外壳协议
+http/https 协议和 API
+命令行基础指令
+学习理解
+数据结构与算法
+字符编码
+设计模式
+github/gitlab 平台与工作流
+
+ph
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-05-14
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/php%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    php后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/php/">
+                        <span class="chip bg-color">php</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/05/08/golang-array-and-slice/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="golang base (one)">
+                        
+                        <span class="card-title">golang base (one)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            程序入口
+必须为 package main
+必须是 func main(){}
+文件名称可以不为 main.go
+Go 中 main 函数不支持返回值
+可以通过 os.Exit() 来传出 返回值
+main 函数不支持传入参数 可以通过 o
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/golang/" class="post-category">
+                                    golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/golang/">
+                        <span class="chip bg-color">golang</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://blogxy.cn" target="_blank">YI</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/whyiyhw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

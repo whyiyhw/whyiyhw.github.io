@@ -1,0 +1,1098 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="关于php后端的100个话题（一）消息队列, blog life">
+    <meta name="description" content="消息队列解决了什么问题？
+消息队列最主要解决了系统间 数据通信 的问题
+
+消息队列的使用场景
+异步处理
+把不重要的同步串行，改成异步，可以更快地返回结果
+减少等待，自然实现了步骤之间的并发，提升系统的性能
+
+
+流量控制
+将网关将请求放入请求">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>关于php后端的100个话题（一）消息队列 | Yiの鸟巢</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Yiの鸟巢</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Yiの鸟巢</div>
+        <div class="logo-desc">
+            
+            偶尔会衔回些故事,希望能感动自己
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/whyiyhw" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/whyiyhw" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        关于php后端的100个话题（一）消息队列
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/php/">
+                                <span class="chip bg-color">php</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                                <span class="chip bg-color">消息队列</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/php%E5%90%8E%E7%AB%AF/" class="post-category">
+                                php后端
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-07-22
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-11-26
+                </div>
+                
+
+                
+
+                
+				
+                
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="消息队列解决了什么问题？"><a href="#消息队列解决了什么问题？" class="headerlink" title="消息队列解决了什么问题？"></a>消息队列解决了什么问题？</h2><ul>
+<li>消息队列最主要解决了系统间 <strong>数据通信</strong> 的问题</li>
+</ul>
+<h2 id="消息队列的使用场景"><a href="#消息队列的使用场景" class="headerlink" title="消息队列的使用场景"></a>消息队列的使用场景</h2><ul>
+<li>异步处理<ul>
+<li>把不重要的同步串行，改成异步，可以更快地返回结果</li>
+<li>减少等待，自然实现了步骤之间的并发，提升系统的性能</li>
+</ul>
+</li>
+<li>流量控制<ul>
+<li>将网关将请求放入请求队列进入等待状态，后端去处理请求队列的参数，然后网关再响应 ，一旦超时就丢弃响应服务错误给请求，来限制流量<ul>
+<li>大致的思路是，网关会把用户的request缓存起来，然后发消息，至于发的消息内容不一定就是这个原封不动的request对象，只要把Request中必要的信息发给后端就可以了。后端服务可以用<code>RPC</code>通知网关秒杀结果，网关收到结果后找到对应的Request来构建Response返回即可。</li>
+</ul>
+</li>
+<li>使用令牌桶<ul>
+<li>控制流量的原理是：单位时间内只发放固定数量的令牌到令牌桶中，规定服务在处理请求之前必须先从令牌桶中拿出一个令牌，如果令牌桶中没有令牌，则拒绝请求，这样就保证单位时间内，能处理的请求不超过发放令牌的数量，起到了流量控制的作用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>服务解耦<ul>
+<li>订单服务在订单变化时发送一条消息到消息队列的一个主题 Order 中， 多有下游系统都订阅主题 Order 这样每个下游系统都可以获得一份实时完整的订单系统，而不必在创建订单的时候一个个系统进行</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见的消息队列选型"><a href="#常见的消息队列选型" class="headerlink" title="常见的消息队列选型"></a>常见的消息队列选型</h2><ul>
+<li>选型的基本标准<ul>
+<li>开源</li>
+<li>流行，热门，兼容性好</li>
+<li>消息的可靠传递： 不丢消息</li>
+<li>Cluster: 支持集群</li>
+<li>性能：具备足够好的性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="可供选择的消息队列产品"><a href="#可供选择的消息队列产品" class="headerlink" title="可供选择的消息队列产品"></a>可供选择的消息队列产品</h2><ul>
+<li><strong><code>RabbitMQ</code></strong><ul>
+<li>优势<ul>
+<li>轻量级</li>
+<li>灵活的路由配置</li>
+<li>兼容性好</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>对消息堆积的支持并不好，设计理念为消息队列是一个管道，大量的消息挤压是一种不正常的情况</li>
+<li>性能一般，每秒钟可以处理几万到十几万条消息</li>
+<li>使用Erlang 二次开发的可维护性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>RocketMQ</code></strong><ul>
+<li>优势<ul>
+<li>响应时延做了优化，金融级别的稳定性</li>
+<li>国人开发中文社区活跃，每秒钟可以处理几十万条消息</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>国际上没那么流行，与周边生态系统的集成跟兼容要略逊一筹</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>Kafka</code></strong><ul>
+<li>优势<ul>
+<li>设计目的是为了处理海量日志，早期版本存在一定问题</li>
+<li>Kafka与周边生态系统的兼容性时最好的，特别是大数据和流计算领域，几乎所有的相关开源系统都会优先支持 Kafka</li>
+<li>异步收发性能是最好的，每秒也是 几十万条消息</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>对于消息数量达不到一定量时，<code>Kafka</code>的时延反而比较高，所以<code>kafka</code>不太适合在线业务场景</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>ActiveMQ</code></strong><ul>
+<li>已经进入老年期，性能无法跟现代消息队列做比较，存在的目的是为了兼容老一辈的产品</li>
+</ul>
+</li>
+<li><strong><code>ZeroMQ</code></strong> <ul>
+<li>不是一个纯粹的消息队列，而是一个基于消息队列的多线程网络库</li>
+</ul>
+</li>
+<li>总结<ul>
+<li>一般场景 开箱即用可以考虑<strong><code>RabbitMQ</code></strong></li>
+<li>在线业务，如交易系统可以考虑 <strong><code>RocketMQ</code></strong> </li>
+<li>海量数据处理，收集日志，监控信息，前端埋点，大数据，流计算，Kafka比较适合</li>
+</ul>
+</li>
+</ul>
+<h2 id="消息模型"><a href="#消息模型" class="headerlink" title="消息模型"></a>消息模型</h2><ul>
+<li>主题与队列的区别<ul>
+<li>队列 是一种先进先出的线性表，通常使用链表或者数组来实现，队列只允许在后端进行插入，在前端进行删除操作，是严格有序的。<ul>
+<li>早期的消息队列，就是严格按照队列数据结构来设计，队列模式<ul>
+<li>消费者（consumer）《—- 队列《—- 生产者（producer）</li>
+<li>特点<ul>
+<li>如果有多个消费者，消费者之间是竞争的关系，每个消费者只能接受到队列中的一部分消息</li>
+</ul>
+</li>
+<li>不足之处<ul>
+<li>如果需要把一份消息数据分配给多个消费者，要求每个消费者都能收到全量的消息，就很难做到了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>另一种消息队列 发布-订阅模型（Publish-Subscribe Pattern）<ul>
+<li>发布者 Publisher<ul>
+<li>发送——-》主题Topic</li>
+</ul>
+</li>
+<li>订阅者 Subscribe<ul>
+<li>订阅主题 </li>
+<li>从主题中 接受 —–》消息 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>两者最大的区别就是，一份消息数据能不能被消费多次的问题</li>
+<li><code>RabbitMQ</code> 的消息模型<ul>
+<li>现代的消息队列产品使用的消息模型大多是这种发布-订阅模型，但是 <code>RabbitMQ</code> 坚持使用 队列模型</li>
+<li><code>RabbitMQ</code> 解决发布订阅问题的方案是 处于生产者与队列之间的Exchange 模块<ul>
+<li>生产者 Producer</li>
+<li>Exchange<ul>
+<li>队列1 —》消费者</li>
+<li>队列2 —》消费者 </li>
+</ul>
+</li>
+<li><img src="/images/02.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>由Exchange将消息发送到多个队列，这样就变相实现了发布订阅模型</li>
+</ul>
+</li>
+<li><code>RocketMQ</code> 的消息模型<ul>
+<li>中规中矩的<code>RocketMQ</code> 属于发布-订阅模型</li>
+<li><img src="/images/01.jpg" alt="&quot;图片&quot;"></li>
+<li>消息队列的请求确认机制<ul>
+<li>生产者向主题中投放 消息时 一定要主题响应成功，它才会确认已经存入，不然会再次投放</li>
+<li>消费者在收到消息完成业务逻辑后也会向消息队列端响应消费成功的信息，不然就会一直给消费者发送消息</li>
+<li>也就是说每个主题任意时刻，只会有一个消费者实例来消费，效率太低</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a><strong><code>RabbitMQ</code></strong></h2><ul>
+<li><code>RabbitMQ</code>安装教程 <a href="https://segmentfault.com/a/1190000018916099" target="_blank" rel="noopener">https://segmentfault.com/a/1190000018916099</a> </li>
+<li>基础使用教程（一 ~ 五）<ul>
+<li><a href="https://segmentfault.com/a/1190000011825148" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011825148</a></li>
+<li><a href="https://segmentfault.com/a/1190000011829380" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011829380</a></li>
+</ul>
+</li>
+<li>点对点模式  一个生产者者一个消费者模式<ul>
+<li>生产者生成数据送往 管道</li>
+<li>消费者监听管道消费数据</li>
+<li>模式的特点在于实时性，你发了我马上就能知道，并能处理</li>
+<li>模式的缺点在于易堆积，一个消费者一次只能处理一条消息，要是处理时间比较长，就会消息堆积，影响正常业务</li>
+</ul>
+</li>
+<li>一个生产者多个消费者模式    <ul>
+<li>一个生产者生成数据送往管道</li>
+<li>多个消费者监听管道消费数据</li>
+<li>模式的特点在于实时性，你发了我马上就能知道，多开几个消费者总能及时的去处理数据</li>
+<li>模式的缺点在于资源浪费，你要按照最大峰值去配置消费者的数量</li>
+</ul>
+</li>
+<li>消息确认机制<ul>
+<li>我发你了—-》我收到了OK 结束 </li>
+<li>我发你了—-》我觉得有问题  循环到 出现我收到了为止</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn" rel="external nofollow noreferrer">YI</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blogxy.cn/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">https://blogxy.cn/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://blogxy.cn" target="_blank">YI</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/php/">
+                                    <span class="chip bg-color">php</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">消息队列</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/11/25/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E4%B8%80/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="网络协议(一)">
+                        
+                        <span class="card-title">网络协议(一)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            协议
+协议，网络协议的简称，网络协议是指通信计算机双方必须共同遵从的一组约定。
+
+为了使数据在网络上从源到达目的，网络通信的参与方必须遵循相同的规则，这套规则称为协议（protocol），它最终体现为在网络上传输的数据包的格式。
+
+协议的三
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" class="post-category">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/http/">
+                        <span class="chip bg-color">http</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/07/01/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="java学习笔记（一）">
+                        
+                        <span class="card-title">java学习笔记（一）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            java 执行流程
+java 粗略执行流程
+源文件编译成 .class 字节码文件 -&gt;解释执行 jre( 装载 -&gt; 字节码校验 -&gt; jvm 执行)
+jdk 包含了 javac jre debugging tools 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/program-language/" class="post-category">
+                                    program language
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://blogxy.cn" target="_blank">YI</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/whyiyhw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 ---
 title: about
-date: 2019-11-26 16:04:43
-type: "about"
-layout: "about"
+date: 2020-04-07 15:44:06
+layout: about
 ---
+
+## 勤能补拙，骄可覆舟

@@ -23,7 +23,7 @@ tags:
    yum clean all # 清除缓存
    yum makecache # 生成缓存
    yum update -y # 更新
-
+  
   ```
 
 ## 一些准备工作
@@ -119,7 +119,7 @@ tags:
         root   /dev/www/php/test;
         index index.php  index.html index.htm;
     }
-
+  
     location ~* \.php$ {
         fastcgi_index   index.php;
         fastcgi_pass    127.0.0.1:9000;

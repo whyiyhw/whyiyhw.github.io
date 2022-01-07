@@ -1,6 +1,6 @@
 ---
 title: go design (一) array
-date: 2022-01-07 14:24:03
+date: 2021-12-31 20:24:03
 categories: golang 
 tags:
 - array

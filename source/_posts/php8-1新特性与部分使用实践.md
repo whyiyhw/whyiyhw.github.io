@@ -7,20 +7,20 @@ tags:
 - php8
 ---
 
-#  php8.x 的新特性与使用
+#  php8.x 的实用特性与使用
 
 ## php8 中的实用特性
 
 ### 命名参数
 
-- 1. 可以指定参数传入，跳过可选参数 ； 2. 指定参数是无需遵循传入顺序。
+- 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。
 
 - 看例子把 解释起来 比较 费劲
 
 ```php
 public function response(array $data = [],int $code = 200,string $msg = "") : array
 {
-return ['data'=> $data, 'code'=> $code,'msg' => $msg];
+	return ['data'=> $data, 'code'=> $code,'msg' => $msg];
 }
 
 // php7
@@ -39,10 +39,10 @@ $user = null;
 
 // php7
 if($user){
-$order = $user->lastOrder();
-if($order){
-$discountAmount = $order->getDiscountAmount();	
-}
+	$order = $user->lastOrder();
+    if($order){
+        $discountAmount = $order->getDiscountAmount();	
+    }
 }
 //对于参数对象可能为 null 并且会执行方法的情况 ?? 就没法去处理了
 
@@ -89,18 +89,21 @@ public function success(array|object $data = [], string $msg = "", int|object $c
 }
 ```
 
-## php8 的opcache 与 `jit(Just In Time)`
+## `php8`  的  `opcache`  与 `jit(Just In Time)`
 
 - `php ` 的 `opcache` 对运行效率的提示是极其巨大，建议 `php7` 以上的版本 都开起来。
 
 - `php8` 之后 加入了 `jit`  机制，
 
-  - 在 `opcache` 的基础上，对运行时的 `opcodes` 进行分析，对热点 `opcodes` 直接转换成指令码，
-  - 来减少 `VM` 的翻译执行工作，所以代码会越跑越快
-  - 但是这个提升，效果没有 `opcache` 开启时起飞的感觉，实测下来 大概有 5% - 10% 左右的提升
-  - 毕竟 `php` 的项目 性能瓶颈，更多的在网络跟 `IO`
+  - 在 `opcache` 的基础上，对运行时的 `opcodes` 进行分析，对热点 `opcodes` 直接转换成指令码，来减少 `VM` 的翻译执行工作，所以代码会越跑越快
+  - 但是这个提升，效果没有 `opcache` 开启时起飞的感觉，实测下来 大概有 5% - 10% 左右的不稳定提升
+  - 毕竟 `php` 的项目的性能瓶颈，更多的在网络跟 `IO`
 
-- 原理就不多加说明了，附一份相关配置
+- 原理简易缩略图如下
+
+![05](/img/05.png)
+
+- 就不多加说明了，附一份相关配置
 
   ```php
     [opcache]
@@ -135,6 +138,8 @@ public function success(array|object $data = [], string $msg = "", int|object $c
     opcache.jit_buffer_size=256M
   ```
 
+- 以上的配置在实际应用中，需要通过实际 `opcache` 的运行情况进行监控与调整。怎么监控与调整，等以后有时间再聊。
+
 -     `opcode.jit`的配置值有点复杂。
       
     - 它接受 `disable，on，off，trace，function`，和按顺序排列的 4 个不同标志的 4 位值。
@@ -144,15 +149,15 @@ public function success(array|object $data = [], string $msg = "", int|object $c
       - tracing：细化配置 的别名 1254。
       - function：细化配置 的别名 1205。
     
-- jit 的四位配置顺序是：CPU特定的优化标志、寄存器分配、JIT触发器、优化级别，官方给的推荐值为1255
+- `jit` 的四位配置顺序是：`CPU`特定的优化标志、寄存器分配、`JIT` 触发器、优化级别，官方给的推荐值为1255
 
-  - CPU特定的优化标志：
+  - `CPU`特定的优化标志：
 
     - 0 没有
 
     - 1个 启用AVX指令生成
 
-  - R-寄存器分配：
+  - `R`-寄存器分配：
 
     - 0 不执行寄存器分配
 
@@ -160,7 +165,7 @@ public function success(array|object $data = [], string $msg = "", int|object $c
 
     - 2 使用全局线性扫描寄存器分配器
 
-  - JIT触发器：
+  - `JIT`触发器：
     - 0 JIT在第一次脚本加载时的所有功能
     - 1 首次执行时的JIT函数
     - 2 在第一个请求时进行概要分析，并在第二个请求时编译热功能
@@ -168,7 +173,7 @@ public function success(array|object $data = [], string $msg = "", int|object $c
     - 4 在文档注释中使用@jit标记编译函数
     - 5 跟踪JIT
 
-  - O-优化级别：	
+  - `O`-优化级别：	
     - 0 不要准时
     - 1 最小JIT（调用标准VM处理程序）
     - 2 选择性VM处理程序内联

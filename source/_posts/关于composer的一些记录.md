@@ -22,7 +22,7 @@ Composer version 1.2.1 2016-09-12 11:27:19
 ```
 
 - 解决方法，升级 composer 版本
-- `composer selfupdate`
+- `composer self-update`
 
 ```shell
 

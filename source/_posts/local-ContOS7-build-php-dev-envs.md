@@ -310,12 +310,143 @@ swoole.unixsock_buffer_size => 8388608 => 8388608
 - `mkdir -p /data/mysql/datadir` #用于挂载`mysql`数据文件
 - `mkdir -p /data/mysql/conf.d` #用于挂载`mysql`配置文件
   
-  ```shell
-  docker run -d \
-  --name mysql5.7 -p 3306:3306 \
-  -v /data/mysql/datadir:/var/lib/mysql \
-  -v /data/mysql/conf.d:/etc/mysql/conf.d \
-  -e MYSQL_ROOT_PASSWORD=123456  mysql:5.7
-  ```
-  
+```shell
+docker run -d \
+--name mysql5.7 -p 3306:3306 \
+-v /data/mysql/datadir:/var/lib/mysql \
+-v /data/mysql/conf.d:/etc/mysql/conf.d \
+-e MYSQL_ROOT_PASSWORD=123456  mysql:5.7
+```
+
 - `-e`：设置环境变量，此处指定 `root` 密码
+
+## docker 构建生产可用 php8.1 
+
+```dockerfile
+FROM php:8.1-fpm
+
+ENV REDIS_VERSION=5.3.5  SWOOLE_VERSION=4.8.6
+
+# 设置时间
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo 'Asia/Shanghai' > /etc/timezone
+
+#更换源
+RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN sed -i "s/http/https/g" /etc/apt/sources.list
+
+#编译安装扩展 gd 与其他依赖配置
+RUN apt-get update &&\
+    apt-get install --allow-downgrades -y  libz-dev unzip sudo  \
+       libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libssl-dev libcurl4-openssl-dev &&\
+    apt-get clean &&\
+    apt-get autoremove &&\
+    docker-php-ext-configure gd &&\
+    docker-php-ext-install -j$(nproc) gd
+
+# top 与 ps 这类的监控软件 ，需要时添加
+#RUN apt install procps --allow-downgrades -y
+
+#pecl 安装扩展 redis
+RUN pecl install redis-$REDIS_VERSION && docker-php-ext-enable redis
+
+#安装其他必需扩展
+RUN docker-php-ext-install bcmath pdo_mysql zip sockets pcntl
+
+#安装swoole
+#RUN pecl install swoole-$SWOOLE_VERSION && docker-php-ext-enable swoole
+
+# Composer安装 与设置镜像地址
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer self-update --clean-backups \
+    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
+# php-OPcache 配置
+RUN touch /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini &&  \
+    echo "[opcache]" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "zend_extension=opcache.so" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.interned_strings_buffer=8" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.max_accelerated_files=100000" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.max_wasted_percentage=5" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.use_cwd=1" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.revalidate_freq=2" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.save_comments=0" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.jit_debug=0" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.jit=1255" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "opcache.jit_buffer_size=256M" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "# 其他php配置" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "memory_limit=256M" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini && \
+    echo "post_max_size=50M" >> /usr/local/etc/php/conf.d/docker-php-ext-OPcache.ini
+
+# 更改 fpm 的分组 因为我 宿主机有 www:x:1001:1001 分组跟用户 所以才做这样的处理 其他机器按照自己想要的分组去处理就好
+# groupadd -g 1001 www
+RUN  useradd -u 1001 www && RUN sed -i "s/www-data/www/g" /usr/local/etc/php-fpm.d/www.conf
+
+```
+
+### 构建镜像
+
+`docker build -t php81-laravel:v1 .`
+
+### 构建运行时
+
+```shell
+docker run -i -t -d \
+ --restart=always \
+ -p 8100:9000 \
+ -v /pathto/code:/var/www/html  --name=laravel8  php81-laravel:v1
+```
+### 执行者权限问题
+
+- 在容器内 `php-fpm` 的运行时分组 为 `www-data`
+
+```shell
+# 容器内
+id  www-data 
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+- 所以其生成的 log 文件也是 属于这个分组下
+- 在宿主机上 如果没有 33 的分组与用户， 展示的则为 `tape tape`
+- 如若在宿主机上使用 crontab 势必会导致 log 权限的问题，
+- 解决方式 就是保证内外用户uid 的一致 如:
+
+```dockerfile
+RUN  useradd -u 1001 www && RUN sed -i "s/www-data/www/g" /usr/local/etc/php-fpm.d/www.conf
+```
+
+### laravel 相关任务
+
+```shell
+# 可以直接在宿主机上 执行 容器内的命令 如
+# 将容器内的 composer 进行更新
+docker exec composer update -vvv 
+#（此时以容器内的 root 用户去执行的命令）
+
+# 所以在容器内不安装 crontab 的情况下，可以在宿主机进行配置
+# 以 root 用户去启动 crontab  在容器内转换成 www 用户去执行 php 完美
+crontab -e
+
+* * * * *  docker exec laravel8 sudo -u www php artisan schedule:run
+```
+
+## `docker` 安装 `portainer`
+
+```shell
+# 拉取镜像
+docker pull portainer/portainer
+# 生成数据保存路径
+mkdir -p /data/portainer_data
+# 生成 portainer 镜像
+docker run -d -p 9001:9000 --name portainer --restart=always \
+-v /var/run/docker.sock:/var/run/docker.sock  -v  /data/portainer_data:/data portainer/portainer 
+```
+
+## lnmp 一键安装 脚本，
+- 支持到 php8.1 , 测试服用这个省心
+- `https://lnmp.org/`

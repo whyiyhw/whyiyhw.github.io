@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php8.1新特性与部分使用实践">
+<meta property="og:url" content="https://blogxy.cn/2022/01/20/php8-1%E6%96%B0%E7%89%B9%E6%80%A7%E4%B8%8E%E9%83%A8%E5%88%86%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/img/05.png">
+<meta property="article:published_time" content="2022-01-20T04:57:04.000Z">
+<meta property="article:modified_time" content="2022-01-20T15:46:41.334Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="jit">
+<meta property="article:tag" content="php8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/img/05.png">
+  
+  
+  <title>php8.1新特性与部分使用实践 - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="php8.1新特性与部分使用实践">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-20 12:57" pubdate>
+        星期四, 一月 20日 2022, 12:57 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">php8.1新特性与部分使用实践</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期四, 一月 20日 2022, 11:46 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="php8-x-的实用特性与使用"><a href="#php8-x-的实用特性与使用" class="headerlink" title="php8.x 的实用特性与使用"></a>php8.x 的实用特性与使用</h1><h2 id="php8-中的实用特性"><a href="#php8-中的实用特性" class="headerlink" title="php8 中的实用特性"></a>php8 中的实用特性</h2><h3 id="命名参数"><a href="#命名参数" class="headerlink" title="命名参数"></a>命名参数</h3><ul>
+<li><p>1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。</p>
+</li>
+<li><p>看例子把 解释起来 比较 费劲</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">response</span>(<span class="hljs-params"><span class="hljs-keyword">array</span> <span class="hljs-variable">$data</span> = [],<span class="hljs-keyword">int</span> <span class="hljs-variable">$code</span> = <span class="hljs-number">200</span>,<span class="hljs-keyword">string</span> <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;&quot;</span></span>) : <span class="hljs-title">array</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> [<span class="hljs-string">&#x27;data&#x27;</span>=&gt; <span class="hljs-variable">$data</span>, <span class="hljs-string">&#x27;code&#x27;</span>=&gt; <span class="hljs-variable">$code</span>,<span class="hljs-string">&#x27;msg&#x27;</span> =&gt; <span class="hljs-variable">$msg</span>];<br>&#125;<br><br><span class="hljs-comment">// php7</span><br><span class="hljs-keyword">$this</span>-&gt;response([],<span class="hljs-number">200</span>,<span class="hljs-string">&quot;其他的提示信息&quot;</span>);<span class="hljs-comment">//非必须参数只能按顺序写</span><br><br><span class="hljs-comment">// php8以后</span><br><span class="hljs-keyword">$this</span>-&gt;response(msg: <span class="hljs-string">&quot;其他的提示信息&quot;</span>)<span class="hljs-comment">//指定参数传入与响应</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Nullsafe-运算符"><a href="#Nullsafe-运算符" class="headerlink" title="Nullsafe  运算符"></a><code>Nullsafe</code>  运算符</h3><ul>
+<li>这个感觉是对 <code>??</code> 操作符的一个补充</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$user</span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-comment">// php7</span><br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$user</span>)&#123;<br>	<span class="hljs-variable">$order</span> = <span class="hljs-variable">$user</span>-&gt;lastOrder();<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$order</span>)&#123;<br>        <span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$order</span>-&gt;getDiscountAmount();	<br>    &#125;<br>&#125;<br><span class="hljs-comment">//对于参数对象可能为 null 并且会执行方法的情况 ?? 就没法去处理了</span><br><br><span class="hljs-comment">// php8 以后 </span><br><span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$user</span>?-&gt;lastOrder()?-&gt;getDiscountAmount();<br></code></pre></td></tr></table></figure>
+
+<h3 id="枚举类型-amp-match-表达式"><a href="#枚举类型-amp-match-表达式" class="headerlink" title="枚举类型 &amp; match 表达式"></a>枚举类型 &amp; <code>match</code> 表达式</h3><ul>
+<li>枚举类型 可以替换原来 常量定义码的作用，并且更加灵活，以下是一种使用的方式</li>
+<li><code>match</code> 替换 <code>switch</code> 可以减少 因为弱类型比较转换，带来的 <code>bug</code></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">ResponseCode</span>: <span class="hljs-title">int</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">case</span> SUCCESS = <span class="hljs-number">200</span>;<br>    <span class="hljs-keyword">case</span> SYS_ERROR = <span class="hljs-number">500</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getMessageByCode</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> <span class="hljs-variable">$code</span></span>): <span class="hljs-title">string</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-variable">$responseCode</span> = <span class="hljs-built_in">self</span>::tryFrom(<span class="hljs-variable">$code</span>);<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$responseCode</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;未定义错误码&#x27;</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">self</span>::getMessage(<span class="hljs-variable">$responseCode</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getMessage</span>(<span class="hljs-params"><span class="hljs-built_in">self</span> <span class="hljs-variable">$value</span></span>): <span class="hljs-title">string</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">match</span> (<span class="hljs-variable">$value</span>) &#123;<br>            <span class="hljs-built_in">self</span>::SUCCESS =&gt; <span class="hljs-string">&quot;成功&quot;</span>,<br>            <span class="hljs-built_in">self</span>::SYS_ERROR =&gt; <span class="hljs-string">&quot;系统错误&quot;</span>,<br>        &#125;;<br>     &#125;<br>&#125;<br><span class="hljs-comment">// 响应值构造使用</span><br><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">success</span>(<span class="hljs-params"><span class="hljs-keyword">array</span>|<span class="hljs-keyword">object</span> <span class="hljs-variable">$data</span> = [], <span class="hljs-keyword">string</span> <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-keyword">int</span>|<span class="hljs-keyword">object</span> <span class="hljs-variable">$code</span> = ResponseCode::SUCCESS</span>): <span class="hljs-title">JsonResponse</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-variable">$res</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">stdClass</span>();<br>    <span class="hljs-variable">$res</span>-&gt;data = <span class="hljs-variable">$data</span> ?: (<span class="hljs-keyword">object</span>)[];<br>    <span class="hljs-variable">$res</span>-&gt;code = is_object(<span class="hljs-variable">$code</span>) ? <span class="hljs-variable">$code</span>-&gt;value : <span class="hljs-variable">$code</span>;<br>    <span class="hljs-variable">$res</span>-&gt;msg = <span class="hljs-variable">$msg</span> ?: ResponseCode::getMessageByCode(<span class="hljs-variable">$res</span>-&gt;code);<br>    <span class="hljs-keyword">return</span> response()-&gt;json(<span class="hljs-variable">$res</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="php8-的-opcache-与-jit-Just-In-Time"><a href="#php8-的-opcache-与-jit-Just-In-Time" class="headerlink" title="php8  的  opcache  与 jit(Just In Time)"></a><code>php8</code>  的  <code>opcache</code>  与 <code>jit(Just In Time)</code></h2><ul>
+<li><p><code>php </code> 的 <code>opcache</code> 对运行效率的提示是极其巨大，建议 <code>php7</code> 以上的版本 都开起来。</p>
+</li>
+<li><p><code>php8</code> 之后 加入了 <code>jit</code>  机制，</p>
+<ul>
+<li>在 <code>opcache</code> 的基础上，对运行时的 <code>opcodes</code> 进行分析，对热点 <code>opcodes</code> 直接转换成指令码，来减少 <code>VM</code> 的翻译执行工作，所以代码会越跑越快</li>
+<li>但是这个提升，效果没有 <code>opcache</code> 开启时起飞的感觉，实测下来 大概有 5% - 10% 左右的不稳定提升</li>
+<li>毕竟 <code>php</code> 的项目的性能瓶颈，更多的在网络跟 <code>IO</code></li>
+</ul>
+</li>
+<li><p>原理简易缩略图如下</p>
+</li>
+</ul>
+<p><img src="/img/05.png" srcset="/img/loading.gif" lazyload alt="05"></p>
+<ul>
+<li><p>就不多加说明了，附一份相关配置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs php">[opcache]<br><span class="hljs-comment"># 加载扩展</span><br>zend_extension=opcache.so<br><span class="hljs-comment"># 开启扩展</span><br>opcache.enable=<span class="hljs-number">1</span><br><span class="hljs-comment"># 开启 cli 模式使用 opcahce</span><br>opcache.enable_cli=<span class="hljs-number">1</span><br><span class="hljs-comment"># opcache 共享内存大小，以兆字节为单位。 </span><br>opcache.memory_consumption=<span class="hljs-number">256</span><br><span class="hljs-comment"># 用来存储预留字符串的内存大小，以兆字节为单位</span><br>opcache.interned_strings_buffer=<span class="hljs-number">8</span><br><span class="hljs-comment"># opcache 哈希表中可存储的脚本文件数量上限。 真实的取值是在质数集合 &#123; 223, 463, 983, 1979, 3907, 7963, 16229, 32531, 65407, 130987 &#125; 中找到的第一个大于等于设置值的质数。 设置值取值范围最小值是 200，最大值在 PHP 5.5.6 之前是 100000，PHP 5.5.6 及之后是 1000000。</span><br><span class="hljs-comment"># laravel 日常  32531 就够用 项目很大的情况下用 65407或者130987</span><br>opcache.max_accelerated_files=<span class="hljs-number">100000</span><br><span class="hljs-comment"># 浪费内存的上限，以百分比计。 如果达到此上限，那么 OPcache 将产生重新启动续发事件。</span><br>opcache.max_wasted_percentage=<span class="hljs-number">5</span><br><span class="hljs-comment">#如果启用，OPcache 将在哈希表的脚本键之后附加改脚本的工作目录，以避免同名脚本冲突的问题。 禁用此选项可以提高性能，但是可能会导致应用崩溃。</span><br>opcache.use_cwd=<span class="hljs-number">1</span><br><span class="hljs-comment"># boolean 是否开启脚本文件变更验证</span><br>opcache.validate_timestamps=<span class="hljs-number">0</span><br><span class="hljs-comment"># 检查脚本时间戳是否有更新的周期，以秒为单位。 设置为 0 会导致针对每个请求， OPcache 都会检查脚本更新</span><br>opcache.revalidate_freq=<span class="hljs-number">60</span><br><span class="hljs-comment"># 不需要注解功能的 就关闭 需要注解才开启</span><br>opcache.save_comments=<span class="hljs-number">0</span><br><span class="hljs-comment">#开启jit的debug</span><br>opcache.jit_debug=<span class="hljs-number">1</span><br><span class="hljs-comment"># jit的模式 默认为 tracing</span><br>opcache.jit=<span class="hljs-number">1255</span><br><span class="hljs-comment"># jit缓存的尺寸; 默认值为 0, 也就是禁用 JIT</span><br>opcache.jit_buffer_size=<span class="hljs-number">256</span>M<br></code></pre></td></tr></table></figure></li>
+<li><p>以上的配置在实际应用中，需要通过实际 <code>opcache</code> 的运行情况进行监控与调整。怎么监控与调整，等以后有时间再聊。</p>
+</li>
+<li><p>  <code>opcode.jit</code>的配置值有点复杂。</p>
+<div class="code-wrapper"><pre><code class="hljs">    - 它接受 `disable，on，off，trace，function`，和按顺序排列的 4 个不同标志的 4 位值。
+- disable：在启动时完全禁用JIT功能，并且在运行时无法启用。
+- off：禁用，但是可以在运行时启用JIT。
+- on：启用tracing模式。
+- tracing：细化配置 的别名 1254。
+- function：细化配置 的别名 1205。
+</code></pre></div>
+</li>
+<li><p><code>jit</code> 的四位配置顺序是：<code>CPU</code>特定的优化标志、寄存器分配、<code>JIT</code> 触发器、优化级别，官方给的推荐值为1255</p>
+<ul>
+<li><p><code>CPU</code>特定的优化标志：</p>
+<ul>
+<li><p>0 没有</p>
+</li>
+<li><p>1个 启用AVX指令生成</p>
+</li>
+</ul>
+</li>
+<li><p><code>R</code>-寄存器分配：</p>
+<ul>
+<li><p>0 不执行寄存器分配</p>
+</li>
+<li><p>1 使用本地线性扫描寄存器分配器</p>
+</li>
+<li><p>2 使用全局线性扫描寄存器分配器</p>
+</li>
+</ul>
+</li>
+<li><p><code>JIT</code>触发器：</p>
+<ul>
+<li>0 JIT在第一次脚本加载时的所有功能</li>
+<li>1 首次执行时的JIT函数</li>
+<li>2 在第一个请求时进行概要分析，并在第二个请求时编译热功能</li>
+<li>3 动态分析并编译热功能</li>
+<li>4 在文档注释中使用@jit标记编译函数</li>
+<li>5 跟踪JIT</li>
+</ul>
+</li>
+<li><p><code>O</code>-优化级别：    </p>
+<ul>
+<li>0 不要准时</li>
+<li>1 最小JIT（调用标准VM处理程序）</li>
+<li>2 选择性VM处理程序内联</li>
+<li>3 基于单个函数的静态类型推断的优化JIT</li>
+<li>4 静态类型推断和调用树的优化JIT</li>
+<li>5 基于静态类型推断和内部过程分析的优化JIT</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>所以 1255 指的是, 启用AVX指令生成，使用本地线性扫描寄存器分配器，跟踪JIT，基于静态类型推断和内部过程分析的优化JIT</p>
+<ul>
+<li>function 是C = 1，R = 2，T = 0，O = 5的别名。 1205</li>
+<li>tracing 是C = 1，R = 2，T = 5，O = 4的别名。 1254</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>相关参考</p>
+<ul>
+<li><p>  jit <a target="_blank" rel="noopener" href="https://php.watch/versions/8.0/JIT">https://php.watch/versions/8.0/JIT</a></p>
+</li>
+<li><p>  opcache <a target="_blank" rel="noopener" href="https://php.p2hp.com/manual/zh/opcache.configuration.php">https://php.p2hp.com/manual/zh/opcache.configuration.php</a></p>
+</li>
+<li><p>php8特性 </p>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="https://www.php.net/releases/8.1/zh.php">https://www.php.net/releases/8.1/zh.php</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://www.php.net/releases/8.0/zh.php">https://www.php.net/releases/8.0/zh.php</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/php/">php</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/jit/">jit</a>
+                    
+                      <a class="hover-with-bg" href="/tags/php8/">php8</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/21/php-fpm%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">php-fpm模式下的优化思路与实践</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/10/golong-design-channel/">
+                        <span class="hidden-mobile">go design (五) channel</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

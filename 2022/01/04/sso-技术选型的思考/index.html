@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="关于 SSO 选型的思考你在什么时候会去考虑实施SSO？ 公司具备开发能力，且内部应用系统林立，烟囱式的系统建设导致内部数据流转困难，业务人员需要登录与记忆几个系统的密码，管理人员需要多次登录来设置各类的权限时，就可以考虑建立SSO来统一人员信息，进一步可以统一权限信息。这不但是公司基础设施的基础也可以作为自身晋升功绩的一部分，等打通 基础的人员，权限信息后，后续可以进行 中台&#x2F;平台 化改造，内部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sso-技术选型的思考">
+<meta property="og:url" content="https://blogxy.cn/2022/01/04/sso-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="关于 SSO 选型的思考你在什么时候会去考虑实施SSO？ 公司具备开发能力，且内部应用系统林立，烟囱式的系统建设导致内部数据流转困难，业务人员需要登录与记忆几个系统的密码，管理人员需要多次登录来设置各类的权限时，就可以考虑建立SSO来统一人员信息，进一步可以统一权限信息。这不但是公司基础设施的基础也可以作为自身晋升功绩的一部分，等打通 基础的人员，权限信息后，后续可以进行 中台&#x2F;平台 化改造，内部">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/img/07.png">
+<meta property="og:image" content="https://blogxy.cn/img/08.jpg">
+<meta property="og:image" content="https://blogxy.cn/img/09.jpg">
+<meta property="og:image" content="https://blogxy.cn/img/10.jpg">
+<meta property="article:published_time" content="2022-01-04T14:38:28.000Z">
+<meta property="article:modified_time" content="2022-01-25T15:11:05.967Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="技术选型">
+<meta property="article:tag" content="sso">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/img/07.png">
+  
+  
+  <title>sso-技术选型的思考 - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="sso-技术选型的思考">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-04 22:38" pubdate>
+        星期二, 一月 4日 2022, 10:38 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">sso-技术选型的思考</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期二, 一月 25日 2022, 11:11 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="关于-SSO-选型的思考"><a href="#关于-SSO-选型的思考" class="headerlink" title="关于 SSO 选型的思考"></a>关于 SSO 选型的思考</h1><p><strong>你在什么时候会去考虑实施SSO？</strong></p>
+<p>公司具备开发能力，且内部应用系统林立，烟囱式的系统建设导致内部数据流转困难，业务人员需要登录与记忆几个系统的密码，管理人员需要多次登录来设置各类的权限时，就可以考虑建立SSO来统一人员信息，进一步可以统一权限信息。<br>这不但是公司基础设施的基础也可以作为自身晋升功绩的一部分，等打通 基础的人员，权限信息后，后续可以进行 <strong>中台/平台</strong> 化改造，内部功能的改造，(如日志，告警，消息服务…) 来提升效率, 趁机也可以开启整体系统的微服务改造。</p>
+<h2 id="什么是-SSO-Single-sign-on-单点登录-？"><a href="#什么是-SSO-Single-sign-on-单点登录-？" class="headerlink" title="什么是 SSO (Single sign-on , 单点登录)？"></a>什么是 SSO (Single sign-on , 单点登录)？</h2><p>单点登录是一种身份验证方法 是在多个应用系统中，用户只需要登录(认证)一次就可以访问多个相互信任的应用系统。</p>
+<p>一般 <code>sso</code> 体系主要角色有三种： <code>user</code>（多个） <code>web</code> 应用（多个）, <code>sso</code> 认证中心（ <strong>1 个</strong>）</p>
+<p>一般的步骤为</p>
+<ol>
+<li><p>前提-A应用在认证中心注册</p>
+</li>
+<li><p>用户点击A应用的统一登录按钮跳转进入认证中心</p>
+</li>
+<li><p>用户在认证中心认证成功后，携带认证信息跳转回应用</p>
+</li>
+<li><p>应用获取授权信息，关联自身的用户模块，记录用户登录信息，登录成功</p>
+</li>
+</ol>
+<p><img src="/img/07.png" srcset="/img/loading.gif" lazyload alt="07"></p>
+<h2 id="目前的实现方案"><a href="#目前的实现方案" class="headerlink" title="目前的实现方案"></a>目前的实现方案</h2><p>基于以上的思路，业界出现了几套通用的方案</p>
+<h3 id="CAS-Central-Authentication-Service-中央认证服务"><a href="#CAS-Central-Authentication-Service-中央认证服务" class="headerlink" title="CAS(Central Authentication Service) 中央认证服务"></a>CAS(Central Authentication Service) 中央认证服务</h3><p>国内的话，有各种供应商会给学校，医院，政府，企业提供此类的系统。在<code>github</code>上也有成熟的开源产品可以使用。</p>
+<p><img src="/img/08.jpg" srcset="/img/loading.gif" lazyload alt="08"></p>
+<p>各位有对接需求的可以看下 <code>github.com/apereo/phpCAS</code> 这个包</p>
+<p>优点：成熟，<code>java</code> 线容易找到大量的系统<br>缺点：部分产品基于session cookie 机制，技术栈较老 ，系统侵入性强，代码内需要引入其对应的客户端，定制化处理比较麻烦</p>
+<h3 id="OAuth2-0-rfc"><a href="#OAuth2-0-rfc" class="headerlink" title="OAuth2.0 rfc"></a>OAuth2.0 <a target="_blank" rel="noopener" href="http://www.rfcreader.com/#rfc6749">rfc</a></h3><p>这类的方案是目前的主流，比如微信，钉钉，QQ 等各类的大厂都有此协议的实现 , 授权码模式的具体实现如下图</p>
+<p><img src="/img/09.jpg" srcset="/img/loading.gif" lazyload alt="09"></p>
+<p>我们也可以在 <code>GitHub</code> 上找到 大量的 <code>OAuth2.0</code> 的代码，但是 <code>OAuth</code>只规定了授权方式，而并没有涉及到具体用户</p>
+<p>大部分的开源项目要不就直接写死了用户表与对应的字段，还提供默认的登录与认证页面，定制化修改较为困难。</p>
+<p>要不就是只实现了<code>OAuth</code> 协议，拿过来还要理解整个流程，没法直接使用。</p>
+<p>在协议细节上比如微信公众号通过对于 获取 <code>access_token</code> 时会响应 <code>open_id</code> 来让应用可以通过缓存，减少一次请求.</p>
+<h3 id="中小型公司的实际需求"><a href="#中小型公司的实际需求" class="headerlink" title="中小型公司的实际需求"></a>中小型公司的实际需求</h3><p>在 OAuth2.0 授权码的模式下进一步简化，去除无效字段，减少逻辑</p>
+<p><img src="/img/10.jpg" srcset="/img/loading.gif" lazyload alt="10"></p>
+<ul>
+<li><p>A : 用户在业务端 主动发起三方认证登录，拼接 <code>app_id</code> 与 <code>redirect_uri</code> 进行跳转</p>
+</li>
+<li><p>B : 认证服务对 认证人 进行登录认证</p>
+<ul>
+<li><p>未登录，跳转至登录界面，进行登录认证</p>
+</li>
+<li><p>已登录进入下一步</p>
+</li>
+</ul>
+</li>
+<li><p>C : 确认已登录人员信息，确认 跳转进入的 应用信息（<code>app_id</code>）与 回调地址（redirect_uri ），生成授权码与跳转链接，并进行跳转</p>
+<ul>
+<li>应用信息确认失败的，进入 认证登录大厅页面</li>
+</ul>
+</li>
+<li><p>D :   业务端在回调地址（<code>redirect_uri</code> ） 获取 授权码 <code>code</code>，并进行用户是否登录判定，</p>
+<ul>
+<li><p>未登录则去找认证服务，获取 <code>access_token</code></p>
+</li>
+<li><p>已登录，则直接进入 系统，流程完成</p>
+</li>
+</ul>
+</li>
+<li><p>E : 服务端 响应此用户对应的 <code>access_token</code></p>
+</li>
+<li><p>F : 业务端 通过 <code>access_token</code>  获取此用户的个人信息</p>
+</li>
+<li><p>G : 服务端响应用户信息后，业务端通过此信息，进行自身系统的登录注册相关逻辑</p>
+</li>
+</ul>
+<h3 id="综合考虑"><a href="#综合考虑" class="headerlink" title="综合考虑"></a>综合考虑</h3><p>中小型企业，自建一套其实也就一个礼拜的功夫。自己的 UI 界面，与对应服务，定制化与扩展性肯定让你们老板满意。后续有时间的话，我可能会考虑用 golang 写一套后端相关 API。<br>我更新了一些<code>php</code>日常用得到的<code>Dockerfile</code>, <code>github.com/whyiyhw/work_dockerfile</code> 有问题可以跟我留言~</p>
+<p>接下来，我会花上一段时间去更新 <code>golang</code> 相关的内容，其实 <code>golang</code> 算起来跟 <code>php</code> 也是互补，对抗 <code>java</code> 生态的伙伴吧，关键词少，看起来简洁而不简单，我们好好过一遍 <code>golang</code> 来弥补 <code>php</code> 所刻意掩盖的web程序开发的复杂性与细节。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/">技术选型</a>
+                    
+                      <a class="hover-with-bg" href="/tags/sso/">sso</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/07/golang-design-map/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">go design (三) map</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/02/golang-design-slice/">
+                        <span class="hidden-mobile">go design (二) slice</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="消息队列解决了什么问题？ 消息队列最主要解决了系统间 数据通信 的问题  消息队列的使用场景 异步处理 把不重要的同步串行，改成异步，可以更快地返回结果 减少等待，自然实现了步骤之间的并发，提升系统的性能   流量控制 将网关将请求放入请求队列进入等待状态，后端去处理请求队列的参数，然后网关再响应 ，一旦超时就丢弃响应服务错误给请求，来限制流量 大致的思路是，网关会把用户的request缓存起来，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于php后端的100个话题（一）消息队列">
+<meta property="og:url" content="https://blogxy.cn/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="消息队列解决了什么问题？ 消息队列最主要解决了系统间 数据通信 的问题  消息队列的使用场景 异步处理 把不重要的同步串行，改成异步，可以更快地返回结果 减少等待，自然实现了步骤之间的并发，提升系统的性能   流量控制 将网关将请求放入请求队列进入等待状态，后端去处理请求队列的参数，然后网关再响应 ，一旦超时就丢弃响应服务错误给请求，来限制流量 大致的思路是，网关会把用户的request缓存起来，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/images/02.jpg">
+<meta property="og:image" content="https://blogxy.cn/images/01.jpg">
+<meta property="article:published_time" content="2019-07-22T05:04:26.000Z">
+<meta property="article:modified_time" content="2022-01-20T15:45:22.652Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="消息队列">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/images/02.jpg">
+  
+  
+  <title>关于php后端的100个话题（一）消息队列 - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="关于php后端的100个话题（一）消息队列">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-07-22 13:04" pubdate>
+        星期一, 七月 22日 2019, 1:04 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于php后端的100个话题（一）消息队列</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期四, 一月 20日 2022, 11:45 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="消息队列解决了什么问题？"><a href="#消息队列解决了什么问题？" class="headerlink" title="消息队列解决了什么问题？"></a>消息队列解决了什么问题？</h2><ul>
+<li>消息队列最主要解决了系统间 <strong>数据通信</strong> 的问题</li>
+</ul>
+<h2 id="消息队列的使用场景"><a href="#消息队列的使用场景" class="headerlink" title="消息队列的使用场景"></a>消息队列的使用场景</h2><ul>
+<li>异步处理<ul>
+<li>把不重要的同步串行，改成异步，可以更快地返回结果</li>
+<li>减少等待，自然实现了步骤之间的并发，提升系统的性能</li>
+</ul>
+</li>
+<li>流量控制<ul>
+<li>将网关将请求放入请求队列进入等待状态，后端去处理请求队列的参数，然后网关再响应 ，一旦超时就丢弃响应服务错误给请求，来限制流量<ul>
+<li>大致的思路是，网关会把用户的request缓存起来，然后发消息，至于发的消息内容不一定就是这个原封不动的request对象，只要把Request中必要的信息发给后端就可以了。后端服务可以用<code>RPC</code>通知网关秒杀结果，网关收到结果后找到对应的Request来构建Response返回即可。</li>
+</ul>
+</li>
+<li>使用令牌桶<ul>
+<li>控制流量的原理是：单位时间内只发放固定数量的令牌到令牌桶中，规定服务在处理请求之前必须先从令牌桶中拿出一个令牌，如果令牌桶中没有令牌，则拒绝请求，这样就保证单位时间内，能处理的请求不超过发放令牌的数量，起到了流量控制的作用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>服务解耦<ul>
+<li>订单服务在订单变化时发送一条消息到消息队列的一个主题 Order 中， 多有下游系统都订阅主题 Order 这样每个下游系统都可以获得一份实时完整的订单系统，而不必在创建订单的时候一个个系统进行</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见的消息队列选型"><a href="#常见的消息队列选型" class="headerlink" title="常见的消息队列选型"></a>常见的消息队列选型</h2><ul>
+<li>选型的基本标准<ul>
+<li>开源</li>
+<li>流行，热门，兼容性好</li>
+<li>消息的可靠传递： 不丢消息</li>
+<li>Cluster: 支持集群</li>
+<li>性能：具备足够好的性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="可供选择的消息队列产品"><a href="#可供选择的消息队列产品" class="headerlink" title="可供选择的消息队列产品"></a>可供选择的消息队列产品</h2><ul>
+<li><strong><code>RabbitMQ</code></strong><ul>
+<li>优势<ul>
+<li>轻量级</li>
+<li>灵活的路由配置</li>
+<li>兼容性好</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>对消息堆积的支持并不好，设计理念为消息队列是一个管道，大量的消息挤压是一种不正常的情况</li>
+<li>性能一般，每秒钟可以处理几万到十几万条消息</li>
+<li>使用Erlang 二次开发的可维护性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>RocketMQ</code></strong><ul>
+<li>优势<ul>
+<li>响应时延做了优化，金融级别的稳定性</li>
+<li>国人开发中文社区活跃，每秒钟可以处理几十万条消息</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>国际上没那么流行，与周边生态系统的集成跟兼容要略逊一筹</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>Kafka</code></strong><ul>
+<li>优势<ul>
+<li>设计目的是为了处理海量日志，早期版本存在一定问题</li>
+<li>Kafka与周边生态系统的兼容性时最好的，特别是大数据和流计算领域，几乎所有的相关开源系统都会优先支持 Kafka</li>
+<li>异步收发性能是最好的，每秒也是 几十万条消息</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>对于消息数量达不到一定量时，<code>Kafka</code>的时延反而比较高，所以<code>kafka</code>不太适合在线业务场景</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>ActiveMQ</code></strong><ul>
+<li>已经进入老年期，性能无法跟现代消息队列做比较，存在的目的是为了兼容老一辈的产品</li>
+</ul>
+</li>
+<li><strong><code>ZeroMQ</code></strong> <ul>
+<li>不是一个纯粹的消息队列，而是一个基于消息队列的多线程网络库</li>
+</ul>
+</li>
+<li>总结<ul>
+<li>一般场景 开箱即用可以考虑**<code>RabbitMQ</code>**</li>
+<li>在线业务，如交易系统可以考虑 <strong><code>RocketMQ</code></strong> </li>
+<li>海量数据处理，收集日志，监控信息，前端埋点，大数据，流计算，Kafka比较适合</li>
+</ul>
+</li>
+</ul>
+<h2 id="消息模型"><a href="#消息模型" class="headerlink" title="消息模型"></a>消息模型</h2><ul>
+<li>主题与队列的区别<ul>
+<li>队列 是一种先进先出的线性表，通常使用链表或者数组来实现，队列只允许在后端进行插入，在前端进行删除操作，是严格有序的。<ul>
+<li>早期的消息队列，就是严格按照队列数据结构来设计，队列模式<ul>
+<li>消费者（consumer）《—- 队列《—- 生产者（producer）</li>
+<li>特点<ul>
+<li>如果有多个消费者，消费者之间是竞争的关系，每个消费者只能接受到队列中的一部分消息</li>
+</ul>
+</li>
+<li>不足之处<ul>
+<li>如果需要把一份消息数据分配给多个消费者，要求每个消费者都能收到全量的消息，就很难做到了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>另一种消息队列 发布-订阅模型（Publish-Subscribe Pattern）<ul>
+<li>发布者 Publisher<ul>
+<li>发送——-》主题Topic</li>
+</ul>
+</li>
+<li>订阅者 Subscribe<ul>
+<li>订阅主题 </li>
+<li>从主题中 接受 —–》消息 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>两者最大的区别就是，一份消息数据能不能被消费多次的问题</li>
+<li><code>RabbitMQ</code> 的消息模型<ul>
+<li>现代的消息队列产品使用的消息模型大多是这种发布-订阅模型，但是 <code>RabbitMQ</code> 坚持使用 队列模型</li>
+<li><code>RabbitMQ</code> 解决发布订阅问题的方案是 处于生产者与队列之间的Exchange 模块<ul>
+<li>生产者 Producer</li>
+<li>Exchange<ul>
+<li>队列1 —》消费者</li>
+<li>队列2 —》消费者 </li>
+</ul>
+</li>
+<li><img src="/images/02.jpg" srcset="/img/loading.gif" lazyload alt="图片"></li>
+</ul>
+</li>
+<li>由Exchange将消息发送到多个队列，这样就变相实现了发布订阅模型</li>
+</ul>
+</li>
+<li><code>RocketMQ</code> 的消息模型<ul>
+<li>中规中矩的<code>RocketMQ</code> 属于发布-订阅模型</li>
+<li><img src="/images/01.jpg" srcset="/img/loading.gif" lazyload alt="&quot;图片&quot;"></li>
+<li>消息队列的请求确认机制<ul>
+<li>生产者向主题中投放 消息时 一定要主题响应成功，它才会确认已经存入，不然会再次投放</li>
+<li>消费者在收到消息完成业务逻辑后也会向消息队列端响应消费成功的信息，不然就会一直给消费者发送消息</li>
+<li>也就是说每个主题任意时刻，只会有一个消费者实例来消费，效率太低</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a><strong><code>RabbitMQ</code></strong></h2><ul>
+<li><code>RabbitMQ</code>安装教程 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018916099">https://segmentfault.com/a/1190000018916099</a> </li>
+<li>基础使用教程（一 ~ 五）<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011825148">https://segmentfault.com/a/1190000011825148</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011829380">https://segmentfault.com/a/1190000011829380</a></li>
+</ul>
+</li>
+<li>点对点模式  一个生产者者一个消费者模式<ul>
+<li>生产者生成数据送往 管道</li>
+<li>消费者监听管道消费数据</li>
+<li>模式的特点在于实时性，你发了我马上就能知道，并能处理</li>
+<li>模式的缺点在于易堆积，一个消费者一次只能处理一条消息，要是处理时间比较长，就会消息堆积，影响正常业务</li>
+</ul>
+</li>
+<li>一个生产者多个消费者模式    <ul>
+<li>一个生产者生成数据送往管道</li>
+<li>多个消费者监听管道消费数据</li>
+<li>模式的特点在于实时性，你发了我马上就能知道，多开几个消费者总能及时的去处理数据</li>
+<li>模式的缺点在于资源浪费，你要按照最大峰值去配置消费者的数量</li>
+</ul>
+</li>
+<li>消息确认机制<ul>
+<li>我发你了—-》我收到了OK 结束 </li>
+<li>我发你了—-》我觉得有问题  循环到 出现我收到了为止</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/php%E5%90%8E%E7%AB%AF/">php后端</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/php/">php</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/25/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E4%B8%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">网络协议(一)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/01/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+                        <span class="hidden-mobile">java学习笔记（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

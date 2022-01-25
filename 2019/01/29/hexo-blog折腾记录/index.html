@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="安装折腾总览目前的 blog 折腾经过了  自己用 PHP 写 自建，样式太丑，放弃（17年） Github page 国内访问速度太慢，加上 next 的样式太素（19年）  最后改成 fluid 这个样式，page 换到 Gitee（20年）  目录也分为三块 hexo 安装 hexo 的主题 next 与 fluid 的修改 最后就是 过程中碰到的一些问题 样式与生成出来文件的分支管理？ 多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo-blog折腾记录">
+<meta property="og:url" content="https://blogxy.cn/2019/01/29/hexo-blog%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="安装折腾总览目前的 blog 折腾经过了  自己用 PHP 写 自建，样式太丑，放弃（17年） Github page 国内访问速度太慢，加上 next 的样式太素（19年）  最后改成 fluid 这个样式，page 换到 Gitee（20年）  目录也分为三块 hexo 安装 hexo 的主题 next 与 fluid 的修改 最后就是 过程中碰到的一些问题 样式与生成出来文件的分支管理？ 多">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-29T03:03:50.000Z">
+<meta property="article:modified_time" content="2020-04-07T11:19:24.000Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="fluid">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>hexo-blog折腾记录 - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="hexo-blog折腾记录">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-29 11:03" pubdate>
+        星期二, 一月 29日 2019, 11:03 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">hexo-blog折腾记录</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期二, 四月 7日 2020, 7:19 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="安装折腾总览"><a href="#安装折腾总览" class="headerlink" title="安装折腾总览"></a>安装折腾总览</h2><p>目前的 blog 折腾经过了</p>
+<ul>
+<li><del>自己用 PHP 写 自建，样式太丑，放弃（17年）</del></li>
+<li><del>Github page 国内访问速度太慢，加上 next 的样式太素（19年）</del> </li>
+<li>最后改成 fluid 这个样式，page 换到 Gitee（20年）</li>
+</ul>
+<h3 id="目录也分为三块"><a href="#目录也分为三块" class="headerlink" title="目录也分为三块"></a>目录也分为三块</h3><ul>
+<li>hexo 安装</li>
+<li>hexo 的主题 next 与 fluid 的修改</li>
+<li>最后就是 过程中碰到的一些问题<ul>
+<li>样式与生成出来文件的分支管理？</li>
+<li>多主机如何进行发布？</li>
+<li>git 如何超高速拉取 github 仓库的文件？</li>
+</ul>
+</li>
+</ul>
+<h2 id="HEXO-基础安装流程"><a href="#HEXO-基础安装流程" class="headerlink" title="HEXO 基础安装流程"></a>HEXO 基础安装流程</h2><ul>
+<li><p><code>npm</code> 跟 <code>cnpm</code> 的区别就不说了</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">`cnpm install hexo -g` #安装 `hexo` <br>`hexo -v`  #查看版本<br></code></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">`cnpm install -g hexo-cli` 				# 安装 `hexo` 命令行<br>`hexo init dir` 						# 初始化目录<br>`hexo new post &quot;关于hexo的安装的一些记录&quot;` # 新建文件<br>`cnpm install hexo-server --save`  		# 更新预览服务<br>`hexo server`							# 启动服务，可访问 http://localhost:4000 进行预览<br>`hexo generate --deploy`			    # 编译生成静态文件，并上传至 git 服务上<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="hexo-的主题-next-与-fluid-的修改hexo-进阶-next"><a href="#hexo-的主题-next-与-fluid-的修改hexo-进阶-next" class="headerlink" title="hexo 的主题 next 与 fluid 的修改hexo  进阶 next "></a>hexo 的主题 next 与 fluid 的修改<code>hexo</code>  进阶 <code>next </code></h2><ul>
+<li><p>next 主题相关</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd themes # 进入主题目录<br>git clone https://github.com/iissnan/hexo-theme-next themes/next #克隆主题文件<br>// 主要参考 : https://www.jianshu.com/p/9f0e90cc32c2<br></code></pre></td></tr></table></figure></li>
+<li><p>fluid 主题相关</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd themes # 进入主题目录<br>git clone https://github.com/fluid-dev/hexo-theme-fluid.git    #克隆主题文件<br>// 主要参考 : https://hexo.fluid-dev.com/ 进行配置<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="过程中可能碰到的一些问题"><a href="#过程中可能碰到的一些问题" class="headerlink" title="过程中可能碰到的一些问题"></a>过程中可能碰到的一些问题</h2><h3 id="样式与生成出来文件的分支管理？"><a href="#样式与生成出来文件的分支管理？" class="headerlink" title="样式与生成出来文件的分支管理？"></a>样式与生成出来文件的分支管理？</h3><ul>
+<li>需要 新建一个 hexo 分支 来避免 master 主分支被覆盖 ，主分支 master 为静态文件目录 ，hexo 分支为 样式与配置文件目录</li>
+</ul>
+<h3 id="多主机如何进行发布？"><a href="#多主机如何进行发布？" class="headerlink" title="多主机如何进行发布？"></a>多主机如何进行发布？</h3><ul>
+<li><code>git checkout hexo</code> 拉下代码后 切换分支  至配置生成目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cnpm install hexo 					  # 重新安装 hexo<br>cnpm install 						  # 重新拉所需的运行所需文件<br>cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功<br></code></pre></td></tr></table></figure>
+
+<h3 id="git-设置-https-代理的正确姿势"><a href="#git-设置-https-代理的正确姿势" class="headerlink" title="git 设置 https 代理的正确姿势?"></a>git 设置 https 代理的正确姿势?</h3><ul>
+<li><code>git config --global http.https://github.com.proxy socks5://127.0.0.1:1080</code> 仅设置 github 在 https 端口的 代理</li>
+<li>前提条件，你的 SS 开了，而且本地端口为 1080</li>
+<li>git 全局 设置代理  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --global http.proxy &#x27;socks5://127.0.0.1:1080&#x27; # http全局设置代理<br>git config --global https.proxy &#x27;socks5://127.0.0.1:1080&#x27;# https全局设置代理<br>git config --global --unset http.proxy # http全局取消代理<br>git config --global --unset https.proxy# https全局取消代理<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误"><a href="#搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误" class="headerlink" title="搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误"></a>搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误</h3><ul>
+<li><code>cnpm install hexo-deployer-git --save</code> #重新生成 钩子才能上传成功</li>
+</ul>
+<h3 id="hexo-怎么删除文章？"><a href="#hexo-怎么删除文章？" class="headerlink" title="hexo 怎么删除文章？"></a>hexo 怎么删除文章？</h3><ul>
+<li> 先使用 hexo clean 再删除</li>
+<li> 最后再重新 hexo generate –deploy 生成就OK</li>
+</ul>
+<h3 id="如何让-百度收录"><a href="#如何让-百度收录" class="headerlink" title="如何让 百度收录"></a>如何让 百度收录</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ziyuan.baidu.com/linksubmit/url">https://ziyuan.baidu.com/linksubmit/url</a> 自行提交</li>
+</ul>
+<p><strong>如果想自行安装，请学习检索</strong></p>
+<ul>
+<li> 技能点需求 难度 ♥ ♥</li>
+<li><code>git</code>、 <code>hexo</code> 、<code>npm</code>、 <code>md</code> 、<code>html/文件目录</code> 相关基础知识      </li>
+<li> 这样就能继续愉快的写<code>blog</code>了</li>
+</ul>
+<p><strong>参考</strong><br><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">hexo官方文档</a><br><a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/">fluid官方文档</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/blog/">blog</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/hexo/">hexo</a>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                      <a class="hover-with-bg" href="/tags/fluid/">fluid</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/02/04/%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E9%A2%84%E5%A4%87%E4%B9%A6%E5%8D%95%E4%B8%8Eflag/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">新的一年预备书单与flag</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

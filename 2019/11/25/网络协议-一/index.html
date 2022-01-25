@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="协议 协议，网络协议的简称，网络协议是指通信计算机双方必须共同遵从的一组约定。  为了使数据在网络上从源到达目的，网络通信的参与方必须遵循相同的规则，这套规则称为协议（protocol），它最终体现为在网络上传输的数据包的格式。  协议的三要素包括 语法 语义 时序   以上内容来自百度百科 不谈它在网络中的表示，我们所理解的，字面上的协议，就是约定，双方都明白且遵循的一种规则，也就是说是人为规定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络协议(一)">
+<meta property="og:url" content="https://blogxy.cn/2019/11/25/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E4%B8%80/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="协议 协议，网络协议的简称，网络协议是指通信计算机双方必须共同遵从的一组约定。  为了使数据在网络上从源到达目的，网络通信的参与方必须遵循相同的规则，这套规则称为协议（protocol），它最终体现为在网络上传输的数据包的格式。  协议的三要素包括 语法 语义 时序   以上内容来自百度百科 不谈它在网络中的表示，我们所理解的，字面上的协议，就是约定，双方都明白且遵循的一种规则，也就是说是人为规定">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/medias/image/03.jpg">
+<meta property="og:image" content="https://blogxy.cn/medias/image/04.jpg">
+<meta property="article:published_time" content="2019-11-25T13:58:42.000Z">
+<meta property="article:modified_time" content="2022-01-20T15:45:22.655Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/medias/image/03.jpg">
+  
+  
+  <title>网络协议(一) - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="网络协议(一)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-25 21:58" pubdate>
+        星期一, 十一月 25日 2019, 9:58 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">网络协议(一)</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期四, 一月 20日 2022, 11:45 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><ul>
+<li><p>协议，网络协议的简称，网络协议是指通信计算机双方必须共同遵从的一组约定。</p>
+</li>
+<li><p>为了使数据在网络上从源到达目的，网络通信的参与方必须遵循相同的规则，这套规则称为协议（protocol），它最终体现为在网络上传输的数据包的格式。</p>
+<ul>
+<li>协议的三要素包括 <strong>语法</strong> <strong>语义</strong> <strong>时序</strong></li>
+</ul>
+</li>
+<li><p><em>以上内容来自百度百科</em></p>
+<p>不谈它在网络中的表示，我们所理解的，字面上的<code>协议</code>，就是约定，双方都明白且遵循的一种规则，也就是说是人为规定的，不是自然产生的。有人的地方就有江湖，协议也不例外，人有时代局限性，协议当然也有，也可以说网络协议是人们为了避免纷争，妥协出来的产物。协议一直在不断完善中，我们要学习与理解现在的协议发展，就要从头开始去理解。</p>
+</li>
+<li><h3 id="ISO-OSI-协议模型"><a href="#ISO-OSI-协议模型" class="headerlink" title="ISO/OSI 协议模型"></a><code>ISO/OSI</code> 协议模型</h3></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理层</td>
+<td align="left">物理层（Physical Layer）在局部局域网上传送<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%B8%A7">数据帧</a>（data frame），它负责管理电脑通信设备和网络媒体之间的互通。包括了针脚、电压、线缆规范、集线器、中继器、网卡、主机接口卡等。</td>
+</tr>
+<tr>
+<td>数据链路层</td>
+<td align="left">数据链路层（<code>Data Link Layer</code>）负责网络寻址、错误侦测和改错。当表头和表尾被加至数据包时，会形成帧。数据链表头（<code>DLH</code>）是包含了物理地址和错误侦测及改错的方法。数据链表尾（<code>DLT</code>）是一串指示数据包末端的字符串。例如以太网、无线局域网（<code>Wi-Fi</code>）和通用分组无线服务（<code>GPRS</code>）等。分为两个子层：逻辑链路控制（<code>logical link control，LLC</code>）子层和介质访问控制（<code>Media access control，MAC</code>）子层</td>
+</tr>
+<tr>
+<td>网络层</td>
+<td align="left">网络层（<code>Network Layer</code>）决定数据的路径选择和转寄，将网络表头（<code>NH</code>）加至数据包，以形成报文。网络表头包含了网络数据。例如:互联网协议（<code>IP</code>）等。</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td align="left">传输层（<code>Transport Layer</code>）把传输表头（<code>TH</code>）加至数据以形成数据包。传输表头包含了所使用的协议等发送信息。例如:传输控制协议（<code>TCP</code>）等。</td>
+</tr>
+<tr>
+<td>会话层</td>
+<td align="left">会话层（Session Layer）负责在数据传输中设置和维护电脑网络中两台电脑之间的通信连接。</td>
+</tr>
+<tr>
+<td>表示层</td>
+<td align="left">表达层（Presentation Layer）把数据转换为能与接收者的系统格式兼容并适合传输的格式。</td>
+</tr>
+<tr>
+<td>应用层</td>
+<td align="left">应用层（<code>Application Layer</code>）提供为应用软件而设的接口，以设置与另一应用软件之间的通信。例如: <code>HTTP，HTTPS，FTP，TELNET，SSH，SMTP，POP3,HTML</code>等。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p> <code>1984</code>年，<code>ISO</code>发布了著名的<code>ISO/IEC 7498</code>标准，它定义了网络互联的7层框架，也就是开放式系统互联参考模型 （<code>OSI</code>，Open Systems Interconnection）(by来自维基百科)</p>
+</li>
+<li><p>因为协议由人设计，所以各大公司都有一套自己的玩意，这些东西一直到现在（2019）依然对兼容性有着很大的约束.</p>
+</li>
+<li><p>七层模型也称为理想中的模型，实际上一般的业务程序员在工作中能感知的 无非就是上层的应用层 <code>http</code>  网络层 <code>IP</code>  传输层 <code>TCP</code> 一般没事都不会关心，这也体现出分层的好处，减少心智负担</p>
+<ul>
+<li><p>所以 也有 </p>
+<ul>
+<li><p><strong>五层</strong>划分为：<strong>应用层（应用，表示，会话）、传输层、网络层、数据链路层、物理层</strong>。</p>
+</li>
+<li><p><strong>四层</strong>划分为：<strong>应用层（应用，表示，会话）、传输层、网络层、网络接口层（数据链路层、物理层）</strong>。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通俗来说 物理层就是来保证数据能正常在实体设备间进行传输的，它只负责跟硬件设备打交道，数据链路层就是对电信号进行分组</p>
+</li>
+<li><p>数据链路层的以太网协议<code>Ethernet</code>。</p>
+<ul>
+<li>一组电信号称之为一个数据包，或者叫做一个<strong>“帧”</strong></li>
+<li>每一数据帧分成：报头head和数据data两部分</li>
+<li>[【head】【data】]<ul>
+<li>head包含：（固定18个字节）<ul>
+<li>发送者（源地址，6个字节）</li>
+<li>接收者（目标地址，6个字节）</li>
+<li>数据类型（6个字节）</li>
+</ul>
+</li>
+<li>data包含：（最短46字节，最长1500字节）</li>
+<li>其中的源地址和目标地址指的是<strong>mac地址</strong> </li>
+</ul>
+</li>
+<li><code>Ethernet</code>规定接入Internet的设备都必须具备网卡，发送端的和接收端的地址便是指网卡的地址，即<code>Mac</code>地址。每块网卡出厂时都被烧录上一个实际上唯一的Mac地址，长度为48位2进制，通常由12位16进制数表示</li>
+</ul>
+</li>
+<li><p>有了以太网协议后，在同一局域网内的设备就可以通信，局域网内的计算机不管是对内还是对外都是靠吼，这就是数据链路层的工作方式—–广播（<code>ARP</code>协议），这个里面肯定还有细节点，之后再写</p>
+</li>
+<li><p>当然，数据链路层仅限于局域网的信息传递，问题是，跨局域网设备通讯是怎么做的呢？</p>
+</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><ul>
+<li><p>HTTP 协议始于 1991 年的 HTTP/0.9，</p>
+</li>
+<li><p>1996 年 HTTP/1.0 规范的发布</p>
+<ul>
+<li>在 HTTP/1.0 中，客户端和服务器之间交换的每个请求 / 响应都会创建一个新的 TCP 连接</li>
+<li>这意味着所有 <code>TCP</code> 握手均在每个请求之前完成，因此所有请求都会产生延迟。</li>
+<li>TCP 不是在建立连接后尽快发送所有未完成的数据，而需要“慢启动”的预热时间，这使 <code>TCP</code> 拥塞控制算法能够随时确定可以传输的数据量，防止网络路径发生拥塞，并避免将无法处理的数据包都堆到网络中。但是，由于新连接必须经过缓慢的启动过程，因此它们无法立即使用所有可用的网络带宽。</li>
+</ul>
+</li>
+<li><p>1999 年演变为 HTTP/1.1，并由 <code>IETF</code>（互联网工程任务组）负责进行标准化。</p>
+<ul>
+<li><p>引入<code>保持活动</code>连接的概念来解决这些问题 <code>Connection: keep-alive</code></p>
+</li>
+<li><p>允许客户端复用 TCP 连接，从而分摊了建立初始连接和针对多个请求缓慢启动的成本</p>
+</li>
+<li><p>尽管多个请求可以共享同一个连接，但它们仍需逐个序列化它们，因此任意时点上客户端和服务器只能为每个连接执行一次请求 / 响应交换</p>
+</li>
+<li><p>随着网络的发展，多年来网站所需资源（<code>CSS、JavaScript</code> 和图像等）不断增长，浏览器在获取和呈现网页时需要越来越多的并发性。但由于 <code>HTTP/1.1</code> 只允许客户端同时进行一次 <code>HTTP 请求 / 响应交换</code>，因此在网络层上获得并发能力的唯一方法是<code>并行使用多个 TCP 连接到同一来源</code>，代价就是<code>牺牲了活动连接的大多数好处</code>。尽管连接仍会在一定程度上（但程度不大）被复用，但我们又回到了起点。</p>
+</li>
+<li><p><strong>Chrome 有个机制，对于同一个域名，默认允许同时建立 6 个 TCP 持久连接。</strong>使用持久连接时，虽然能共用一个 TCP 管道，<strong>但是在一个管道中同一时刻只能处理一个请求</strong>，在当前的请求没有结束之前，其他的请求只能处于阻塞状态。另外，如果在同一个域名下同时有 10 个请求发生，那么其中 4 个请求会进入排队等待状态，直至进行中的请求完成。</p>
+</li>
+<li><p><code>HTTP/1.1</code> 有两个主要的缺点：安全不足和性能不高。</p>
+<ul>
+<li>明文传输 – 带来不安全性</li>
+<li>高延迟 – 带来页面加载速度的降低<ul>
+<li><strong>网络延迟问题主要由于队头阻塞 (Head-Of-Line Blocking) 产生，导致带宽无法被充分利用</strong></li>
+<li>TCP协议的堵塞    </li>
+</ul>
+</li>
+<li>无状态特性 – 带来巨大的 HTTP 头部 ，<code>Header</code> 里携带的内容过大，在一定程度上增加了传输成本 </li>
+<li>不支持服务器推送消息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HTTP/2 在 2015 年出现了。</p>
+<ul>
+<li><p><strong><code>HTTP/2</code> 基于 <code>SPDY</code>，专注于性能，最大的目标是在用户和网站间只用一个连接（<code>connec-tion</code>）</strong></p>
+</li>
+<li><p>率先引入了 <code>HTTP</code>“流”的概念：这是一种抽象概念，允许 <code>HTTP</code> 实现将不同的 <code>HTTP</code> 交换并发地复用到同一 <code>TCP</code> 连接上， 使浏览器更高效地复用 <code>TCP</code> 连接。</p>
+</li>
+<li><p><code>HTTP/2</code> 解决了最初的问题——单个 <code>TCP</code> 连接的使用效率低——因为现在可以通过同一连接同时传输多个请求 / 响应。但是，即使只有单个请求丢失数据，所有请求和响应也会同样受到数据包丢失（比如因为网络拥塞）的影响。这是因为尽管 <code>HTTP/2</code> 层可以在不同的流上隔离不同的 <code>HTTP</code> 交换，但是 <code>TCP</code> 不了解这种抽象，并且后者所看到的只是字节流，没有特殊含义。</p>
+</li>
+<li><p><code>TCP</code> 的作用是以正确的顺序从一个端点到另一端点传递整个字节流。当承载某些字节的 <code>TCP</code> 数据包在网络路径上丢失时将在流中造成间隙，并且 <code>TCP</code> 需要在检测到丢失时重新发送受影响的数据包来弥补这一间隙。这样做时，即使丢失数据之后的数据属于完全不同的 <code>HTTP</code> 请求，自己也根本没有丢失，也能正常传递成功，它们还是不能正常传递给应用程序。因此它们只能毫无必要地产生延迟，因为 <code>TCP</code> 无法知道应用程序缺少了丢失的数据包时能否处理后面的数据。这个问题称为“行首阻塞”</p>
+</li>
+<li><p><code>SPDY</code> 位于 <code>HTTP</code> 之下，<code>TCP</code> 和 <code>SSL</code> 之上，这样可以轻松兼容老版本的 <code>HTTP</code> 协议 (将 <code>HTTP1.x</code> 的内容封装成一种新的 <code>frame</code> 格式)，同时可以使用已有的 <code>SSL</code> 功能</p>
+</li>
+<li><p> 二进制传输</p>
+</li>
+<li><p><strong>HTTP/2 传输数据量的大幅减少, 主要有两个原因: 以二进制方式传输和 Header 压缩</strong></p>
+</li>
+<li><p><strong>HTTP/2 将请求和响应数据分割为更小的帧，并且它们采用二进制编码</strong>。</p>
+</li>
+<li><p><strong>多个帧之间可以乱序发送，根据帧首部的流标识可以重新组装</strong>。</p>
+</li>
+<li><p>Header 压缩</p>
+<ul>
+<li>采用了新的压缩算法，主要解决了header头重复的问题</li>
+</ul>
+</li>
+<li><p>多路复用</p>
+<ul>
+<li>在 HTTP/2 中引入了多路复用的技术。多路复用很好地解决了浏览器限制同一个域名下请求数量的问题，同时也更容易实现全速传输，毕竟新开一个 TCP 连接都需要慢慢提升传输速度。</li>
+<li>同域名下所有通信都在单个连接上完成。</li>
+<li>单个连接可以承载任意数量的双向数据流。</li>
+<li>数据流以消息的形式发送，而消息又由一个或多个帧组成，多个帧之间可以乱序发送，因为根据帧首部的流标识可以重新组装。</li>
+</ul>
+</li>
+<li><p> 服务器推送</p>
+</li>
+<li><p>服务器不再完全被动地响应请求，也可以新建“流”主动向客户端发送消息。比如，在浏览器刚请求 HTML 的时候就提前把可能会用到的 <code>JS、CSS</code> 文件发给客户端，减少等待的延迟，这被称为 “ 服务器推送 “（ <code>Server Push，也叫 Cache push</code>）</p>
+</li>
+<li><p>提高安全性</p>
+<ul>
+<li>内容不再明文，而是以 二进制传输, 实际上 目前的<code>http/2</code> 基本上都是跑在 <code>TLS</code> 上的 都需要解密</li>
+</ul>
+</li>
+<li><p><strong>HTTP/2 的缺点</strong></p>
+<ul>
+<li>主要是底层支撑的 TCP 协议造成的<ul>
+<li><code>TCP</code> 和 <code>TCP+TLS</code> 建立连接的延时</li>
+<li><code>TCP</code> 的队头阻塞并没有彻底解决<ul>
+<li><code>HTTP/2</code> 中，多个请求是跑在一个 <code>TCP</code> 管道中的。但当出现了丢包时，<code>HTTP/2</code> 的表现反倒不如 <code>HTTP/1</code> 了。因为 <code>TCP</code> 为了保证可靠传输，有个特别的<code>“丢包重传”</code>机制，丢失的包必须要等待重新传输确认，<code>HTTP/2</code> 出现丢包时，整个 <code>TCP</code> 都要开始等待重传，那么就会阻塞该 <code>TCP</code> 连接中的所有请求。而对于 <code>HTTP/1.1</code> 来说，可以开启多个 <code>TCP</code> 连接，出现这种情况反倒只会影响其中一个连接，剩余的 <code>TCP</code> 连接还可以正常传输数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2018年底，<code>IETF</code> 又推出新版本 <code>HTTP/3</code>（<code>QUIC</code> 和 <code>HTTP/3</code>）</p>
+<ul>
+<li>这就是 <code>HTTP/3</code> 的用武之地：它不是使用 <code>TCP</code> 作为会话的传输层，而是使用 <code>QUIC</code> （一种新的互联网传输协议）。该协议率先在传输层将流作为一等公民引入。多个 <code>QUIC </code>流共享相同的 <code>QUIC</code> 连接，因此<code>不需要额外的握手和慢启动</code>来创建新的 <code>QUIC</code> 流。但 <code>QUIC</code> 流是独立交付的，因此在大多数情况下，只影响一个流的丢包不会影响其他流。这是因为 <code>QUIC</code> 数据包封装在 <code>UDP</code> 数据报的顶部。</li>
+<li>与 <code>TCP</code> 相比，使用 <code>UDP</code> 可以提供更大的灵活性，并且可以使 <code>QUIC</code> 实现完全存在于用户空间中——协议实现的更新不像 <code>TCP</code> 那样依赖操作系统的更新。借助 <code>QUIC</code>，可以将 <code>HTTP</code> 级别的流简单地映射到 <code>QUIC</code> 流的顶部，从而在享受 <code>HTTP/2</code> 所有好处的同时避免了<code>行首阻塞</code>。</li>
+<li><code>QUIC</code> 还结合了典型的 <code>3 向 TCP 握手</code>和 <code>TLS 1.3</code> 的握手。结合这些步骤意味着加密和身份验证能够默认提供，并且还可以更快地建立连接。换句话说，即使 <code>HTTP</code> 会话中的初始请求需要新的 <code>QUIC</code> 连接，在数据开始流动之前的等候延迟也比使用 <code>TLS</code> 的 <code>TCP</code> 要低。</li>
+</ul>
+</li>
+<li><p>总结</p>
+<ul>
+<li>`HTTP/1.1· 有两个主要的缺点：安全不足和性能不高。</li>
+<li><code>HTTP/2</code> 完全兼容 <code>HTTP/1</code>，是“更安全的 <code>HTTP</code>、更快的 <code>HTTPS</code>“，头部压缩、多路复用等技术可以充分利用带宽，降低延迟，从而大幅度提高上网体验。</li>
+<li><code>QUIC</code> 基于 <code>UDP</code> 实现，是 <code>HTTP/3</code> 中的底层支撑协议。该协议基于 <code>UDP</code>，又汲取了 <code>TCP</code> 中的精华，实现了既快又可靠的协议。</li>
+</ul>
+</li>
+</ul>
+<p>以上就解释了为什么会出现 <code>http/2</code>与<code>http/3</code>？</p>
+<h3 id="http-tls-传输的基本结构"><a href="#http-tls-传输的基本结构" class="headerlink" title="http + tls 传输的基本结构"></a><code>http + tls</code> 传输的基本结构</h3><p><img src="/medias/image/03.jpg" srcset="/img/loading.gif" lazyload alt="&quot;图片&quot;"></p>
+<ul>
+<li>三次握手后 使用 <code>tls</code> 协议（也是三次握手）沟通传输密钥，最后才是 <code>http</code>内容的请求</li>
+</ul>
+<h3 id="http-3-tls-传输的基本结构"><a href="#http-3-tls-传输的基本结构" class="headerlink" title="http/3 + tls 传输的基本结构"></a><code>http/3 + tls</code> 传输的基本结构</h3><p><img src="/medias/image/04.jpg" srcset="/img/loading.gif" lazyload alt="&quot;图片&quot;"></p>
+<ul>
+<li>三次握手时 顺便使用 <code>tls</code> 协议沟通传输密钥，最后才是 <code>http</code>内容的请求</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/kU4OkqR8vH123a8dLCCJ">infoQ-解密 HTTP/2 与 HTTP/3 的新特性</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/http/">http</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/12/04/plan/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">plan</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                        <span class="hidden-mobile">关于php后端的100个话题（一）消息队列</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

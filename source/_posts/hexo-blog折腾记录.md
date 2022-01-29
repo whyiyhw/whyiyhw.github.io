@@ -38,6 +38,7 @@ tags: [hexo, git, fluid]
     `cnpm install hexo-server --save`  		# 更新预览服务
     `hexo server`							# 启动服务，可访问 http://localhost:4000 进行预览
     `hexo generate --deploy`			    # 编译生成静态文件，并上传至 git 服务上
+    `hexo d -g`                             # 可缩写
     ```
 
 ## hexo 的主题 next 与 fluid 的修改`hexo`  进阶 `next `

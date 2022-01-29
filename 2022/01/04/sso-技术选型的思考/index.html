@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://blogxy.cn/img/09.jpg">
 <meta property="og:image" content="https://blogxy.cn/img/10.jpg">
 <meta property="article:published_time" content="2022-01-04T14:38:28.000Z">
-<meta property="article:modified_time" content="2022-01-25T15:11:05.967Z">
+<meta property="article:modified_time" content="2022-01-25T15:22:48.824Z">
 <meta property="article:author" content="YI">
 <meta property="article:tag" content="技术选型">
 <meta property="article:tag" content="sso">
@@ -245,7 +245,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期二, 一月 25日 2022, 11:11 晚上
+                  本文最后更新于：星期二, 一月 25日 2022, 11:22 晚上
                 
               </p>
             
@@ -273,6 +273,7 @@
 <p>优点：成熟，<code>java</code> 线容易找到大量的系统<br>缺点：部分产品基于session cookie 机制，技术栈较老 ，系统侵入性强，代码内需要引入其对应的客户端，定制化处理比较麻烦</p>
 <h3 id="OAuth2-0-rfc"><a href="#OAuth2-0-rfc" class="headerlink" title="OAuth2.0 rfc"></a>OAuth2.0 <a target="_blank" rel="noopener" href="http://www.rfcreader.com/#rfc6749">rfc</a></h3><p>这类的方案是目前的主流，比如微信，钉钉，QQ 等各类的大厂都有此协议的实现 , 授权码模式的具体实现如下图</p>
 <p><img src="/img/09.jpg" srcset="/img/loading.gif" lazyload alt="09"></p>
+<p>()</p>
 <p>我们也可以在 <code>GitHub</code> 上找到 大量的 <code>OAuth2.0</code> 的代码，但是 <code>OAuth</code>只规定了授权方式，而并没有涉及到具体用户</p>
 <p>大部分的开源项目要不就直接写死了用户表与对应的字段，还提供默认的登录与认证页面，定制化修改较为困难。</p>
 <p>要不就是只实现了<code>OAuth</code> 协议，拿过来还要理解整个流程，没法直接使用。</p>

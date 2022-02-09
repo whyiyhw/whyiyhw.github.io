@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="计算机概论计算机硬件组成 中央处理器CPU(运算器&amp;控制器&amp;寄存器组&amp;内部总线) 寄存器  cpu内部用来暂时存放参与运算的数据跟结果的小单元 本质为常见的时序逻辑电路，只包含存储电路   运算器 算数逻辑单元(Arithmetic and Logic Unit, ALU) 负责数据处理，对数据的算数与逻辑运算    累加寄存器(Accumulator, AC) 通用寄存器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机概论（一）">
+<meta property="og:url" content="https://blogxy.cn/2022/02/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%A6%82%E8%AE%BA(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="计算机概论计算机硬件组成 中央处理器CPU(运算器&amp;控制器&amp;寄存器组&amp;内部总线) 寄存器  cpu内部用来暂时存放参与运算的数据跟结果的小单元 本质为常见的时序逻辑电路，只包含存储电路   运算器 算数逻辑单元(Arithmetic and Logic Unit, ALU) 负责数据处理，对数据的算数与逻辑运算    累加寄存器(Accumulator, AC) 通用寄存器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/img/15.png">
+<meta property="article:published_time" content="2022-02-07T06:15:01.000Z">
+<meta property="article:modified_time" content="2022-02-09T08:06:38.971Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="计算机组成">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/img/15.png">
+  
+  
+  <title>计算机概论（一） - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="计算机概论（一）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-07 14:15" pubdate>
+        星期一, 二月 7日 2022, 2:15 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      36 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机概论（一）</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期三, 二月 9日 2022, 4:06 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="计算机概论"><a href="#计算机概论" class="headerlink" title="计算机概论"></a>计算机概论</h1><h2 id="计算机硬件组成"><a href="#计算机硬件组成" class="headerlink" title="计算机硬件组成"></a>计算机硬件组成</h2><ul>
+<li>中央处理器CPU(运算器&amp;控制器&amp;寄存器组&amp;内部总线)<ul>
+<li>寄存器 <ul>
+<li>cpu内部用来暂时存放参与运算的数据跟结果的小单元</li>
+<li>本质为常见的时序逻辑电路，只包含存储电路</li>
+</ul>
+</li>
+<li>运算器<ul>
+<li>算数逻辑单元(Arithmetic and Logic Unit, ALU)<ul>
+<li>负责数据处理，对数据的算数与逻辑运算 </li>
+</ul>
+</li>
+<li>累加寄存器(Accumulator, AC)<ul>
+<li>通用寄存器，为ALU执行算数或逻辑运算时，提供工作区</li>
+</ul>
+</li>
+<li>数据缓冲寄存器(Data Register, DR)<ul>
+<li>在内存进行读/写操作时，暂时存放指令或数据，分离不同时间读/写的数据</li>
+</ul>
+</li>
+<li>状态条件寄存器 (Program Status Word, PSW)<ul>
+<li>保存算数和逻辑指令的结果所产生的条件码，包括状态标志和控制标志</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>控制器<ul>
+<li>程序计数器(Program Counter Register,  PC)<ul>
+<li>寄存信息跟计数，保存指令地址并自动保存下一条指令地址 </li>
+</ul>
+</li>
+<li>地址寄存器 (Address Register, AR)<ul>
+<li>保存当前CPU访问的内存单元的地址 </li>
+</ul>
+</li>
+<li>指令寄存器 (Instruction Register, IR)<ul>
+<li>暂存指令</li>
+</ul>
+</li>
+<li>指令译码器(Instruction Decoder, ID)<ul>
+<li>分析解释指令中的操作码字段，识别该指令的操作，向控制器发出控制信号，控制各部件完成工作 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>寄存器组<ul>
+<li>通用寄存器 ：作用可变</li>
+<li>专用寄存器： 运算器和控制器中的寄存器是专用寄存器，作用固定</li>
+</ul>
+</li>
+<li>内部总线是一种内部结构，是 cpu 内存 输入 输出设备传递信息的公用通道</li>
+</ul>
+<img src="/img/15.png" srcset="/img/loading.gif" lazyload alt="一条指令的执行过程简易图示"></li>
+<li>存储器(内部存储&amp;外部存储)<ul>
+<li>cpu 内部的通用寄存器组，cpu内的Cache(高速缓存)，</li>
+<li>cpu外部的Cache、主板上的主存储器，主板外的联机磁盘存储器（在线），U盘存储（离线）</li>
+<li>** Cache 和主存之间的交互功能全部由硬件实现 **  主存与辅存之间的交互可由软硬件结合实现</li>
+<li>分类方式<ul>
+<li>位置 ： 内存与外存</li>
+<li>工作方式: 读/写存储器（Random Access Memory RAM），只读存储器(Read Only Memory ROM)</li>
+<li>访问方式：按地址访问、按内存访问</li>
+<li>寻址方式：随机存储器、顺序存储器、直接存储器</li>
+</ul>
+</li>
+<li>Cache 高速缓存<ul>
+<li>从内存中去取数据映射到Cache 中，cpu 会先从 Cache 中寻址，取不到才会去主存中获取，然后替换掉，Cache 中的一块，<strong>Cache 与主存中的地址映射是由硬件自动完成的</strong></li>
+<li>映射关系分类<ul>
+<li>直接映像：固定的</li>
+<li>全相联映像：主存与Cache存储器均分成大小相同的块，相互映射</li>
+<li>组相联映像：将组内的块再分组</li>
+</ul>
+</li>
+<li>替换的算法<ul>
+<li>随机替换</li>
+<li>先进先出</li>
+<li>LRU 近期最少使用算法</li>
+<li>优化替换算法，先统计Cache的替换情况，下次根据替换情况来替换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚拟存储器（用磁盘来 扩大 内存 swap）</li>
+</ul>
+</li>
+<li>输入与输出<ul>
+<li>内存与接口地址的编址 方式</li>
+<li>外设<ul>
+<li>直接程序控制<ul>
+<li>无条件传送</li>
+<li>程序查询 需要先查询外设状态，再去执行</li>
+</ul>
+</li>
+<li>中断处理<ul>
+<li>在接受中断请求信号后，会保存程序现场，先去执行中断，再去执行目前的程序</li>
+<li>中断优先级控制 多个中断源服务，CPU 会优先响应级最高的中断源</li>
+</ul>
+</li>
+<li><strong>直接内存存取 （Direct Memory Access, DMA）</strong><ul>
+<li>内存在I/O 设备间的传送一个数据块的过程中，<strong>不需要CPU的任何干涉</strong> 实际操作是由DMA硬件直接执行完成的。<strong>但此时总线是被占用的</strong></li>
+</ul>
+</li>
+<li>输入输出处理机 （Input/Output Processor, IOP ) 分担了CPU的一部分功能，实现对外围设备的统一管理，完成外围设备与主存之间的数据传送</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总线结构<ul>
+<li>总线（bus ）数据总线、地址总线、控制总线3类。<ul>
+<li>数据总线 (Data bus, DB) 信息传输，双向的，宽度决定一次性交换数据的位数</li>
+<li>地址总线 (Address bus, AB)传送CPU发出的地址信息， 单向的，最大寻址能力</li>
+<li>控制总线(Controller bus, CB)，双向的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="计算机安全"><a href="#计算机安全" class="headerlink" title="计算机安全"></a>计算机安全</h3><ul>
+<li>三大分类 <strong>技术安全，管理安全，政策法律安全</strong></li>
+<li>数据安全（内部安全，外部安全）</li>
+<li>可靠性 （不稳定期，正常工作期，老化期）<ul>
+<li>串联系统的可靠性 = 各个子系统可靠性相乘 </li>
+<li>并联系统的可靠性 = <code>1- (1-r1)* (1-r2)* (1-r3)</code> 1 减去 不可靠性</li>
+<li>N模冗余系统  <code>N=2n+1</code> 只要 n+1 或 n+1以上的系统正常工作就是正常工作</li>
+</ul>
+</li>
+</ul>
+<h3 id="计算机性能"><a href="#计算机性能" class="headerlink" title="计算机性能"></a>计算机性能</h3><h3 id="计算机体系结构"><a href="#计算机体系结构" class="headerlink" title="计算机体系结构"></a>计算机体系结构</h3><ul>
+<li><p>处理系统</p>
+<ul>
+<li>单处理系统</li>
+<li>并行处理与多处理系统</li>
+<li>分布式处理系统</li>
+</ul>
+</li>
+<li><p>指令系统 (Instruction Set Architecture ISA )</p>
+<ul>
+<li><p>1.操作数在cpu上的存储方式 2. 显示操作数的数量 3. 操作数的位置，能放入主存，如何定位 4.指令支持那些操作 5. 操作数的类型与大小</p>
+</li>
+<li><p>暂存机制</p>
+<ul>
+<li>堆栈（stack）, 累加器 (Accumulator), 寄存器组 (a set of register)</li>
+</ul>
+</li>
+<li><p>CISC (Complex Instruction Set Computer) 复杂指令集计算机</p>
+</li>
+<li><p>RISC (Reduced Instruction Set Computer) 精简指令集计算机</p>
+<ul>
+<li>关键技术</li>
+<li>重叠寄存器窗口</li>
+<li>优化编译技术</li>
+<li>超流水及超标量技术</li>
+<li>硬布线逻辑与微程序的结合 </li>
+</ul>
+</li>
+<li><p>指令的流水</p>
+<ul>
+<li>顺序方式   先分析再执行</li>
+<li>重叠方式 （分析与执行指令 同时执行）</li>
+<li>流水方式  把重复的顺序处理过程分解为若干子过程，每个子过程可以<ul>
+<li>解决局部相关性，解决</li>
+<li>超流水线</li>
+<li>超标量</li>
+<li>超长指令字</li>
+<li>吞吐量 为最长子过程耗费时间的导数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="软件（程序-amp-数据-amp-文档）"><a href="#软件（程序-amp-数据-amp-文档）" class="headerlink" title="软件（程序&amp;数据&amp;文档）"></a>软件（程序&amp;数据&amp;文档）</h3><ul>
+<li>系统软件</li>
+<li>应用软件</li>
+</ul>
+<h3 id="数据表示"><a href="#数据表示" class="headerlink" title="数据表示"></a>数据表示</h3><ul>
+<li>机器数 二进制数</li>
+<li>无符号数</li>
+<li>带符号数（机器数的最高位代表正负符号，其他标识数值）</li>
+</ul>
+<h4 id="码制-（原码，反码，补码，移码）"><a href="#码制-（原码，反码，补码，移码）" class="headerlink" title="码制 （原码，反码，补码，移码）"></a>码制 （原码，反码，补码，移码）</h4><ul>
+<li>原码 由符号位和真值的绝对值组成（<strong>原码不能直接拿来计算</strong>）</li>
+<li>反码：正数不变，负数的反码是其<strong>原码</strong>的基础上，符号位不变，其他的 按位取反</li>
+<li>补码：正数不变，负数的补码是其<strong>反码</strong>加一 <strong>（计算时一般使用补码）</strong></li>
+<li><strong>正数的 原码，反码，补码 一致</strong></li>
+<li>-0 与 +0 是不一致的，其符号位不同</li>
+<li>反码与补码 为了减法的计算问题<ul>
+<li>将减法变成 加法去计算，<code>减法电路比 加法电路 复杂</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight subunit"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs subunit">字长 就是一次性读取二进制位的个数<br>定点整数-根据字长求范围，<br>原码 =`-(2^(n<span class="hljs-string">-1</span>) - 1) ~ +(2^(n<span class="hljs-string">-1</span>) - 1)`  = 反码<br>补码 中 人为 规定 `<span class="hljs-string">-0</span> = <span class="hljs-string">-2</span>^n` 所以补码范围为 `<span class="hljs-string">-2</span>^(n<span class="hljs-string">-1</span>) ~ +(2^(n<span class="hljs-string">-1</span>) - 1)`  = 移码<br></code></pre></td></tr></table></figure>
+
+<h4 id="小数的表示"><a href="#小数的表示" class="headerlink" title="小数的表示"></a>小数的表示</h4><ul>
+<li><p>定点小数（纯小数，如0.8）</p>
+<ul>
+<li><code>正负号|1|0|0|0|</code></li>
+</ul>
+</li>
+<li><p>定点小数 (规定所有数值数据的小数点后隐含在某一个固定位置上)，小数点本身不占用位置</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs subunit">定点小数-根据字长求范围，<br>原码 =`-(1- 2^-(n<span class="hljs-string">-1</span>)) ~ +(1- 2^-(n<span class="hljs-string">-1</span>))`  = 反码<br>补码 中 人为 规定 `<span class="hljs-string">-0</span> = <span class="hljs-string">-2</span>^n` 所以补码范围为 `<span class="hljs-string">-1</span>~ +(1<span class="hljs-string">-2</span>^-(n<span class="hljs-string">-1</span>))`  = 移码<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="浮点数表示-（小数点位置不固定）"><a href="#浮点数表示-（小数点位置不固定）" class="headerlink" title="浮点数表示 （小数点位置不固定）"></a>浮点数表示 （小数点位置不固定）</h4><ul>
+<li><code>N = 尾数*基数^指数|阶码</code></li>
+<li>尾数 = 定点小数 （补码）， 阶码=定点整数（移码）</li>
+<li><code>N = M * 2^E</code> (E 阶码  M 尾数) </li>
+<li>符号位，指数，尾数</li>
+<li><strong>阶符（阶码的符号位）|阶码|数符（尾数的符号位）|尾数</strong> 构成了浮点数<ul>
+<li>基数在计算机中默认为2</li>
+<li>阶码影响数值的范围</li>
+<li>尾数可以表示有效精度，尾数越多</li>
+<li>结果格式化</li>
+</ul>
+</li>
+<li>计算过程<ul>
+<li>阶码对齐，小数向大数对齐，小数的尾数右移实现的，高位补零</li>
+<li>对尾数进行计算</li>
+<li>结果格式化</li>
+</ul>
+</li>
+<li>IEEE754 为浮点数事实标准</li>
+</ul>
+<h4 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h4><ul>
+<li>与 两者都为真才真</li>
+<li>或 两者有一个为真就真</li>
+<li>非 取反</li>
+<li>异或 两者相同为真 不相同为假</li>
+</ul>
+<h3 id="校验码"><a href="#校验码" class="headerlink" title="校验码"></a>校验码</h3><ul>
+<li>奇偶校验码 <strong>1位</strong><ul>
+<li>只能检测错误，不能纠错</li>
+</ul>
+</li>
+<li>海明码 把第N位的校验码放在 2n 位上<ul>
+<li>在数据位之间 加入 <strong>K</strong> 个校验位，能检错跟纠错</li>
+<li>设数据有n位，校验码为x位，校验码一共有2^x 种取值方式<ul>
+<li>2^x - 1 &gt; x+n （能表示的出错的总数，要大于任一位出错的数值）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CRC<ul>
+<li>采用 mod 2 的方式去计算</li>
+</ul>
+</li>
+</ul>
+<h2 id="程序设计语言"><a href="#程序设计语言" class="headerlink" title="程序设计语言"></a>程序设计语言</h2><h3 id="程序设计语言基本概念"><a href="#程序设计语言基本概念" class="headerlink" title="程序设计语言基本概念"></a>程序设计语言基本概念</h3><ul>
+<li>机器指令是最基本的计算机语言（可读性差，难以修改和维护）</li>
+<li>汇编语言（特定计算机）&amp;机器语言为低级语言</li>
+<li>源程序 通过 <strong>汇编、解释和编译</strong> 进行翻译</li>
+<li>解释程序（解释器）<ul>
+<li>执行源程序  翻译成中间代码加以执行</li>
+</ul>
+</li>
+<li>编译程序（编译器）<ul>
+<li>编译器将源代码翻译成目标程序</li>
+</ul>
+</li>
+<li>语法，语义，语用，语境</li>
+<li>语言<ul>
+<li>Fortran(Formula translation) 第一个广泛应用的高级语言</li>
+<li>c 直接访问操作系统和底层硬件</li>
+<li>c++ 面向对象，封装继承多态</li>
+<li>c# </li>
+<li>java 删除了c++指针相关特征</li>
+<li>Python 面向对象，解释性（解释器=&gt;中间码）语言（脚本语言）</li>
+<li>JavaScript 脚本语言，解释性</li>
+</ul>
+</li>
+<li>语言分类<ul>
+<li>命令式&amp;结构化 Fortran c</li>
+<li>面向对象 c++ java </li>
+<li>函数式（LISP）1958年为人工智能应用而设计的语言</li>
+<li>逻辑型程序设计语言 ProLog</li>
+</ul>
+</li>
+<li><h3 id="程序设计语言基本成分"><a href="#程序设计语言基本成分" class="headerlink" title="程序设计语言基本成分"></a>程序设计语言基本成分</h3></li>
+<li>基本成分包括 <strong>数据，运算，控制和传输</strong></li>
+<li>数据<ul>
+<li>有存储类别 ，类型，名称，作用域，生存周期… 属性</li>
+<li>常量&amp;变量<ul>
+<li>数据对象可以拥有左值（存储单元|地址|容器）和右值（内容）</li>
+</ul>
+</li>
+<li>全局量和局部量</li>
+<li>数据类型<ul>
+<li> 基本类型</li>
+<li> 特殊类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>控制<ul>
+<li>顺序，选择，循环（初始化，循环体，循环条件）</li>
+</ul>
+</li>
+<li>传输（赋值处理，数据的输入和输出）<ul>
+<li>包括函数（定义，声明，调用）</li>
+</ul>
+</li>
+</ul>
+<h3 id="汇编程序基本原理"><a href="#汇编程序基本原理" class="headerlink" title="汇编程序基本原理"></a>汇编程序基本原理</h3><ul>
+<li><p>面向特定计算机设计的符号化的程序设计语言，编写的源程序需要汇编翻译程序进行翻译。</p>
+</li>
+<li><p>语句</p>
+<ul>
+<li>指令语句-汇编后能被CPU直接识别与执行的操作 如 ADD,SUB和AND <ul>
+<li><strong>传送指令，算术运算指令，逻辑运算指令，移位指令，转移指令和处理机控制指令</strong></li>
+</ul>
+</li>
+<li>伪指令语句，在汇编源程序时完成一些工作 <strong>汇编后不产生机器代码</strong><ul>
+<li><strong>所指示的操作是在源程序被汇编时完成的，指令语句的操作必须在运行时完成</strong> </li>
+</ul>
+</li>
+<li>宏指令语句 <strong>多次重复使用的程序段定义为宏</strong></li>
+</ul>
+</li>
+<li><p>工作原理 （将源程序翻译成对饮固定机器指令）</p>
+<ul>
+<li>经过<strong>两次扫描</strong> ，第一次扫描创建一个<strong>符号表</strong>（初始化），第二次产生目标程序<h3 id="编译程序基本原理"><a href="#编译程序基本原理" class="headerlink" title="编译程序基本原理"></a>编译程序基本原理</h3></li>
+</ul>
+</li>
+<li><p><strong>编译的过程6个部分</strong> </p>
+</li>
+<li><p>源程序 </p>
+<ul>
+<li><ol>
+<li>词法分析</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>语法分析</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>语义分析</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>中间码生成</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>代码优化</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>目标代码生成</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>生成目标代码</p>
+</li>
+</ul>
+<h3 id="解释程序基本原理"><a href="#解释程序基本原理" class="headerlink" title="解释程序基本原理"></a>解释程序基本原理</h3><ul>
+<li>解释程序的处理主要分为两个部分<ul>
+<li>分析<ul>
+<li>词法，语法，语义 生成中间代码<strong>（语法树，后缀式[逆波兰式]，三地址代码）</strong></li>
+</ul>
+</li>
+<li>解释<ul>
+<li>对分析生成的中间代码进行解释执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>解释与编译程序的比较</p>
+<ul>
+<li>效率低，灵活性强，可移植性强</li>
+</ul>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li>数据结构是存储，组织数据的方式</li>
+<li>算法是操作数据结构的行为</li>
+</ul>
+<h3 id="线性结构"><a href="#线性结构" class="headerlink" title="线性结构"></a>线性结构</h3><ul>
+<li>数组<ul>
+<li>一维数组</li>
+<li>多维数组 </li>
+</ul>
+</li>
+<li>链表<ul>
+<li>线性表</li>
+<li>顺序表（数组）</li>
+<li>双向链表</li>
+<li>循环链表</li>
+<li>双向循环链表</li>
+</ul>
+</li>
+<li>栈（堆栈）后进先出（Last In First Out, LIFO）(受限表)<ul>
+<li>顺序存储（空间优先）</li>
+<li>链式存储 </li>
+</ul>
+</li>
+<li>队列 先进先出（First In First Out , FIFO）(受限表)<ul>
+<li>顺序队列 链表（无限空间）</li>
+<li>循环队列 （有限空间）</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵和广义表"><a href="#矩阵和广义表" class="headerlink" title="矩阵和广义表"></a>矩阵和广义表</h3><h4 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h4><ul>
+<li>科学与工程计算领域研究的数学对象，（应用点 二维数组）</li>
+<li>特殊矩阵，会对相同元素进行压缩</li>
+<li>稀疏矩阵，不进行压缩的矩阵</li>
+</ul>
+<h4 id="广义表（线性表的推广）"><a href="#广义表（线性表的推广）" class="headerlink" title="广义表（线性表的推广）"></a>广义表（线性表的推广）</h4><ul>
+<li>线性表的元素是结构上不可分的单元素，广义表的元素既可以是单元素，也可以是有结构的表</li>
+<li>重要运算<ul>
+<li>取表头</li>
+<li>取表尾 <strong>非空广义表的表尾必定是一个表</strong></li>
+</ul>
+</li>
+<li>特点<ul>
+<li>多层次结构</li>
+<li>元素可以是其他广义表</li>
+<li>可以为递归表 </li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%BD%AF%E8%80%83%E4%B8%AD%E7%BA%A7%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88/">软考中级软件设计师</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/">计算机组成</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/02/2022%E5%B9%B4%E5%BA%A6%E5%B0%8F%E7%9B%AE%E6%A0%87/">
+                        <span class="hidden-mobile">2022年度小目标</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

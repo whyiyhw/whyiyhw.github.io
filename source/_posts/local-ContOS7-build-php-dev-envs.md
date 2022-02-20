@@ -130,10 +130,26 @@ tags:
 
 - `nginx -t && nginx -s reload`
 
+## 安装docker 
+
+```shell
+yum remove docker  docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+
+yum install -y yum-utils
+
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+yum install docker-ce docker-ce-cli containerd.io -y
+
+systemctl start docker
+
+systemctl enable docker
+```
+
 ## 使用`docker `构建 `php5.4` 环境
 
 - 更换镜像，使用阿里云的镜像加速
-- `https://cr.console.aliyun.com/#/accelerator`
+- `https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors`
 - `vim /etc/docker/daemon.json`
 - 修改成自己的镜像加速
 - `"registry-mirrors": ["https://xxxxx.mirror.aliyuncs.com"]`
@@ -448,5 +464,6 @@ docker run -d -p 9001:9000 --name portainer --restart=always \
 ```
 
 ## lnmp 一键安装 脚本，
+
 - 支持到 php8.1 , 测试服用这个省心
 - `https://lnmp.org/`

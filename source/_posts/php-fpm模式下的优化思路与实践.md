@@ -3,8 +3,7 @@ title: php-fpm模式下的优化思路与实践
 date: 2022-01-21 13:28:06
 categories: php
 tags:
-- fpm
-- 优化
+- php-fpm
 ---
 
 # php-fpm模式下的优化思路与实践

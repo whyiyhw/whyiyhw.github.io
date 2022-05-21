@@ -19,14 +19,16 @@
     <meta name="description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 修改 ONBOOT&#x3D;yes 后 systemctl restart network.service 重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因 修改 vi &#x2F;etc&#x2F;r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="build yourself Linux dev env">
-<meta property="og:url" content="https://blogxy.cn/2019/05/09/local-ContOS7-build-php-dev-envs/index.html">
+<meta property="og:url" content="https://blogxy.cn/2019/05/09/build-yourself-Linux-dev-env/index.html">
 <meta property="og:site_name" content="积木成楼">
 <meta property="og:description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 修改 ONBOOT&#x3D;yes 后 systemctl restart network.service 重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因 修改 vi &#x2F;etc&#x2F;r">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-09T04:17:23.000Z">
-<meta property="article:modified_time" content="2022-05-21T07:29:30.208Z">
+<meta property="article:modified_time" content="2022-05-21T07:47:36.997Z">
 <meta property="article:author" content="YI">
 <meta property="article:tag" content="php">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -465,8 +467,6 @@
 
 <h3 id="laravel-相关任务"><a href="#laravel-相关任务" class="headerlink" title="laravel 相关任务"></a>laravel 相关任务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">可以直接在宿主机上 执行 容器内的命令 如</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将容器内的 composer 进行更新</span><br>docker exec composer update -vvv <br><span class="hljs-meta prompt_">#</span><span class="language-bash">（此时以容器内的 root 用户去执行的命令）</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">所以在容器内不安装 crontab 的情况下，可以在宿主机进行配置</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">以 root 用户去启动 crontab  在容器内转换成 www 用户去执行 php 完美</span><br>crontab -e<br><br>* * * * *  docker exec laravel8 sudo -u www php artisan schedule:run<br></code></pre></td></tr></table></figure>
 
-
-
 <h2 id="lnmp-一键安装-脚本"><a href="#lnmp-一键安装-脚本" class="headerlink" title="lnmp 一键安装 脚本"></a>lnmp 一键安装 脚本</h2><ul>
 <li>支持到 php8.1 , 测试服用这个省心</li>
 <li><code>https://lnmp.org/</code></li>
@@ -505,12 +505,7 @@
 
 <h2 id="docker-安装基础服务"><a href="#docker-安装基础服务" class="headerlink" title="docker 安装基础服务"></a><code>docker</code> 安装基础服务</h2><h3 id="docker-安装-portainer"><a href="#docker-安装-portainer" class="headerlink" title="docker 安装 portainer"></a><code>docker</code> 安装 <code>portainer</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取镜像</span><br>docker pull portainer/portainer<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成数据保存路径</span><br>mkdir -p /data/portainer_data<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成 portainer 运行时</span><br>docker run -d -p 9001:9000 --name portainer --restart=always \<br>-v /var/run/docker.sock:/var/run/docker.sock  -v  /data/portainer_data:/data  portainer/portainer <br></code></pre></td></tr></table></figure>
 
-<h3 id="docker-安装-mysql服务"><a href="#docker-安装-mysql服务" class="headerlink" title="docker  安装 mysql服务"></a><code>docker</code>  安装 <code>mysql</code>服务</h3><ul>
-<li>``</li>
-<li>`` #用于挂载<code>mysql</code>数据文件</li>
-<li>`` #用于挂载<code>mysql</code>配置文件</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装MySQL5.7</span><br>dokcer pull mysql:5.7<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成mysql数据保存路径</span><br>mkdir -p /data/mysql/datadir<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成mysql配置文件保存路径</span><br>mkdir -p /data/mysql/conf.d<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成 MySQL 运行时</span><br>docker run -d \<br>--name mysql5.7 -p 3306:3306 \<br>-v /data/mysql/datadir:/var/lib/mysql \<br>-v /data/mysql/conf.d:/etc/mysql/conf.d \<br>-e MYSQL_ROOT_PASSWORD=123456  mysql:5.7<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">`-e`：设置环境变量，此处指定 `root` 密码</span><br></code></pre></td></tr></table></figure>
+<h3 id="docker-安装-mysql服务"><a href="#docker-安装-mysql服务" class="headerlink" title="docker  安装 mysql服务"></a><code>docker</code>  安装 <code>mysql</code>服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装MySQL5.7</span><br>dokcer pull mysql:5.7<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成mysql数据保存路径</span><br>mkdir -p /data/mysql/datadir<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成mysql配置文件保存路径</span><br>mkdir -p /data/mysql/conf.d<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成 MySQL 运行时</span><br>docker run -d \<br>--name mysql5.7 -p 3306:3306 \<br>-v /data/mysql/datadir:/var/lib/mysql \<br>-v /data/mysql/conf.d:/etc/mysql/conf.d \<br>-e MYSQL_ROOT_PASSWORD=123456  mysql:5.7<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">`-e`：设置环境变量，此处指定 `root` 密码</span><br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -528,7 +523,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/docker-nginx/" class="category-chain-item">docker nginx</a>
+  <a href="/categories/linux/" class="category-chain-item">linux</a>
   
   
 
@@ -545,6 +540,10 @@
       
         <a href="/tags/php/">#php</a>
       
+        <a href="/tags/docker/">#docker</a>
+      
+        <a href="/tags/nginx/">#nginx</a>
+      
     </div>
   
 </div>
@@ -556,7 +555,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>build yourself Linux dev env</div>
-      <div>https://blogxy.cn/2019/05/09/local-ContOS7-build-php-dev-envs/</div>
+      <div>https://blogxy.cn/2019/05/09/build-yourself-Linux-dev-env/</div>
     </div>
     <div class="license-meta">
       

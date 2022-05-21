@@ -24,7 +24,7 @@
 <meta property="og:description" content="为什么 上线要使用 composer dump-autoload -o composer dump-autoload -o 做了什么？  自动生成了 注册类的 key&#x3D;&gt;value 数组 按A-Z进行排序并生成了对应的索引   Compsoer\ClassLoader 会优先查看 autoload_classmap 中所有生成的注册类。  如果在classmap 中没有发现再 fallbac">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-15T02:33:38.000Z">
-<meta property="article:modified_time" content="2022-01-20T15:45:22.652Z">
+<meta property="article:modified_time" content="2022-05-21T07:29:30.241Z">
 <meta property="article:author" content="YI">
 <meta property="article:tag" content="composer">
 <meta name="twitter:card" content="summary_large_image">
@@ -274,7 +274,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2022年1月20日 晚上
+                    本文最后更新于：2022年5月21日 下午
                   
                 
               </p>
@@ -294,7 +294,7 @@
 <li><p>所以当执行 <code>composer dump-autoload -o</code> 之后，<code>composer</code> 就会提前加载需要的类并提前返回。这样大大减少了 <code>IO</code> 和深层次的 <code>loop</code></p>
 </li>
 </ul>
-<h3 id="问题点-You-made-a-reference-to-a-non-existent-script-php-artisan-package-discover"><a href="#问题点-You-made-a-reference-to-a-non-existent-script-php-artisan-package-discover" class="headerlink" title="问题点 You made a reference to a non-existent script @php artisan package:discover"></a>问题点 <code>You made a reference to a non-existent script @php artisan package:discover</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">composer -V<br>Composer version 1.2.1 2016-09-12 11:27:19<br></code></pre></td></tr></table></figure>
+<h3 id="问题点-You-made-a-reference-to-a-non-existent-script-php-artisan-package-discover"><a href="#问题点-You-made-a-reference-to-a-non-existent-script-php-artisan-package-discover" class="headerlink" title="问题点 You made a reference to a non-existent script @php artisan package:discover"></a>问题点 <code>You made a reference to a non-existent script @php artisan package:discover</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">composer -V<br>Composer version 1.2.1 2016-09-12 11:27:19<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>解决方法，升级 composer 版本</li>

@@ -40,7 +40,7 @@ tags: [hexo, git, fluid]
     `cnpm install hexo-server --save`        # 更新预览服务
     `hexo server`                            # 启动服务，可访问 http://localhost:4000 进行预览
     `hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上
-    `hexo d -g`                              # 编译缩写
+    `hexo clean && hexo d -g`                # 上传前需要清理缓存来避免样式错乱问题，编译缩写
     ```
 
 ## hexo 的主题 next 与 fluid 的修改 `hexo`  进阶 `next`
@@ -105,7 +105,7 @@ cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 
 - **如果想自行安装，请学习检索**
 - 技能点需求 难度 ♥ ♥
-- `git`、 `hexo` 、`npm`、 `md` 、`html/文件目录` 相关基础知识   
+- `git`、 `hexo` 、`npm`、 `md` 、`html/文件目录` 相关基础知识
 - 这样就能继续愉快的写`blog`了
 
 **参考**

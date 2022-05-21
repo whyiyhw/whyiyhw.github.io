@@ -1,9 +1,11 @@
 ---
 title: build yourself Linux dev env 
 date: 2019-05-09 12:17:23
-categories: docker nginx
+categories: linux 
 tags: 
 - php
+- docker
+- nginx
 ---
 
 ## `ContOS7`  php多版本环境的配置
@@ -439,8 +441,6 @@ crontab -e
 * * * * *  docker exec laravel8 sudo -u www php artisan schedule:run
 ```
 
-
-
 ## lnmp 一键安装 脚本
 
 - 支持到 php8.1 , 测试服用这个省心
@@ -610,10 +610,6 @@ docker run -d -p 9001:9000 --name portainer --restart=always \
 
 ### `docker`  安装 `mysql`服务
 
-- ``
-- `` #用于挂载`mysql`数据文件
-- `` #用于挂载`mysql`配置文件
-  
 ```shell
 # 安装MySQL5.7
 dokcer pull mysql:5.7

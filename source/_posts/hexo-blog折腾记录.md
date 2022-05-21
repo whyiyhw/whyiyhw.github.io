@@ -9,9 +9,11 @@ tags: [hexo, git, fluid]
 ## 安装折腾总览
 
 目前的 blog 折腾经过了
+
 - ~~自己用 PHP 写 自建，样式太丑，放弃（17年）~~
-- ~~Github page 国内访问速度太慢，加上 next 的样式太素（19年）~~ 
-- 最后改成 fluid 这个样式，page 换到 Gitee（20年）
+- ~~Github page 国内访问速度太慢，加上 next 的样式太素（19年）~~
+- ~~最后改成 fluid 这个样式，page 换到 Gitee（20年）~~
+- gitee 启动审查机制，弃用 ，jsdelivr 被污染，更换 cdn源 ，重回GitHub（2022年5月）
 
 ### 目录也分为三块
 
@@ -30,20 +32,21 @@ tags: [hexo, git, fluid]
     `cnpm install hexo -g` #安装 `hexo` 
     `hexo -v`  #查看版本
     ```
-    
+
     ```shell
-    `cnpm install -g hexo-cli` 				# 安装 `hexo` 命令行
-    `hexo init dir` 						# 初始化目录
+    `cnpm install -g hexo-cli`               # 安装 `hexo` 命令行
+    `hexo init dir`                          # 初始化目录
     `hexo new post "关于hexo的安装的一些记录"` # 新建文件
-    `cnpm install hexo-server --save`  		# 更新预览服务
-    `hexo server`							# 启动服务，可访问 http://localhost:4000 进行预览
-    `hexo generate --deploy`			    # 编译生成静态文件，并上传至 git 服务上
-    `hexo d -g`                             # 可缩写
+    `cnpm install hexo-server --save`        # 更新预览服务
+    `hexo server`                            # 启动服务，可访问 http://localhost:4000 进行预览
+    `hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上
+    `hexo d -g`                              # 编译缩写
     ```
 
-## hexo 的主题 next 与 fluid 的修改`hexo`  进阶 `next `
+## hexo 的主题 next 与 fluid 的修改 `hexo`  进阶 `next`
 
 - next 主题相关
+
 ```shell
   cd themes # 进入主题目录
   git clone https://github.com/iissnan/hexo-theme-next themes/next #克隆主题文件
@@ -51,6 +54,7 @@ tags: [hexo, git, fluid]
 ```
 
 - fluid 主题相关
+
 ```shell
     cd themes # 进入主题目录
     git clone https://github.com/fluid-dev/hexo-theme-fluid.git    #克隆主题文件
@@ -68,8 +72,8 @@ tags: [hexo, git, fluid]
 - `git checkout hexo` 拉下代码后 切换分支  至配置生成目录
 
 ```shell
-cnpm install hexo 					  # 重新安装 hexo
-cnpm install 						  # 重新拉所需的运行所需文件
+cnpm install hexo                     # 重新安装 hexo
+cnpm install                          # 重新拉所需的运行所需文件
 cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 ```
 
@@ -78,6 +82,7 @@ cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 - `git config --global http.https://github.com.proxy socks5://127.0.0.1:1080` 仅设置 github 在 https 端口的 代理
 - 前提条件，你的 SS 开了，而且本地端口为 1080
 - git 全局 设置代理
+
     ```shell
     git config --global http.proxy 'socks5://127.0.0.1:1080' # http全局设置代理
     git config --global https.proxy 'socks5://127.0.0.1:1080'# https全局设置代理
@@ -85,23 +90,24 @@ cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
     git config --global --unset https.proxy# https全局取消代理
     ```
 
-###  搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误
+### 搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误
 
 - `cnpm install hexo-deployer-git --save` #重新生成 钩子才能上传成功
 
 ### hexo 怎么删除文章？
--  先使用 hexo clean 再删除
--  最后再重新 hexo generate --deploy 生成就OK
+
+- 先使用 hexo clean 再删除
+- 最后再重新 hexo generate --deploy 生成就OK
 
 ### 如何让 百度收录
-- https://ziyuan.baidu.com/linksubmit/url 自行提交
 
-**如果想自行安装，请学习检索**
+- <https://ziyuan.baidu.com/linksubmit/url> 自行提交
 
--  技能点需求 难度 ♥ ♥
-  - `git`、 `hexo` 、`npm`、 `md` 、`html/文件目录` 相关基础知识  	
--  这样就能继续愉快的写`blog`了
+- **如果想自行安装，请学习检索**
+- 技能点需求 难度 ♥ ♥
+- `git`、 `hexo` 、`npm`、 `md` 、`html/文件目录` 相关基础知识   
+- 这样就能继续愉快的写`blog`了
 
-**参考** 
+**参考**
 [hexo官方文档](https://hexo.io/zh-cn/docs/)
 [fluid官方文档](https://hexo.fluid-dev.com/)

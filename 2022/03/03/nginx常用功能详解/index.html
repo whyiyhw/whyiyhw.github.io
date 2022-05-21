@@ -24,7 +24,7 @@
 <meta property="og:description" content="nginx 常用功能详解nginx与php-fpm的两种通信方式详解一般来说，我们配置 nginx 与 php-fpm 的通信会有两种设置，以 unix socket 与 tcp&#x2F;ip socket 的方式 通过 fast-cgi 协议进行通信 比如 1234# tcp socket 的方式fastcgi_pass  127.0.0.1:9000# unix socket 的方式fastcgi_p">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-03T05:51:56.000Z">
-<meta property="article:modified_time" content="2022-04-10T14:47:44.360Z">
+<meta property="article:modified_time" content="2022-05-21T04:44:30.042Z">
 <meta property="article:author" content="YI">
 <meta property="article:tag" content="php-fpm">
 <meta property="article:tag" content="nginx">
@@ -275,7 +275,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2022年4月10日 晚上
+                    本文最后更新于：2022年5月21日 下午
                   
                 
               </p>
@@ -284,7 +284,7 @@
               
               <h1 id="nginx-常用功能详解"><a href="#nginx-常用功能详解" class="headerlink" title="nginx 常用功能详解"></a>nginx 常用功能详解</h1><h2 id="nginx与php-fpm的两种通信方式详解"><a href="#nginx与php-fpm的两种通信方式详解" class="headerlink" title="nginx与php-fpm的两种通信方式详解"></a>nginx与php-fpm的两种通信方式详解</h2><p>一般来说，我们配置 <code>nginx</code> 与 <code>php-fpm</code> 的通信会有两种设置，以 <code>unix socket</code> 与 <code>tcp/ip socket</code> 的方式 通过 fast-cgi 协议进行通信</p>
 <p>比如</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># tcp socket 的方式</span><br><span class="hljs-attribute">fastcgi_pass</span>  <span class="hljs-number">127.0.0.1:9000</span><br><span class="hljs-comment"># unix socket 的方式</span><br>fastcgi_pass  /usr/run/php-fpm.sock <br></code></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># tcp socket 的方式</span><br><span class="hljs-attribute">fastcgi_pass</span>  <span class="hljs-number">127.0.0.1:9000</span><br><span class="hljs-comment"># unix socket 的方式</span><br>fastcgi_pass  /usr/run/php-fpm.sock <br></code></pre></td></tr></table></figure>
 
 <h2 id="对比-UNIX-Domain-Socket-与-TCP-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP/IP Socket"></a>对比 UNIX Domain Socket 与 TCP/IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
 <ul>
@@ -292,7 +292,7 @@
 <ul>
 <li>不需要网络协议栈、打包拆包,减少了 tcp 开销，理论效率比 tcp socket 更高</li>
 <li>缺点也是因为缺少tcp的检查与重试机制，在高并发时稳定性欠佳（需要优化内核与应用相关参数）<ul>
-<li>listen.backlog   等待连接数，当其被用完时直接 502 </li>
+<li>listen.backlog   等待连接数，当其被用完时直接 502</li>
 <li>pm.max_children 进程都在执行等待时处理过慢 504</li>
 <li><a target="_blank" rel="noopener" href="https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html">https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42123737/article/details/81367074">https://blog.csdn.net/weixin_42123737/article/details/81367074</a></li>
@@ -312,7 +312,7 @@
 <ul>
 <li>cgi 与 fast-cgi 协议 对比？</li>
 <li>fast-cgi 协议相关？<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE">https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE</a> </li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE">https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE</a></li>
 <li>协议头 <code>version type request_id content_length</code></li>
 <li>协议体 <code>data</code></li>
 </ul>

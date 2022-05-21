@@ -1,12 +1,12 @@
 ---
-title: local ContOS7 build php dev envs
+title: build yourself Linux dev env 
 date: 2019-05-09 12:17:23
 categories: docker nginx
 tags: 
 - php
 ---
 
-## `ContOS7 php` 多环境的配置
+## `ContOS7`  php多版本环境的配置
 
 ### 使用最小化安装之后的第一个问题，内外网不通
 
@@ -26,7 +26,7 @@ tags:
   
   ```
 
-## 一些准备工作
+### 一些准备工作
 
 - `yum install vim -y && yum install net-tools -y`   习惯了 `vim` 加上一个网络分析小工具
 - `yum install gcc gcc-c++ httpd-tools autoconf pcre pcre-devel make automake -y` 安装一些编译测试工具
@@ -36,7 +36,7 @@ tags:
 - 下面的 `selinuxtype` 要是改成 `disable` 建议删了重装会快一些
 - 不然 `selinux` 可能会导致你的网络端口不可访问
 
-## 安装 `nginx`
+### 安装 `nginx`
 
 - [参考](http://nginx.org/en/linux_packages.html#RHEL-CentOS)
 - `vim /etc/yum.repos.d/nginx.repo` 创建 `yum` 源文件
@@ -77,7 +77,7 @@ tags:
 - 然后输入 `IP` 到浏览器访问成功
 - 默认配置位置 `/etc/nginx/nginx.conf` `/etc/nginx/conf.d/default.conf`
 
-## 安装 `PHP`
+### 安装 `PHP`
 
 - [参考](https://webtatic.com/packages/php72/)
 
@@ -103,7 +103,7 @@ tags:
   - 写入 `extension=redis.so`
   - `systemctl restart php-fpm` 就 `ok` 了
 
-## `php`与`nginx` 链接起来
+### `php`与`nginx` 链接起来
 
   ```shell
   [root@localhost ~]# cd dev
@@ -130,7 +130,7 @@ tags:
 
 - `nginx -t && nginx -s reload`
 
-## 安装docker 
+### 安装docker
 
 ```shell
 yum remove docker  docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
@@ -146,7 +146,7 @@ systemctl start docker
 systemctl enable docker
 ```
 
-## 使用`docker `构建 `php5.4` 环境
+### 使用`docker`构建 `php5.4` 环境
 
 - 更换镜像，使用阿里云的镜像加速
 - `https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors`
@@ -155,7 +155,7 @@ systemctl enable docker
 - `"registry-mirrors": ["https://xxxxx.mirror.aliyuncs.com"]`
 - `systemctl daemon-reload`
 - `systemctl restart docker`
-- 运行生成一个` php5.4` 的容器
+- 运行生成一个`php5.4` 的容器
 
   ```shell
   docker run -d \
@@ -164,7 +164,7 @@ systemctl enable docker
   --name phpfpm54 --privileged=true php:5.4-fpm
   ```
 
-## docker 中 扩展安装
+#### docker 中 扩展安装
 
 - `docker exec -ti phpfpm54 /bin/bash`
 - `-ti` 打开图形界面
@@ -178,7 +178,7 @@ systemctl enable docker
 bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zend_test zip
 ```
 
-### docker `Debian` 换源安装` gd` 库
+#### docker `Debian` 换源安装`gd` 库
 
 ```shell
 cd /etc/apt && cp sources.list ./sources.list.bak
@@ -248,7 +248,7 @@ kill -USR2 1
 - 如果是在外面也可以：docker exec -it 容器id或名称 kill -USR2 1
 - 或者重启容器  docker restart 容器id或名称
 
-## 安装  `swoole`
+#### 安装  `swoole`
 
 - `yum install git openssl-devel -y`
 - `git clone https://gitee.com/swoole/swoole.git`
@@ -287,6 +287,7 @@ kill -USR2 1
     ```
 
 ```shell
+
 [root@localhost swoole]# php --ri swoole
 
 swoole
@@ -318,25 +319,10 @@ swoole.enable_coroutine => On => On
 swoole.display_errors => On => On
 swoole.use_shortname => On => On
 swoole.unixsock_buffer_size => 8388608 => 8388608
+
 ```
 
-## `docker`  安装 `mysql `服务
-
-- `dokcer pull mysql:5.7`
-- `mkdir -p /data/mysql/datadir` #用于挂载`mysql`数据文件
-- `mkdir -p /data/mysql/conf.d` #用于挂载`mysql`配置文件
-  
-```shell
-docker run -d \
---name mysql5.7 -p 3306:3306 \
--v /data/mysql/datadir:/var/lib/mysql \
--v /data/mysql/conf.d:/etc/mysql/conf.d \
--e MYSQL_ROOT_PASSWORD=123456  mysql:5.7
-```
-
-- `-e`：设置环境变量，此处指定 `root` 密码
-
-## docker 构建生产可用 php8.1 
+### docker 构建生产可用 php8.1
 
 ```dockerfile
 FROM php:8.1-fpm
@@ -418,6 +404,7 @@ docker run -i -t -d \
  -p 8100:9000 \
  -v /pathto/code:/var/www/html  --name=laravel8  php81-laravel:v1
 ```
+
 ### 执行者权限问题
 
 - 在容器内 `php-fpm` 的运行时分组 为 `www-data`
@@ -427,6 +414,7 @@ docker run -i -t -d \
 id  www-data 
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
+
 - 所以其生成的 log 文件也是 属于这个分组下
 - 在宿主机上 如果没有 33 的分组与用户， 展示的则为 `tape tape`
 - 如若在宿主机上使用 crontab 势必会导致 log 权限的问题，
@@ -451,19 +439,195 @@ crontab -e
 * * * * *  docker exec laravel8 sudo -u www php artisan schedule:run
 ```
 
-## `docker` 安装 `portainer`
+
+
+## lnmp 一键安装 脚本
+
+- 支持到 php8.1 , 测试服用这个省心
+- `https://lnmp.org/`
+
+## `Debian` 环境配置
+
+因为 `contOS8` 以后的版本会面临的风险，所以打算更换Linux的构建版本，在对比了一系列版本后，最终选择了 `Debian11` 希望这个系统能陪我10-20年。
+
+### ISO 文件获取
+
+- 11版本的的debian.iso 文件获取 发行版本也才300M
+[https://developer.aliyun.com/mirror/debian-cd](https://developer.aliyun.com/mirror/debian-cd)
+
+### VirtualBox 相关配置
+
+- 内存调整 4G
+- 核心 两核
+- 网卡开 nat 跟 host only 两个
+
+- 安装过程中拒绝 `ghome` 等桌面软件, 开启 `ssh serve`
+
+### 初始化后调整本地的host网络
+
+```shell
+
+# 查看相关网卡
+ip addr 
+# 发现 enp0s8 host only 网卡没配置
+
+# 对其进行配置
+vim /etc/network/interfaces
+
+allow-hotplug enp0s8
+iface enp0s8 inet dhcp
+
+# 通过 ifup 来启动网卡
+ifup enp0s8
+```
+
+### ssh 开启允许 root 登录
+
+```shell
+vim /etc/ssh/sshd_config
+
+# 修改
+PermitRootLogin yes
+
+# 重启 
+systemctl restart sshd
+
+```
+
+- [更改apt源](https://developer.aliyun.com/mirror/debian)
+
+```shell
+# 更改源
+vim /etc/apt/sources.list
+# 写入数据
+deb http://mirrors.aliyun.com/debian/ bullseye main non-free contrib
+deb-src http://mirrors.aliyun.com/debian/ bullseye main non-free contrib
+deb http://mirrors.aliyun.com/debian-security/ bullseye-security main
+deb-src http://mirrors.aliyun.com/debian-security/ bullseye-security main
+deb http://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib
+deb-src http://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib
+deb http://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib
+deb-src http://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib
+
+# 更新源与 相关软件
+apt update && apt upgrade -y
+
+```
+
+### docker 与相关应用安装
+
+- docker [安装](https://docs.docker.com/engine/install/debian/)
+
+```shell
+
+apt install ca-certificates curl gnupg lsb-release -y
+
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" |  tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# 更新源
+apt update
+
+# 直接安装
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y 
+
+# 查看版本 & 进行安装
+apt-cache madison docker-ce
+
+apt-get install docker-ce=5:20.10.16~3-0~debian-bullseye docker-ce-cli=5:20.10.16~3-0~debian-bullseye containerd.io docker-compose-plugin
+
+# 持久化开启docker
+systemctl start docker && systemctl enable docker
+
+# 镜像加速
+vim /etc/docker/daemon.json
+# 写入数据
+{
+  "registry-mirrors": ["https://xxxx.mirror.aliyuncs.com"]
+}
+
+# 重启加速
+systemctl daemon-reload && systemctl restart docker
+
+```
+
+### nginx 安装
+
+```shell
+apt install curl gnupg2 ca-certificates lsb-release debian-archive-keyring -y
+
+apt update  && apt install nginx -y
+
+# 持久化开启
+systemctl start nginx && systemctl enable nginx
+```
+
+### 个性化设置
+
+```shell
+
+# ll 别名
+alias ll="ls -l"
+
+# oh-my-zsh 安装
+
+# 安装 zsh
+apt-get install zsh -y
+
+# 切换shell 到zsh   然后重启
+chsh -s /bin/zsh
+
+# https://github.com/ohmyzsh/ohmyzsh 想办法下载安装脚本
+sh install.sh
+
+# 更换主题
+vim ~/.zshrc
+
+# 修改 ZSH_THEME="cloud" 新开tab生效
+
+# 更多主题 可以查看 https://github.com/ohmyzsh/ohmyzsh/wiki/themes
+
+# xshell连接此host的终端类型，改成linux 来避免 home end 失效
+```
+
+## `docker` 安装基础服务
+
+### `docker` 安装 `portainer`
 
 ```shell
 # 拉取镜像
 docker pull portainer/portainer
 # 生成数据保存路径
 mkdir -p /data/portainer_data
-# 生成 portainer 镜像
+# 生成 portainer 运行时
 docker run -d -p 9001:9000 --name portainer --restart=always \
--v /var/run/docker.sock:/var/run/docker.sock  -v  /data/portainer_data:/data portainer/portainer 
+-v /var/run/docker.sock:/var/run/docker.sock  -v  /data/portainer_data:/data  portainer/portainer 
 ```
 
-## lnmp 一键安装 脚本，
+### `docker`  安装 `mysql`服务
 
-- 支持到 php8.1 , 测试服用这个省心
-- `https://lnmp.org/`
+- ``
+- `` #用于挂载`mysql`数据文件
+- `` #用于挂载`mysql`配置文件
+  
+```shell
+# 安装MySQL5.7
+dokcer pull mysql:5.7
+# 生成mysql数据保存路径
+mkdir -p /data/mysql/datadir
+# 生成mysql配置文件保存路径
+mkdir -p /data/mysql/conf.d
+
+# 生成 MySQL 运行时
+docker run -d \
+--name mysql5.7 -p 3306:3306 \
+-v /data/mysql/datadir:/var/lib/mysql \
+-v /data/mysql/conf.d:/etc/mysql/conf.d \
+-e MYSQL_ROOT_PASSWORD=123456  mysql:5.7
+
+# `-e`：设置环境变量，此处指定 `root` 密码
+```

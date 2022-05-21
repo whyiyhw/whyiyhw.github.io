@@ -29,23 +29,23 @@ fastcgi_pass  /usr/run/php-fpm.sock
 - `UNIX Socket` （同一服务器上不同进程间的通信机制）
   - 不需要网络协议栈、打包拆包,减少了 tcp 开销，理论效率比 tcp socket 更高
   - 缺点也是因为缺少tcp的检查与重试机制，在高并发时稳定性欠佳（需要优化内核与应用相关参数）
-    - listen.backlog   等待连接数，当其被用完时直接 502 
+    - listen.backlog   等待连接数，当其被用完时直接 502
     - pm.max_children 进程都在执行等待时处理过慢 504
-    - https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html
-    - https://blog.csdn.net/weixin_42123737/article/details/81367074
+    - <https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html>
+    - <https://blog.csdn.net/weixin_42123737/article/details/81367074>
 - `TCP/IP Socket` （多台服务器上不同进程间的通信机制）
   - 扩展方便 , 适合 nginx 与 php-fpm 在不同服务器的情况
-  - 相关优化方案比较多  https://blog.51cto.com/u_15322220/3286743
+  - 相关优化方案比较多  <https://blog.51cto.com/u_15322220/3286743>
 - 相关衍生问题
 
   - 协议 CGI 与 FAST-CGI
     - cgi 与 fast-cgi 协议 对比？
     - fast-cgi 协议相关？
-      - https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE 
+      - <https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE>
       - 协议头 `version type request_id content_length`
       - 协议体 `data`
   - fpm backlog 配置优化
-    - https://www.cnxct.com/something-about-phpfpm-s-backlog/
+    - <https://www.cnxct.com/something-about-phpfpm-s-backlog/>
 
   - 进程间通信 IPC 的7种方式？
     - 匿名管道 pipe

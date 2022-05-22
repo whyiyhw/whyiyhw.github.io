@@ -16,23 +16,22 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="nginx 常用功能详解nginx与php-fpm的两种通信方式详解一般来说，我们配置 nginx 与 php-fpm 的通信会有两种设置，以 unix socket 与 tcp&#x2F;ip socket 的方式 通过 fast-cgi 协议进行通信 比如 1234# tcp socket 的方式fastcgi_pass  127.0.0.1:9000# unix socket 的方式fastcgi_p">
+    <meta name="description" content="安卓自动化 tasker 的实践事情是这个样子的，出于不合理工时以及废旧安卓的再利用，我需要在不root的情况下进行xxapp的自动打卡 初步思路经过Google与V站查询，大致的有这4种思路去做  自动化相关应用 tasker、autojs、hamibot   远程工具 TeamViewer   虚拟定位软件 修改 WiFi mac 地址  问题点xxapp 极速打卡可能会存在的一些检测机制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx常用功能详解">
-<meta property="og:url" content="https://blogxy.cn/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="安卓自动化软件 tasker 的实践">
+<meta property="og:url" content="https://blogxy.cn/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="nginx 常用功能详解nginx与php-fpm的两种通信方式详解一般来说，我们配置 nginx 与 php-fpm 的通信会有两种设置，以 unix socket 与 tcp&#x2F;ip socket 的方式 通过 fast-cgi 协议进行通信 比如 1234# tcp socket 的方式fastcgi_pass  127.0.0.1:9000# unix socket 的方式fastcgi_p">
+<meta property="og:description" content="安卓自动化 tasker 的实践事情是这个样子的，出于不合理工时以及废旧安卓的再利用，我需要在不root的情况下进行xxapp的自动打卡 初步思路经过Google与V站查询，大致的有这4种思路去做  自动化相关应用 tasker、autojs、hamibot   远程工具 TeamViewer   虚拟定位软件 修改 WiFi mac 地址  问题点xxapp 极速打卡可能会存在的一些检测机制">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-03T05:51:56.000Z">
-<meta property="article:modified_time" content="2022-05-21T07:29:30.208Z">
+<meta property="article:published_time" content="2022-05-22T09:38:14.000Z">
+<meta property="article:modified_time" content="2022-05-22T09:42:11.057Z">
 <meta property="article:author" content="YI">
-<meta property="article:tag" content="nginx">
-<meta property="article:tag" content="php-fpm">
+<meta property="article:tag" content="自动打卡">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>nginx常用功能详解 - 积木成楼</title>
+  <title>安卓自动化软件 tasker 的实践 - 积木成楼</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="nginx常用功能详解"></span>
+            <span id="subtitle" data-typed-text="安卓自动化软件 tasker 的实践"></span>
           
         </div>
 
@@ -206,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-03-03 13:51" pubdate>
-          星期四, 三月 3日 2022, 1:51 下午
+        <time datetime="2022-05-22 17:38" pubdate>
+          星期日, 五月 22日 2022, 5:38 下午
         </time>
       </span>
     
@@ -219,7 +218,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.3k 字
+          1.1k 字
         
       </span>
     
@@ -231,7 +230,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          10 分钟
         
       </span>
     
@@ -269,75 +268,55 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">nginx常用功能详解</h1>
+            <h1 style="display: none">安卓自动化软件 tasker 的实践</h1>
             
               <p class="note note-info">
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
+                    本文最后更新于：2022年5月22日 下午
                   
                 
               </p>
             
             <div class="markdown-body">
               
-              <h1 id="nginx-常用功能详解"><a href="#nginx-常用功能详解" class="headerlink" title="nginx 常用功能详解"></a>nginx 常用功能详解</h1><h2 id="nginx与php-fpm的两种通信方式详解"><a href="#nginx与php-fpm的两种通信方式详解" class="headerlink" title="nginx与php-fpm的两种通信方式详解"></a>nginx与php-fpm的两种通信方式详解</h2><p>一般来说，我们配置 <code>nginx</code> 与 <code>php-fpm</code> 的通信会有两种设置，以 <code>unix socket</code> 与 <code>tcp/ip socket</code> 的方式 通过 fast-cgi 协议进行通信</p>
-<p>比如</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># tcp socket 的方式</span><br><span class="hljs-attribute">fastcgi_pass</span>  <span class="hljs-number">127.0.0.1:9000</span><br><span class="hljs-comment"># unix socket 的方式</span><br>fastcgi_pass  /usr/run/php-fpm.sock <br></code></pre></td></tr></table></figure>
-
-<h2 id="对比-UNIX-Domain-Socket-与-TCP-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP/IP Socket"></a>对比 UNIX Domain Socket 与 TCP/IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
+              <h2 id="安卓自动化-tasker-的实践"><a href="#安卓自动化-tasker-的实践" class="headerlink" title="安卓自动化 tasker 的实践"></a>安卓自动化 tasker 的实践</h2><p>事情是这个样子的，出于不合理工时以及废旧安卓的再利用，我需要在不<code>root</code>的情况下进行<code>xxapp</code>的自动打卡</p>
+<h2 id="初步思路"><a href="#初步思路" class="headerlink" title="初步思路"></a>初步思路</h2><p>经过<code>Google</code>与<code>V站</code>查询，大致的有这4种思路去做</p>
 <ul>
-<li><p><code>UNIX Socket</code> （同一服务器上不同进程间的通信机制）</p>
+<li>自动化相关应用<ul>
+<li><code>tasker</code>、<code>autojs</code>、<code>hamibot</code></li>
+</ul>
+</li>
+<li>远程工具<ul>
+<li><code>TeamViewer</code></li>
+</ul>
+</li>
+<li>虚拟定位软件</li>
+<li>修改 <code>WiFi mac</code> 地址</li>
+</ul>
+<h2 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h2><p><code>xxapp</code> 极速打卡可能会存在的一些检测机制</p>
 <ul>
-<li>不需要网络协议栈、打包拆包,减少了 tcp 开销，理论效率比 tcp socket 更高</li>
-<li>缺点也是因为缺少tcp的检查与重试机制，在高并发时稳定性欠佳（需要优化内核与应用相关参数）<ul>
-<li>listen.backlog   等待连接数，当其被用完时直接 502</li>
-<li>pm.max_children 进程都在执行等待时处理过慢 504</li>
-<li><a target="_blank" rel="noopener" href="https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html">https://shipengliang.com/software-exp/nginx%E5%92%8Cphp-fpm%E4%BD%BF%E7%94%A8tcp-socket%E8%BF%98%E6%98%AFunix-socket.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42123737/article/details/81367074">https://blog.csdn.net/weixin_42123737/article/details/81367074</a></li>
+<li><code>xxapp</code>会定期检测实时位置</li>
+<li><code>xxapp</code>会读取相关运行应用</li>
+<li>另外需要注意的一点是避免打卡的时间过于固定与一致</li>
 </ul>
-</li>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>最终我使用 <a target="_blank" rel="noopener" href="https://tasker.joaoapps.com/download.html">tasker</a> 来做这件事</p>
+<h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul>
+<li>因为是旧华为手机，给 <code>tasker</code> 把权限全部打开</li>
+<li>电池优化相关，设置 <code>tasker</code> 不进入优化名单</li>
+<li>7次点击版本号，进入开发者模式，关闭锁屏选项,开启运行 <code>adb</code> 调试</li>
+<li><a target="_blank" rel="noopener" href="https://www.xda-developers.com/install-adb-windows-macos-linux/#adbsetupwindows">windows电脑端 adb 下载</a> ， 设置安全权限 <code>adb shell pm grant net.dinglisch.android.taskerm android.permission.WRITE_SECURE_SETTINGS</code></li>
 </ul>
-</li>
-<li><p><code>TCP/IP Socket</code> （多台服务器上不同进程间的通信机制）</p>
-<ul>
-<li>扩展方便 , 适合 nginx 与 php-fpm 在不同服务器的情况</li>
-<li>相关优化方案比较多  <a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15322220/3286743">https://blog.51cto.com/u_15322220/3286743</a></li>
-</ul>
-</li>
-<li><p>相关衍生问题</p>
-<ul>
-<li><p>协议 CGI 与 FAST-CGI</p>
-<ul>
-<li>cgi 与 fast-cgi 协议 对比？</li>
-<li>fast-cgi 协议相关？<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE">https://www.cnblogs.com/itbsl/p/9828776.html#%E6%B7%B1%E5%85%A5cgi%E5%8D%8F%E8%AE%AE</a></li>
-<li>协议头 <code>version type request_id content_length</code></li>
-<li>协议体 <code>data</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>fpm backlog 配置优化</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnxct.com/something-about-phpfpm-s-backlog/">https://www.cnxct.com/something-about-phpfpm-s-backlog/</a></li>
-</ul>
-</li>
-<li><p>进程间通信 IPC 的7种方式？</p>
-<ul>
-<li>匿名管道 pipe</li>
-<li>有名管道 fifo</li>
-<li>信号 Signal</li>
-<li>消息队列 Message</li>
-<li>共享内存 share memory</li>
-<li>信号量 semaphore</li>
-<li>嵌套字 socket</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<h3 id="tasker-应用基础概念"><a href="#tasker-应用基础概念" class="headerlink" title="tasker 应用基础概念"></a>tasker 应用基础概念</h3><p>在完成上述的设置之后，进入这个软件，我们目前要用的核心板块有三块，配置文件、任务与变量。</p>
+<p>配置文件可以对任务进行编排，设置触发条件，任务指的是一系列操作的集合，而变量则可以在多个任务之间进行传递。</p>
+<p>我们很轻松可以实现一个打开app的任务,然后app内设置极速打卡，这样我们的设想就成立了，剩下的就是完善。</p>
+<h3 id="定期检测实时位置"><a href="#定期检测实时位置" class="headerlink" title="定期检测实时位置"></a>定期检测实时位置</h3><p>目前处理方式为 将手机放在公司，连接上公司的WiFi，避免虚拟定位导致人一秒钟，移动几公里的漂移问题。</p>
+<h3 id="读取相关运行应用"><a href="#读取相关运行应用" class="headerlink" title="读取相关运行应用"></a>读取相关运行应用</h3><p>这也是不采用虚拟定位app 来进行打卡的原因之一，xx会扫描正在运行时的包，部分应用可能处在黑名单之中。需要在打卡之前，根据随机值，去开启一系列的应用，来模拟日常有人使用的假象。</p>
+<h3 id="不固定打卡时间"><a href="#不固定打卡时间" class="headerlink" title="不固定打卡时间"></a>不固定打卡时间</h3><p>核心功能中的变量正好能处理这个事情，设置一个全局变量<code>%Random</code> 在任务中去进行随机变量的操作，再设置一个等待随机分钟的任务，记得设置的大一点，来避免总时长过于一致的尴尬，这样就算完成打卡的核心功能</p>
+<h3 id="避免节假日自动打卡"><a href="#避免节假日自动打卡" class="headerlink" title="避免节假日自动打卡"></a>避免节假日自动打卡</h3><p>这个可以自己写shell但是没必要，手机设置，自动开关机，智能跳过节假日就好~</p>
+<h3 id="打卡后的通知"><a href="#打卡后的通知" class="headerlink" title="打卡后的通知"></a>打卡后的通知</h3><p>既然手机放在公司，能连上WiFi就可以通过网络来通知，注册一个企业微信，再跟个人微信绑定，创建一个专门用于通知的应用，简单的编写一个通知程序，跑在自己的服务器上，在任务的最后通过 http来调用这个程序，将消息下发到关联微信就好~</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不root的情况下，安卓自动化应用确实是比较弱，这个应用能干的事情也远不止打打卡，后续如果遇到了合适的场景，再去试试它的其他功能，886~</p>
 
               
             </div>
@@ -355,7 +334,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/nginx/" class="category-chain-item">nginx</a>
+  <a href="/categories/tasker/" class="category-chain-item">tasker</a>
   
   
 
@@ -370,9 +349,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/nginx/">#nginx</a>
-      
-        <a href="/tags/php-fpm/">#php-fpm</a>
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E6%89%93%E5%8D%A1/">#自动打卡</a>
       
     </div>
   
@@ -384,8 +361,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>nginx常用功能详解</div>
-      <div>https://blogxy.cn/2022/03/03/nginx常用功能详解/</div>
+      <div>安卓自动化软件 tasker 的实践</div>
+      <div>https://blogxy.cn/2022/05/22/安卓自动化-tasker-的实践/</div>
     </div>
     <div class="license-meta">
       
@@ -397,7 +374,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年3月3日</div>
+          <div>2022年5月22日</div>
         </div>
       
       
@@ -427,18 +404,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/" title="安卓自动化软件 tasker 的实践">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">安卓自动化软件 tasker 的实践</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/20/kubernetes-%E4%B8%80/" title="kubernetes(一)">
-                        <span class="hidden-mobile">kubernetes(一)</span>
+                      <a href="/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/" title="nginx常用功能详解">
+                        <span class="hidden-mobile">nginx常用功能详解</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

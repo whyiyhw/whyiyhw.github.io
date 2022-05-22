@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>安卓自动化软件 tasker 的实践</title>
+    <link href="/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/"/>
+    <url>/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/</url>
+    
+    <content type="html"><![CDATA[<h2 id="安卓自动化-tasker-的实践"><a href="#安卓自动化-tasker-的实践" class="headerlink" title="安卓自动化 tasker 的实践"></a>安卓自动化 tasker 的实践</h2><p>事情是这个样子的，出于不合理工时以及废旧安卓的再利用，我需要在不<code>root</code>的情况下进行<code>xxapp</code>的自动打卡</p><h2 id="初步思路"><a href="#初步思路" class="headerlink" title="初步思路"></a>初步思路</h2><p>经过<code>Google</code>与<code>V站</code>查询，大致的有这4种思路去做</p><ul><li>自动化相关应用<ul><li><code>tasker</code>、<code>autojs</code>、<code>hamibot</code></li></ul></li><li>远程工具<ul><li><code>TeamViewer</code></li></ul></li><li>虚拟定位软件</li><li>修改 <code>WiFi mac</code> 地址</li></ul><h2 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h2><p><code>xxapp</code> 极速打卡可能会存在的一些检测机制</p><ul><li><code>xxapp</code>会定期检测实时位置</li><li><code>xxapp</code>会读取相关运行应用</li><li>另外需要注意的一点是避免打卡的时间过于固定与一致</li></ul><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>最终我使用 <a href="https://tasker.joaoapps.com/download.html">tasker</a> 来做这件事</p><h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul><li>因为是旧华为手机，给 <code>tasker</code> 把权限全部打开</li><li>电池优化相关，设置 <code>tasker</code> 不进入优化名单</li><li>7次点击版本号，进入开发者模式，关闭锁屏选项,开启运行 <code>adb</code> 调试</li><li><a href="https://www.xda-developers.com/install-adb-windows-macos-linux/#adbsetupwindows">windows电脑端 adb 下载</a> ， 设置安全权限 <code>adb shell pm grant net.dinglisch.android.taskerm android.permission.WRITE_SECURE_SETTINGS</code></li></ul><h3 id="tasker-应用基础概念"><a href="#tasker-应用基础概念" class="headerlink" title="tasker 应用基础概念"></a>tasker 应用基础概念</h3><p>在完成上述的设置之后，进入这个软件，我们目前要用的核心板块有三块，配置文件、任务与变量。</p><p>配置文件可以对任务进行编排，设置触发条件，任务指的是一系列操作的集合，而变量则可以在多个任务之间进行传递。</p><p>我们很轻松可以实现一个打开app的任务,然后app内设置极速打卡，这样我们的设想就成立了，剩下的就是完善。</p><h3 id="定期检测实时位置"><a href="#定期检测实时位置" class="headerlink" title="定期检测实时位置"></a>定期检测实时位置</h3><p>目前处理方式为 将手机放在公司，连接上公司的WiFi，避免虚拟定位导致人一秒钟，移动几公里的漂移问题。</p><h3 id="读取相关运行应用"><a href="#读取相关运行应用" class="headerlink" title="读取相关运行应用"></a>读取相关运行应用</h3><p>这也是不采用虚拟定位app 来进行打卡的原因之一，xx会扫描正在运行时的包，部分应用可能处在黑名单之中。需要在打卡之前，根据随机值，去开启一系列的应用，来模拟日常有人使用的假象。</p><h3 id="不固定打卡时间"><a href="#不固定打卡时间" class="headerlink" title="不固定打卡时间"></a>不固定打卡时间</h3><p>核心功能中的变量正好能处理这个事情，设置一个全局变量<code>%Random</code> 在任务中去进行随机变量的操作，再设置一个等待随机分钟的任务，记得设置的大一点，来避免总时长过于一致的尴尬，这样就算完成打卡的核心功能</p><h3 id="避免节假日自动打卡"><a href="#避免节假日自动打卡" class="headerlink" title="避免节假日自动打卡"></a>避免节假日自动打卡</h3><p>这个可以自己写shell但是没必要，手机设置，自动开关机，智能跳过节假日就好~</p><h3 id="打卡后的通知"><a href="#打卡后的通知" class="headerlink" title="打卡后的通知"></a>打卡后的通知</h3><p>既然手机放在公司，能连上WiFi就可以通过网络来通知，注册一个企业微信，再跟个人微信绑定，创建一个专门用于通知的应用，简单的编写一个通知程序，跑在自己的服务器上，在任务的最后通过 http来调用这个程序，将消息下发到关联微信就好~</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不root的情况下，安卓自动化应用确实是比较弱，这个应用能干的事情也远不止打打卡，后续如果遇到了合适的场景，再去试试它的其他功能，886~</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>tasker</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>自动打卡</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>nginx常用功能详解</title>
     <link href="/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/"/>
     <url>/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/</url>

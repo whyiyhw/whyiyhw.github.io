@@ -627,3 +627,19 @@ docker run -d \
 
 # `-e`：设置环境变量，此处指定 `root` 密码
 ```
+
+### `docker`  安装 `shiori` 书签服务
+
+```shell
+mkdir -p /data/shiori
+
+chmod -R 777 /data/shiori
+
+docker run -itd --name="shiori" -p 8081:8080 -v /data/shiori:/shiori ghcr.io/go-shiori/shiori
+```
+
+- 初始密码 `shiori`   `gopher`
+- 需要进入后进行新账号生成
+
+- 项目 [https://github.com/go-shiori/shiori](https://github.com/go-shiori/shiori)
+- 衍生浏览器插件 [https://github.com/go-shiori/shiori-web-ext](https://github.com/go-shiori/shiori-web-ext)

@@ -29,16 +29,14 @@ tags: [hexo, git, fluid]
 - `npm` 跟 `cnpm` 的区别就不说了
 
     ```shell
-    `cnpm install hexo -g` #安装 `hexo` 
+    `npm install hexo -g` #安装 `hexo` 
     `hexo -v`  #查看版本
     ```
 
     ```shell
-    `cnpm install -g hexo-cli`               # 安装 `hexo` 命令行
     `hexo init dir`                          # 初始化目录
     `hexo new post "关于hexo的安装的一些记录"` # 新建文件
-    `cnpm install hexo-server --save`        # 更新预览服务
-    `hexo server`                            # 启动服务，可访问 http://localhost:4000 进行预览
+    `hexo s`                                 # 启动服务，可访问 http://localhost:4000 进行预览
     `hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上
     `hexo clean && hexo d -g`                # 上传前需要清理缓存来避免样式错乱问题，编译缩写
     ```
@@ -72,9 +70,9 @@ tags: [hexo, git, fluid]
 - `git checkout hexo` 拉下代码后 切换分支  至配置生成目录
 
 ```shell
-cnpm install hexo                     # 重新安装 hexo
-cnpm install                          # 重新拉所需的运行所需文件
-cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
+npm install hexo                     # 重新安装 hexo
+npm install                          # 重新拉所需的运行所需文件
+npm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 ```
 
 ### git 设置 https 代理的正确姿势?
@@ -92,7 +90,7 @@ cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 
 ### 搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误
 
-- `cnpm install hexo-deployer-git --save` #重新生成 钩子才能上传成功
+- `npm install hexo-deployer-git --save` #重新生成 钩子才能上传成功
 
 ### hexo 怎么删除文章？
 

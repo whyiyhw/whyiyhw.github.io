@@ -220,7 +220,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.8k 字
+          1.7k 字
         
       </span>
     
@@ -302,9 +302,9 @@
 </ul>
 <h2 id="HEXO-基础安装流程"><a href="#HEXO-基础安装流程" class="headerlink" title="HEXO 基础安装流程"></a>HEXO 基础安装流程</h2><ul>
 <li><p><code>npm</code> 跟 <code>cnpm</code> 的区别就不说了</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">`cnpm install hexo -g` #安装 `hexo` <br>`hexo -v`  #查看版本<br></code></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">`npm install hexo -g` #安装 `hexo` <br>`hexo -v`  #查看版本<br></code></pre></td></tr></table></figure>
 
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">`cnpm install -g hexo-cli`               # 安装 `hexo` 命令行<br>`hexo init dir`                          # 初始化目录<br>`hexo new post &quot;关于hexo的安装的一些记录&quot;` # 新建文件<br>`cnpm install hexo-server --save`        # 更新预览服务<br>`hexo server`                            # 启动服务，可访问 http://localhost:4000 进行预览<br>`hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上<br>`hexo clean &amp;&amp; hexo d -g`                # 上传前需要清理缓存来避免样式错乱问题，编译缩写<br></code></pre></td></tr></table></figure></li>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">`hexo init dir`                          # 初始化目录<br>`hexo new post &quot;关于hexo的安装的一些记录&quot;` # 新建文件<br>`hexo s`                                 # 启动服务，可访问 http://localhost:4000 进行预览<br>`hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上<br>`hexo clean &amp;&amp; hexo d -g`                # 上传前需要清理缓存来避免样式错乱问题，编译缩写<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="hexo-的主题-next-与-fluid-的修改-hexo-进阶-next"><a href="#hexo-的主题-next-与-fluid-的修改-hexo-进阶-next" class="headerlink" title="hexo 的主题 next 与 fluid 的修改 hexo  进阶 next"></a>hexo 的主题 next 与 fluid 的修改 <code>hexo</code>  进阶 <code>next</code></h2><ul>
 <li>next 主题相关</li>
@@ -322,7 +322,7 @@
 <h3 id="多主机如何进行发布？"><a href="#多主机如何进行发布？" class="headerlink" title="多主机如何进行发布？"></a>多主机如何进行发布？</h3><ul>
 <li><code>git checkout hexo</code> 拉下代码后 切换分支  至配置生成目录</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cnpm install hexo                     # 重新安装 hexo<br>cnpm install                          # 重新拉所需的运行所需文件<br>cnpm install hexo-deployer-git --save # 重新生成 钩子才能上传成功<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install hexo                     # 重新安装 hexo<br>npm install                          # 重新拉所需的运行所需文件<br>npm install hexo-deployer-git --save # 重新生成 钩子才能上传成功<br></code></pre></td></tr></table></figure>
 
 <h3 id="git-设置-https-代理的正确姿势"><a href="#git-设置-https-代理的正确姿势" class="headerlink" title="git 设置 https 代理的正确姿势?"></a>git 设置 https 代理的正确姿势?</h3><ul>
 <li><p><code>git config --global http.https://github.com.proxy socks5://127.0.0.1:1080</code> 仅设置 github 在 https 端口的 代理</p>
@@ -333,7 +333,7 @@
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --global http.proxy &#x27;socks5://127.0.0.1:1080&#x27; # http全局设置代理<br>git config --global https.proxy &#x27;socks5://127.0.0.1:1080&#x27;# https全局设置代理<br>git config --global --unset http.proxy # http全局取消代理<br>git config --global --unset https.proxy# https全局取消代理<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误"><a href="#搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误" class="headerlink" title="搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误"></a>搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误</h3><ul>
-<li><code>cnpm install hexo-deployer-git --save</code> #重新生成 钩子才能上传成功</li>
+<li><code>npm install hexo-deployer-git --save</code> #重新生成 钩子才能上传成功</li>
 </ul>
 <h3 id="hexo-怎么删除文章？"><a href="#hexo-怎么删除文章？" class="headerlink" title="hexo 怎么删除文章？"></a>hexo 怎么删除文章？</h3><ul>
 <li>先使用 hexo clean 再删除</li>

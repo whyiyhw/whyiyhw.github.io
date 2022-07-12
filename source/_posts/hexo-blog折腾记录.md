@@ -4,6 +4,7 @@ date: 2019-01-29 11:03:50
 updated: 2020-04-07 19:19:24
 categories: blog
 tags: [hexo, git, fluid]
+index_img: "img/post/02.jpg"
 ---
 
 ## 安装折腾总览
@@ -65,6 +66,14 @@ tags: [hexo, git, fluid]
 
 - 需要 新建一个 hexo 分支 来避免 master 主分支被覆盖 ，主分支 master 为静态文件目录 ，hexo 分支为 样式与配置文件目录
 
+### 配置未生效
+
+- 老版本配置写在  `_data/fluid_conf`  中，导致新版本修改配置无效
+
+### 未生成 index.html 内容 layout 无内容
+
+- 需要把 `hexo theme` 文件复制到 `themes` 目录下
+
 ### 多主机如何进行发布？
 
 - `git checkout hexo` 拉下代码后 切换分支  至配置生成目录
@@ -105,6 +114,21 @@ npm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 - 技能点需求 难度 ♥ ♥
 - `git`、 `hexo` 、`npm`、 `md` 、`html/文件目录` 相关基础知识
 - 这样就能继续愉快的写`blog`了
+
+### 设置流量统计
+
+使用 `busuanzi` 来处理 
+
+### 评论系统
+使用 gittalk 来实现，依赖较少，github 也有 oauth 功能倒是第一次用
+创建入口被隐藏了，可以通过 [https://github.com/settings/applications/new](https://github.com/settings/applications/new) 进入
+
+```config
+Application name             // 应用名称，随便填
+Homepage URL                 // 填自己的博客地址
+Application description      // 应用描述，描述一下，无要求
+Authorization callback URL   // 填自己要使用 `Gitalk` 的博客地址，不可乱填
+```
 
 **参考**
 [hexo官方文档](https://hexo.io/zh-cn/docs/)

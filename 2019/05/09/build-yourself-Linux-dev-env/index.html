@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 修改 ONBOOT&#x3D;yes 后 systemctl restart network.service 重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因 修改 vi &#x2F;etc&#x2F;r">
+    <meta name="description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33  修改 ONBOOT&#x3D;yes 后 systemctl restart network.service  重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因  修改 vi &#x2F;et">
 <meta property="og:type" content="article">
 <meta property="og:title" content="build yourself Linux dev env">
 <meta property="og:url" content="https://blogxy.cn/2019/05/09/build-yourself-Linux-dev-env/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 修改 ONBOOT&#x3D;yes 后 systemctl restart network.service 重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因 修改 vi &#x2F;etc&#x2F;r">
+<meta property="og:description" content="ContOS7  php多版本环境的配置使用最小化安装之后的第一个问题，内外网不通 vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33  修改 ONBOOT&#x3D;yes 后 systemctl restart network.service  重启主机，如果此时内外网通了但是 yum list 失败，主要是服务不可达，考虑为 DNS 的原因  修改 vi &#x2F;et">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-09T04:17:23.000Z">
 <meta property="article:modified_time" content="2022-06-05T14:11:28.144Z">
@@ -31,6 +31,8 @@
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>build yourself Linux dev env - 积木成楼</title>
@@ -71,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -80,6 +82,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -208,7 +212,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2019-05-09 12:17" pubdate>
-          星期四, 五月 9日 2019, 12:17 中午
+          2019年5月9日 中午
         </time>
       </span>
     
@@ -231,13 +235,20 @@
         
         
         
-          <!-- compatible with older versions-->
           134 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -272,22 +283,18 @@
             <!-- SEO header -->
             <h1 style="display: none">build yourself Linux dev env</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年6月5日 晚上
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h2 id="ContOS7-php多版本环境的配置"><a href="#ContOS7-php多版本环境的配置" class="headerlink" title="ContOS7  php多版本环境的配置"></a><code>ContOS7</code>  php多版本环境的配置</h2><h3 id="使用最小化安装之后的第一个问题，内外网不通"><a href="#使用最小化安装之后的第一个问题，内外网不通" class="headerlink" title="使用最小化安装之后的第一个问题，内外网不通"></a>使用最小化安装之后的第一个问题，内外网不通</h3><ul>
-<li><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></li>
-<li>修改 <code>ONBOOT=yes</code> 后 <code>systemctl restart network.service</code></li>
-<li>重启主机，如果此时内外网通了但是 <code>yum list</code> 失败，主要是服务不可达，考虑为 <code>DNS</code> 的原因</li>
-<li>修改 <code>vi /etc/resolv.conf</code> 修改 <code>dns</code> 为 <code>nameserver 8.8.8.8</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum update # 成功<br>yum install wget -y # 装一个下载工具<br>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup # 备份<br>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo # 添加阿里源<br>yum clean all # 清除缓存<br>yum makecache # 生成缓存<br>yum update -y # 更新<br>  <br></code></pre></td></tr></table></figure></li>
+              <div class="markdown-body">
+                
+                <h2 id="ContOS7-php多版本环境的配置"><a href="#ContOS7-php多版本环境的配置" class="headerlink" title="ContOS7  php多版本环境的配置"></a><code>ContOS7</code>  php多版本环境的配置</h2><h3 id="使用最小化安装之后的第一个问题，内外网不通"><a href="#使用最小化安装之后的第一个问题，内外网不通" class="headerlink" title="使用最小化安装之后的第一个问题，内外网不通"></a>使用最小化安装之后的第一个问题，内外网不通</h3><ul>
+<li><p><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></p>
+</li>
+<li><p>修改 <code>ONBOOT=yes</code> 后 <code>systemctl restart network.service</code></p>
+</li>
+<li><p>重启主机，如果此时内外网通了但是 <code>yum list</code> 失败，主要是服务不可达，考虑为 <code>DNS</code> 的原因</p>
+</li>
+<li><p>修改 <code>vi /etc/resolv.conf</code> 修改 <code>dns</code> 为 <code>nameserver 8.8.8.8</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum update # 成功<br>yum install wget -y # 装一个下载工具<br>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup # 备份<br>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo # 添加阿里源<br>yum clean all # 清除缓存<br>yum makecache # 生成缓存<br>yum update -y # 更新<br>  <br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="一些准备工作"><a href="#一些准备工作" class="headerlink" title="一些准备工作"></a>一些准备工作</h3><ul>
 <li><code>yum install vim -y &amp;&amp; yum install net-tools -y</code>   习惯了 <code>vim</code> 加上一个网络分析小工具</li>
@@ -304,9 +311,11 @@
 <li><p><code>vim /etc/yum.repos.d/nginx.repo</code> 创建 <code>yum</code> 源文件</p>
 </li>
 <li><p>根据官方提示修改为</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs conf">[nginx]<br>name=nginx repo<br>baseurl=http://nginx.org/packages/centos/7/$basearch/<br>gpgcheck=0<br>enabled=1<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs conf">[nginx]<br>name=nginx repo<br>baseurl=http://nginx.org/packages/centos/7/$basearch/<br>gpgcheck=0<br>enabled=1<br></code></pre></td></tr></table></figure>
+</li>
 <li><p><code>yum list|grep nginx</code> 能够看到 <code>nginx</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost ~]# yum list|grep nginx<br>nginx.x86_64                                1:1.16.0-1.el7.ngx         nginx<br>nginx-debug.x86_64                          1:1.8.0-1.el7.ngx          nginx<br>nginx-debuginfo.x86_64                      1:1.16.0-1.el7.ngx         nginx<br>nginx-module-geoip.x86_64                   1:1.16.0-1.el7.ngx         nginx<br>nginx-module-geoip-debuginfo.x86_64         1:1.16.0-1.el7.ngx         nginx<br>nginx-module-image-filter.x86_64            1:1.16.0-1.el7.ngx         nginx<br>nginx-module-image-filter-debuginfo.x86_64  1:1.16.0-1.el7.ngx         nginx<br>nginx-module-njs.x86_64                     1:1.16.0.0.3.1-1.el7.ngx   nginx<br>nginx-module-njs-debuginfo.x86_64           1:1.16.0.0.3.1-1.el7.ngx   nginx<br>nginx-module-perl.x86_64                    1:1.16.0-1.el7.ngx         nginx<br>nginx-module-perl-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx<br>nginx-module-xslt.x86_64                    1:1.16.0-1.el7.ngx         nginx<br>nginx-module-xslt-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx<br>nginx-nr-agent.noarch                       2.0.0-12.el7.ngx           nginx<br>pcp-pmda-nginx.x86_64                       4.1.0-5.el7_6              updates  <br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost ~]# yum list|grep nginx<br>nginx.x86_64                                1:1.16.0-1.el7.ngx         nginx<br>nginx-debug.x86_64                          1:1.8.0-1.el7.ngx          nginx<br>nginx-debuginfo.x86_64                      1:1.16.0-1.el7.ngx         nginx<br>nginx-module-geoip.x86_64                   1:1.16.0-1.el7.ngx         nginx<br>nginx-module-geoip-debuginfo.x86_64         1:1.16.0-1.el7.ngx         nginx<br>nginx-module-image-filter.x86_64            1:1.16.0-1.el7.ngx         nginx<br>nginx-module-image-filter-debuginfo.x86_64  1:1.16.0-1.el7.ngx         nginx<br>nginx-module-njs.x86_64                     1:1.16.0.0.3.1-1.el7.ngx   nginx<br>nginx-module-njs-debuginfo.x86_64           1:1.16.0.0.3.1-1.el7.ngx   nginx<br>nginx-module-perl.x86_64                    1:1.16.0-1.el7.ngx         nginx<br>nginx-module-perl-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx<br>nginx-module-xslt.x86_64                    1:1.16.0-1.el7.ngx         nginx<br>nginx-module-xslt-debuginfo.x86_64          1:1.16.0-1.el7.ngx         nginx<br>nginx-nr-agent.noarch                       2.0.0-12.el7.ngx           nginx<br>pcp-pmda-nginx.x86_64                       4.1.0-5.el7_6              updates  <br></code></pre></td></tr></table></figure>
+</li>
 <li><p><code>yum install nginx -y</code> 安装 <code>nginx</code></p>
 </li>
 <li><p><code>systemctl enable nginx</code> 开机自启 <code>nginx</code></p>
@@ -320,7 +329,8 @@
 </ul>
 <h3 id="安装-PHP"><a href="#安装-PHP" class="headerlink" title="安装 PHP"></a>安装 <code>PHP</code></h3><ul>
 <li><p><a target="_blank" rel="noopener" href="https://webtatic.com/packages/php72/">参考</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install epel-release<br>rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install epel-release<br>rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm<br></code></pre></td></tr></table></figure>
+</li>
 <li><p>安装 <code>php</code> 全扩展 <code>yum install mod_php72w php72w-bcmath php72w-cli php72w-common php72w-dba php72w-devel php72w-embedded php72w-enchant php72w-fpm php72w-gd  php72w-imap php72w-interbase php72w-imap php72w-intl php72w-ldap php72w-mbstring php72w-mysqlnd php72w-odbc php72w-opcache php72w-pdo php72w-pdo_dblib php72w-pear php72w-pecl-apcu php72w-pecl-imagick php72w-pecl-mongodb php72w-pgsql php72w-phpdbg php72w-process php72w-pspell php72w-recode php72w-snmp php72w-soap php72w-sodium php72w-tidy php72w-xml php72w-xmlrpc -y</code></p>
 </li>
 <li><p>配置文件位置 <code>/etc/php.ini</code></p>
@@ -349,7 +359,8 @@
 
 <ul>
 <li><p><code>vim /etc/nginx/conf.d/default.conf</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">location / &#123;<br>      root   /dev/www/php/test;<br>      index index.php  index.html index.htm;<br>  &#125;<br><br>  location ~* \.php$ &#123;<br>      fastcgi_index   index.php;<br>      fastcgi_pass    127.0.0.1:9000;<br>      include         fastcgi_params;<br>      fastcgi_param SCRIPT_FILENAME /dev/www/php/test$fastcgi_script_name;<br>  &#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">location / &#123;<br>      root   /dev/www/php/test;<br>      index index.php  index.html index.htm;<br>  &#125;<br><br>  location ~* \.php$ &#123;<br>      fastcgi_index   index.php;<br>      fastcgi_pass    127.0.0.1:9000;<br>      include         fastcgi_params;<br>      fastcgi_param SCRIPT_FILENAME /dev/www/php/test$fastcgi_script_name;<br>  &#125;<br></code></pre></td></tr></table></figure>
+</li>
 <li><p><code>nginx -t &amp;&amp; nginx -s reload</code></p>
 </li>
 </ul>
@@ -412,12 +423,9 @@
 <li>或者重启容器  docker restart 容器id或名称</li>
 </ul>
 <h4 id="安装-swoole"><a href="#安装-swoole" class="headerlink" title="安装  swoole"></a>安装  <code>swoole</code></h4><ul>
-<li><p><code>yum install git openssl-devel -y</code></p>
-</li>
-<li><p><code>git clone https://gitee.com/swoole/swoole.git</code></p>
-</li>
-<li><p>高版本</p>
-<ul>
+<li><code>yum install git openssl-devel -y</code></li>
+<li><code>git clone https://gitee.com/swoole/swoole.git</code></li>
+<li>高版本<ul>
 <li><code>cd swoole</code></li>
 <li><code>git checkout v4.4.6</code></li>
 <li><code>./configure --enable-openssl --enable-mysqlnd --enable-sockets</code></li>
@@ -428,8 +436,7 @@
 <li><code>systemctl restart php-fpm</code></li>
 </ul>
 </li>
-<li><p>低版本</p>
-<ul>
+<li>低版本<ul>
 <li><p><code>wget https://github.com/redis/hiredis/archive/v0.14.0.zip</code></p>
 </li>
 <li><p><code>yun install -y unzip</code></p>
@@ -520,8 +527,9 @@
 </li>
 </ul>
 
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -632,6 +640,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: 'b52ffd3e04a1a1a2542eadff7b3f3223'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -680,12 +712,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -721,6 +747,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -730,6 +762,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -775,8 +831,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -812,74 +866,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -916,6 +905,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

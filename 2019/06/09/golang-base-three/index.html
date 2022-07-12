@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="error 处理 没有异常机制  error 类型实现了 error 接口 123type error interface&amp;#123;    Error string&amp;#125; 可以通过 errors.New 来快速创建错误实例 1234567891011121314151617181920212223242526272829303132errors.New(&quot; error info&amp;">
+    <meta name="description" content="error 处理 没有异常机制  error 类型实现了 error 接口 123type error interface&amp;#123;    Error string&amp;#125;  可以通过 errors.New 来快速创建错误实例 1234567891011121314151617181920212223242526272829303132errors.New(&quot; error info">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang base (three)">
 <meta property="og:url" content="https://blogxy.cn/2019/06/09/golang-base-three/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="error 处理 没有异常机制  error 类型实现了 error 接口 123type error interface&amp;#123;    Error string&amp;#125; 可以通过 errors.New 来快速创建错误实例 1234567891011121314151617181920212223242526272829303132errors.New(&quot; error info&amp;">
+<meta property="og:description" content="error 处理 没有异常机制  error 类型实现了 error 接口 123type error interface&amp;#123;    Error string&amp;#125;  可以通过 errors.New 来快速创建错误实例 1234567891011121314151617181920212223242526272829303132errors.New(&quot; error info">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-09T13:43:37.000Z">
 <meta property="article:modified_time" content="2022-05-21T07:29:30.149Z">
@@ -29,6 +29,8 @@
 <meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>golang base (three) - 积木成楼</title>
@@ -69,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -78,6 +80,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -206,7 +210,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2019-06-09 21:43" pubdate>
-          星期日, 六月 9日 2019, 9:43 晚上
+          2019年6月9日 晚上
         </time>
       </span>
     
@@ -229,13 +233,20 @@
         
         
         
-          <!-- compatible with older versions-->
           17 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -270,22 +281,15 @@
             <!-- SEO header -->
             <h1 style="display: none">golang base (three)</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h2 id="error-处理"><a href="#error-处理" class="headerlink" title="error 处理"></a>error 处理</h2><ul>
+              <div class="markdown-body">
+                
+                <h2 id="error-处理"><a href="#error-处理" class="headerlink" title="error 处理"></a>error 处理</h2><ul>
 <li><p>没有异常机制</p>
 </li>
 <li><p>error 类型实现了 error 接口</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> <span class="hljs-type">error</span> <span class="hljs-keyword">interface</span>&#123;<br>    Error <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> <span class="hljs-type">error</span> <span class="hljs-keyword">interface</span>&#123;<br>    Error <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 <li><p>可以通过 errors.New 来快速创建错误实例</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs go">errors.New(<span class="hljs-string">&quot; error info&quot;</span>)<br><span class="hljs-keyword">var</span> NumberLess2Error =  errors.New(<span class="hljs-string">&quot;n must be not less than 2&quot;</span>)<br><span class="hljs-keyword">var</span> NumberLarger100Error =  errors.New(<span class="hljs-string">&quot;n must be not larger than 100&quot;</span>)<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">GetFibonacci</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> (c []<span class="hljs-type">int</span>, err <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-comment">// 及早失败</span><br>    <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span>  &#123;<br>        err = NumberLess2Error<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">100</span>  &#123;<br>        err = NumberLarger100Error<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    c = <span class="hljs-built_in">append</span>(c, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>    a, b := <span class="hljs-number">1</span>, <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; n; i++ &#123;<br>        a, b = b, a+b<br>        c = <span class="hljs-built_in">append</span>(c, b)<br>    &#125;<br>    <span class="hljs-keyword">return</span> c, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGetFibonacci</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    <span class="hljs-keyword">if</span> n,err := GetFibonacci(<span class="hljs-number">-10</span>);err!=<span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">if</span> err == NumberLess2Error&#123;<br>            fmt.Printf(<span class="hljs-string">&quot;less &quot;</span>)<br>        &#125;<br>        t.Error(err)<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        t.Log(n)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
@@ -321,7 +325,7 @@
 </li>
 <li>通过go get 来获取远程依赖<ul>
 <li>go get -u 每次都去拉取最新的包</li>
-<li>包是从GOPATH/src/ 开始算的 </li>
+<li>包是从GOPATH&#x2F;src&#x2F; 开始算的</li>
 </ul>
 </li>
 <li>注意代码在Github 上的组织形式，以适应 go get<ul>
@@ -332,7 +336,7 @@
 <h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><ul>
 <li>Go未解决的依赖问题<ul>
 <li>同一环境下，不同项目使用同一包的不同版本</li>
-<li>无法管理对包的特定版本的依赖 </li>
+<li>无法管理对包的特定版本的依赖</li>
 </ul>
 </li>
 <li>vendor 路径<ul>
@@ -373,15 +377,16 @@
 </ul>
 </li>
 <li>和 KSE（Kernel Speace Entity）的对应关系<ul>
-<li> java thread 是 1:1</li>
-<li> Groutine 是 M:N 多对多</li>
-<li> 系统线程切换的消耗 比较大 go与系统线程是多对多关系，无需系统的线程切换，自己去调度，尽可能的去利用系统线程的能力</li>
+<li>java thread 是 1:1</li>
+<li>Groutine 是 M:N 多对多</li>
+<li>系统线程切换的消耗 比较大 go与系统线程是多对多关系，无需系统的线程切换，自己去调度，尽可能的去利用系统线程的能力</li>
 </ul>
 </li>
 </ul>
 
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -488,6 +493,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '422dd59e508cd6d582b03d6613d777e1'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -536,12 +565,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -577,6 +600,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -586,6 +615,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -631,8 +684,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -668,74 +719,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -772,6 +758,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

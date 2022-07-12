@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -29,6 +29,8 @@
 <meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>golang base (one) - 积木成楼</title>
@@ -69,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -78,6 +80,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -206,7 +210,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2019-05-08 21:58" pubdate>
-          星期三, 五月 8日 2019, 9:58 晚上
+          2019年5月8日 晚上
         </time>
       </span>
     
@@ -218,7 +222,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.4k 字
+          6.5k 字
         
       </span>
     
@@ -229,13 +233,20 @@
         
         
         
-          <!-- compatible with older versions-->
           54 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -270,18 +281,10 @@
             <!-- SEO header -->
             <h1 style="display: none">golang base (one)</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h2 id="程序入口"><a href="#程序入口" class="headerlink" title="程序入口"></a>程序入口</h2><ul>
+              <div class="markdown-body">
+                
+                <h2 id="程序入口"><a href="#程序入口" class="headerlink" title="程序入口"></a>程序入口</h2><ul>
 <li><p>必须为 <code>package main</code></p>
 </li>
 <li><p>必须是 <code>func main()&#123;&#125;</code></p>
@@ -310,8 +313,10 @@
 <li>同一个赋值语句中可以对多个变量进行同时赋值</li>
 </ul>
 <h3 id="常量与其它静态编程语言的差异"><a href="#常量与其它静态编程语言的差异" class="headerlink" title="常量与其它静态编程语言的差异"></a>常量与其它静态编程语言的差异</h3><ul>
-<li>快速设置连续值 <code>iota</code> 遇到下一个 <code>const</code> 之前连续递增1,遇到之后变为0</li>
-<li><code>iota</code> 只能在常量中使用<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">const</span> (<br>    Monday    = <span class="hljs-literal">iota</span> + <span class="hljs-number">1</span> <span class="hljs-comment">// 1</span><br>    Tuesday              <span class="hljs-comment">// 2</span><br>    Wednesday            <span class="hljs-comment">// 3</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>    Readable   = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-literal">iota</span> <span class="hljs-comment">//1 0001</span><br>    Writable               <span class="hljs-comment">//2 0010</span><br>    Executable             <span class="hljs-comment">//4 0100</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>    i = <span class="hljs-literal">iota</span> <span class="hljs-comment">// i=0</span><br>    j = <span class="hljs-number">3.14</span> <span class="hljs-comment">// j=3.14</span><br>    k = <span class="hljs-literal">iota</span> <span class="hljs-comment">// k=2</span><br>    l        <span class="hljs-comment">// l=3</span><br>)<br><br><span class="hljs-keyword">type</span> ByteSize <span class="hljs-type">float64</span><br><br><span class="hljs-keyword">const</span> (<br>    _           = <span class="hljs-literal">iota</span>             <span class="hljs-comment">// ignore first value by assigning to blank identifier</span><br>    KB ByteSize = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>) <span class="hljs-comment">// 1 &lt;&lt; (10*1)</span><br>    MB                             <span class="hljs-comment">// 1 &lt;&lt; (10*2)</span><br>    GB                             <span class="hljs-comment">// 1 &lt;&lt; (10*3)</span><br>    TB                             <span class="hljs-comment">// 1 &lt;&lt; (10*4)</span><br>    PB                             <span class="hljs-comment">// 1 &lt;&lt; (10*5)</span><br>    EB                             <span class="hljs-comment">// 1 &lt;&lt; (10*6)</span><br>    ZB                             <span class="hljs-comment">// 1 &lt;&lt; (10*7)</span><br>    YB                             <span class="hljs-comment">// 1 &lt;&lt; (10*8)</span><br>)<br><br></code></pre></td></tr></table></figure></li>
+<li><p>快速设置连续值 <code>iota</code> 遇到下一个 <code>const</code> 之前连续递增1,遇到之后变为0</p>
+</li>
+<li><p><code>iota</code> 只能在常量中使用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">const</span> (<br>    Monday    = <span class="hljs-literal">iota</span> + <span class="hljs-number">1</span> <span class="hljs-comment">// 1</span><br>    Tuesday              <span class="hljs-comment">// 2</span><br>    Wednesday            <span class="hljs-comment">// 3</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>    Readable   = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-literal">iota</span> <span class="hljs-comment">//1 0001</span><br>    Writable               <span class="hljs-comment">//2 0010</span><br>    Executable             <span class="hljs-comment">//4 0100</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>    i = <span class="hljs-literal">iota</span> <span class="hljs-comment">// i=0</span><br>    j = <span class="hljs-number">3.14</span> <span class="hljs-comment">// j=3.14</span><br>    k = <span class="hljs-literal">iota</span> <span class="hljs-comment">// k=2</span><br>    l        <span class="hljs-comment">// l=3</span><br>)<br><br><span class="hljs-keyword">type</span> ByteSize <span class="hljs-type">float64</span><br><br><span class="hljs-keyword">const</span> (<br>    _           = <span class="hljs-literal">iota</span>             <span class="hljs-comment">// ignore first value by assigning to blank identifier</span><br>    KB ByteSize = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>) <span class="hljs-comment">// 1 &lt;&lt; (10*1)</span><br>    MB                             <span class="hljs-comment">// 1 &lt;&lt; (10*2)</span><br>    GB                             <span class="hljs-comment">// 1 &lt;&lt; (10*3)</span><br>    TB                             <span class="hljs-comment">// 1 &lt;&lt; (10*4)</span><br>    PB                             <span class="hljs-comment">// 1 &lt;&lt; (10*5)</span><br>    EB                             <span class="hljs-comment">// 1 &lt;&lt; (10*6)</span><br>    ZB                             <span class="hljs-comment">// 1 &lt;&lt; (10*7)</span><br>    YB                             <span class="hljs-comment">// 1 &lt;&lt; (10*8)</span><br>)<br><br></code></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
 <li>基本数据类型 值类型 初始化时默认会有零值<ul>
@@ -319,8 +324,8 @@
 <li><code>string</code> : <code>&quot;&quot;</code></li>
 <li><code>int int8 int16 int32 int64</code> : <code>0</code></li>
 <li><code>uint uint8 uint16 uint32 uint64 uintptr</code> : <code>0</code></li>
-<li><code>byte</code> : <code>0</code> // alias for uint8</li>
-<li><code>rune</code>: <code>0</code> // alias for int32，represents a Unicode code point</li>
+<li><code>byte</code> : <code>0</code> &#x2F;&#x2F; alias for uint8</li>
+<li><code>rune</code>: <code>0</code> &#x2F;&#x2F; alias for int32，represents a Unicode code point</li>
 <li><code>float32 float64</code>:<code>0</code></li>
 <li><code>complex64 complex128</code>: <code>(0+0i)</code></li>
 </ul>
@@ -332,7 +337,8 @@
 </li>
 </ul>
 <h3 id="整型占用字节问题"><a href="#整型占用字节问题" class="headerlink" title="整型占用字节问题"></a>整型占用字节问题</h3><ul>
-<li>int，uint整型：和机器平台有关，最小32位，占用4字节，64位，占用8字节。<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">//机器位数</span><br>cpu := runtime.GOARCH<br>t.Log(cpu) <span class="hljs-comment">// amd64</span><br><span class="hljs-comment">//int占用位数</span><br>int_size := strconv.IntSize<br>t.Log(int_size) <span class="hljs-comment">// 64</span><br></code></pre></td></tr></table></figure></li>
+<li><p>int，uint整型：和机器平台有关，最小32位，占用4字节，64位，占用8字节。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">//机器位数</span><br>cpu := runtime.GOARCH<br>t.Log(cpu) <span class="hljs-comment">// amd64</span><br><span class="hljs-comment">//int占用位数</span><br>int_size := strconv.IntSize<br>t.Log(int_size) <span class="hljs-comment">// 64</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="数值范围"><a href="#数值范围" class="headerlink" title="数值范围"></a>数值范围</h3><table>
 <thead>
@@ -391,7 +397,8 @@
 <li>在某些语言中允许小范围类型向大范围类型转换，因为数据精度不会丢失</li>
 <li>大范围向小范围转换会导致精度丢失</li>
 </ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">type</span> MyInt <span class="hljs-type">int64</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDataType</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    <span class="hljs-keyword">var</span> a <span class="hljs-type">int32</span> = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">var</span> b <span class="hljs-type">int64</span><br>    b = <span class="hljs-type">int64</span>(a)<br>    <span class="hljs-keyword">var</span> c MyInt<br>    c = MyInt(b)<br>    t.Log(a,b,c)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">type</span> MyInt <span class="hljs-type">int64</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDataType</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    <span class="hljs-keyword">var</span> a <span class="hljs-type">int32</span> = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">var</span> b <span class="hljs-type">int64</span><br>    b = <span class="hljs-type">int64</span>(a)<br>    <span class="hljs-keyword">var</span> c MyInt<br>    c = MyInt(b)<br>    t.Log(a,b,c)<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 <li><p><code>Go</code> 语言不支持指针运算</p>
 </li>
 <li><p><code>string</code> 是值类型，其默认的初始值为 <code>&quot;&quot;</code> 空字符串，而不是<code>nil</code></p>
@@ -402,8 +409,10 @@
 <li><code>+ - * / % 后++ 后--</code></li>
 </ul>
 <h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><ul>
-<li><code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></li>
-<li>在 <code>golang</code> 比较数组 如果两个数组的维度相等是可以比较的<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Go">a :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125; <span class="hljs-comment">// 数组声明</span><br>b :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>&#125;<br>c :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125;<br>t.Log(a == b) <span class="hljs-comment">// false</span><br>t.Log(a == c) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></li>
+<li><p><code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></p>
+</li>
+<li><p>在 <code>golang</code> 比较数组 如果两个数组的维度相等是可以比较的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Go">a :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125; <span class="hljs-comment">// 数组声明</span><br>b :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>&#125;<br>c :=[...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125;<br>t.Log(a == b) <span class="hljs-comment">// false</span><br>t.Log(a == c) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><ul>
 <li><code>！</code>  <code>&amp;&amp;</code>  <code>||</code></li>
@@ -460,11 +469,12 @@
 <h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// slice 可以看作一个结构体 包括三部分</span><br><span class="hljs-comment">// 指针 指向连续内存 数组 *ptr</span><br><span class="hljs-comment">// len 元素的个数 len</span><br><span class="hljs-comment">// cap 内部数组的容量</span><br><br><span class="hljs-comment">// 声明 区别在于 不用加 ... 与显示的申明长度</span><br><span class="hljs-keyword">var</span> s0 []<span class="hljs-type">int</span><br>s0 = <span class="hljs-built_in">append</span>(s0, <span class="hljs-number">1</span>) <span class="hljs-comment">// 增 append 后记得接受值</span><br>t.Log(<span class="hljs-built_in">len</span>(s0), <span class="hljs-built_in">cap</span>(s0))<span class="hljs-comment">//1,1</span><br><br>s1 := []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;<br>t.Log(<span class="hljs-built_in">len</span>(s1), <span class="hljs-built_in">cap</span>(s1))<span class="hljs-comment">//2,2</span><br><br><span class="hljs-comment">// make 可用于声明一个 slice 第二个c</span><br>s2 := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>) <span class="hljs-comment">// 长度为3 容量为5</span><br>t.Log(<span class="hljs-built_in">len</span>(s2), <span class="hljs-built_in">cap</span>(s2))<br>t.Log(s2[<span class="hljs-number">0</span>], s2[<span class="hljs-number">1</span>], s2[<span class="hljs-number">2</span>])<br><span class="hljs-comment">// len 初始化元素的个数</span><br><span class="hljs-comment">// cap 总容量</span><br>s2 = <span class="hljs-built_in">append</span>(s2, <span class="hljs-number">1</span>)<br>t.Log(<span class="hljs-built_in">len</span>(s2), <span class="hljs-built_in">cap</span>(s2)) <span class="hljs-comment">// 4,5</span><br>s2 = <span class="hljs-built_in">append</span>(s2, <span class="hljs-number">2</span>)<br>t.Log(<span class="hljs-built_in">len</span>(s2), <span class="hljs-built_in">cap</span>(s2)) <span class="hljs-comment">// 5,5</span><br>s2 = <span class="hljs-built_in">append</span>(s2, <span class="hljs-number">3</span>)<br>t.Log(<span class="hljs-built_in">len</span>(s2), <span class="hljs-built_in">cap</span>(s2)) <span class="hljs-comment">// 6,10</span><br><span class="hljs-comment">// 如果新申请容量（cap）大于2倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）</span><br><span class="hljs-comment">// 如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的 1/4，即（newcap=old.cap,for &#123;newcap += newcap/4&#125;）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;= cap）</span><br><span class="hljs-comment">// 如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量(cap)</span><br><br><span class="hljs-comment">// 切片共享存储结构</span><br>year := []<span class="hljs-type">string</span>&#123;<br>    <span class="hljs-string">&quot;Jan&quot;</span>, <span class="hljs-string">&quot;Feb&quot;</span>, <span class="hljs-string">&quot;Mar&quot;</span>, <span class="hljs-string">&quot;Apr&quot;</span>, <span class="hljs-string">&quot;May&quot;</span>, <span class="hljs-string">&quot;Jun&quot;</span>, <span class="hljs-string">&quot;Jul&quot;</span>, <span class="hljs-string">&quot;Aug&quot;</span>, <span class="hljs-string">&quot;Sep&quot;</span>, <span class="hljs-string">&quot;Oct&quot;</span>,<br>    <span class="hljs-string">&quot;Nov&quot;</span>, <span class="hljs-string">&quot;Dec&quot;</span>&#125;<br>Q2 := year[<span class="hljs-number">3</span>:<span class="hljs-number">6</span>]<br>t.Log(Q2, <span class="hljs-built_in">len</span>(Q2), <span class="hljs-built_in">cap</span>(Q2))<span class="hljs-comment">// 3,9</span><br>summer := year[<span class="hljs-number">5</span>:<span class="hljs-number">8</span>]<br>t.Log(summer,<span class="hljs-built_in">len</span>(summer), <span class="hljs-built_in">cap</span>(summer))<br>summer[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;unKnow&quot;</span><br>t.Log(Q2,year)<br><span class="hljs-comment">// 共享内存修改值会相互影响</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><ul>
-<li>容量是否可伸缩<ul>
+<li><p>容量是否可伸缩</p>
+<ul>
 <li>切片容量可伸缩<ul>
 <li>首先判断，如果新申请容量（cap）大于2倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）</li>
-<li>否则判断，如果旧切片的长度小于1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap=doublecap）</li>
-<li>否则判断，如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的 1/4，即（newcap=old.cap,for {newcap += newcap/4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;= cap）</li>
+<li>否则判断，如果旧切片的长度小于1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap&#x3D;doublecap）</li>
+<li>否则判断，如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的 1&#x2F;4，即（newcap&#x3D;old.cap,for {newcap +&#x3D; newcap&#x2F;4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;&#x3D; cap）</li>
 <li>如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量(cap)</li>
 <li>slice的共享内存存在一个隐患，就是使用共享内存的双方slice如果有一方出现扩容，则扩容一方将不再指向原有空间。所以程序中想以修改一方达到数据同步时需要小心</li>
 <li>扩容后会指向一个更大的空间,不再指向原有空间,所以共享内存失效</li>
@@ -473,15 +483,17 @@
 <li>数组声明后长度不可修改</li>
 </ul>
 </li>
-<li>是否可比较<ul>
+<li><p>是否可比较</p>
+<ul>
 <li>数组可以比较 同一类型 同一长度的数组可以比较</li>
 <li>slice 只能与 nil 进行比较</li>
 </ul>
 </li>
 </ul>
 
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -588,6 +600,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '9132fd6823c45d9371d2f4a73245a48a'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -636,12 +672,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -677,6 +707,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -686,6 +722,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -731,8 +791,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -768,74 +826,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -872,6 +865,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -27,6 +27,8 @@
 <meta property="article:tag" content="blog&amp;life">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>积木成楼</title>
@@ -61,7 +63,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -70,6 +72,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -229,9 +233,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/07/golang-design-map/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/07/golang-design-map/" target="_self">
         <div>
-          
           golang 中 哈希表 map 的实现哈希表 在 各种语言中有字典，映射 的称呼 ，本质上解决的是 key &#x3D;&gt; value 键值对之间映射关系，因为其读写 O(1) 的复杂度，性能非常优秀，而被广泛使用。 哈希表 的设计原理如何实现一个优秀的哈希表 ，关键点在于 哈希函数与冲突解决方案。理想的哈希函数 输出范围要大于输入范围，但实际上我们做不到，工程上优秀的 hash 函数，要保证输出均
         </div>
       </a>
@@ -271,9 +275,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/slice/">#slice</a>
-            
               <a href="/tags/%E3%80%8Ago%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B/">#《go语言设计与实现》</a>
+            
+              <a href="/tags/slice/">#slice</a>
             
           </div>
         
@@ -292,10 +296,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/04/sso-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E7%9A%84%E6%80%9D%E8%80%83/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/04/sso-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E7%9A%84%E6%80%9D%E8%80%83/" target="_self">
         <div>
-          
-          关于 SSO 选型的思考你在什么时候会去考虑实施SSO？ 公司具备开发能力，且内部应用系统林立，烟囱式的系统建设导致内部数据流转困难，业务人员需要登录与记忆几个系统的密码，管理人员需要多次登录来设置各类的权限时，就可以考虑建立SSO来统一人员信息，进一步可以统一权限信息。这不但是公司基础设施的基础也可以作为自身晋升功绩的一部分，等打通 基础的人员，权限信息后，后续可以进行 中台&#x2F;平台 化改造，内部
+          关于 SSO 选型的思考你在什么时候会去考虑实施SSO？ 公司具备开发能力，且内部应用系统林立，烟囱式的系统建设导致内部数据流转困难，业务人员需要登录与记忆几个系统的密码，管理人员需要多次登录来设置各类的权限时，就可以考虑建立SSO来统一人员信息，进一步可以统一权限信息。这不但是公司基础设施的基础也可以作为自身晋升功绩的一部分，等打通 基础的人员，权限信息后，后续可以进行 中台&#x2F;平台 化
         </div>
       </a>
 
@@ -355,9 +359,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/02/golang-design-slice/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/02/golang-design-slice/" target="_self">
         <div>
-          
           golang 中如何去设计变长数组我们在 谈论 slice 的时候到底在 讲什么？ go 中 关于 slice  的结构定义  123456&#x2F;&#x2F; src&#x2F;runtime&#x2F;slice.go type slice struct &amp;#123;	array unsafe.Pointer &#x2F;&#x2F; 元素指针	len   int			 &#x2F;&#x2F; 数据的长度	cap   int			 &#x2F;&#x2F; 数据的容量&amp;#125;
         </div>
       </a>
@@ -397,9 +401,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/slice/">#slice</a>
-            
               <a href="/tags/%E3%80%8Ago%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B/">#《go语言设计与实现》</a>
+            
+              <a href="/tags/slice/">#slice</a>
             
           </div>
         
@@ -418,9 +422,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/31/golang-design-array/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/31/golang-design-array/" target="_self">
         <div>
-          
           golang 中 array 的实现数组是由相同类型元素的集合组成的数据结构。计算机操作系统会为数组分配一块连续的内存来保存其中的元素，我们可以利用数组中元素的索引快速访问特定元素 。常见的数组大多都是一维的线性数组。多维数组在数值计算和图形应用方面非常有用。 golang 中 对于数组的实现 array12345678910111213141516171819202122232425262728
         </div>
       </a>
@@ -460,9 +464,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E3%80%8Ago%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B/">#《go语言设计与实现》</a>
-            
               <a href="/tags/array/">#array</a>
+            
+              <a href="/tags/%E3%80%8Ago%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B/">#《go语言设计与实现》</a>
             
           </div>
         
@@ -481,9 +485,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2020/04/23/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86%EF%BC%88%E4%BA%8C%EF%BC%89%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2020/04/23/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86%EF%BC%88%E4%BA%8C%EF%BC%89%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" target="_self">
         <div>
-          
           还是太小看写一个系列的难度，如果按照我第一篇4个小时的时间来算，我估计能写到今年年底，加之写完之后精神比较兴奋，所以会导致晚上睡眠质量很差。这个时候就想到了使用工具，我的矛盾主要在于，思想比较快但由于打字限制了我的表达，所以采用了语音转文字这样一种形式，这样就能大大的提升我的码字效率。 今天主要是来谈论效率工具，先说结论，效率工具不是万能的，适合自己的才是最好的。所谓的适合，要能量化，能拿出数据，
         </div>
       </a>
@@ -542,10 +546,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2020/04/07/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%E6%80%9D%E6%83%B3%E4%B8%8E%E9%80%BB%E8%BE%91%E7%AE%A1%E7%90%86/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2020/04/07/%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%E6%80%9D%E6%83%B3%E4%B8%8E%E9%80%BB%E8%BE%91%E7%AE%A1%E7%90%86/" target="_self">
         <div>
-          
-          起因​        因疫情而更关注现实的我，根据疫情期间的实事，以及自己的一些经历所总结的对于当代（20世界10年代）现实的理解。希望以后的自己能对现在的我进行更深刻的批判。本系列也是一个废宅，在4年间适应社会改造并逐步成长为技术宅的故事，无趣但确实有效。涉及日常生活的各个领域。 思想上的独立​        一般人所受的教育，都是应试教育，总是期待一个标准答案来解释，从学校中出来，生活中遇到的
+          起因​		因疫情而更关注现实的我，根据疫情期间的实事，以及自己的一些经历所总结的对于当代（20世界10年代）现实的理解。希望以后的自己能对现在的我进行更深刻的批判。本系列也是一个废宅，在4年间适应社会改造并逐步成长为技术宅的故事，无趣但确实有效。涉及日常生活的各个领域。 思想上的独立​		一般人所受的教育，都是应试教育，总是期待一个标准答案来解释，从学校中出来，生活中遇到的各种问题。但现实是没有标
         </div>
       </a>
 
@@ -603,9 +607,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2019/12/04/plan/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2019/12/04/plan/" target="_self">
         <div>
-          
           基础目标 网络协议 数据结构与算法 原理与实践（需要刷题） 计算机操作系统（linux与windows） 设计模式与设计范式   语言目标 主要 php 基础，原理与近年来大版本的改进 laravel与tp6框架实现源码流程 基础数据结构，基础数据结构在内存中的分布 GC的实现 swoole 刷题   golang 熟悉各个标准库包的使用，需要刷题 gin框架实现源码流程 基础数据结构，基础数据
         </div>
       </a>
@@ -664,9 +668,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2019/11/25/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E4%B8%80/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2019/11/25/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E4%B8%80/" target="_self">
         <div>
-          
           协议 协议，网络协议的简称，网络协议是指通信计算机双方必须共同遵从的一组约定。  为了使数据在网络上从源到达目的，网络通信的参与方必须遵循相同的规则，这套规则称为协议（protocol），它最终体现为在网络上传输的数据包的格式。  协议的三要素包括 语法 语义 时序   以上内容来自百度百科 不谈它在网络中的表示，我们所理解的，字面上的协议，就是约定，双方都明白且遵循的一种规则，也就是说是人为规定
         </div>
       </a>
@@ -725,9 +729,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2019/07/22/php%E5%90%8E%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%9A%84100%E4%B8%AA%E8%AF%9D%E9%A2%98(%E4%B8%80)%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" target="_self">
         <div>
-          
           消息队列解决了什么问题？ 消息队列最主要解决了系统间 数据通信 的问题  消息队列的使用场景 异步处理 把不重要的同步串行，改成异步，可以更快地返回结果 减少等待，自然实现了步骤之间的并发，提升系统的性能   流量控制 将网关将请求放入请求队列进入等待状态，后端去处理请求队列的参数，然后网关再响应 ，一旦超时就丢弃响应服务错误给请求，来限制流量 大致的思路是，网关会把用户的request缓存起来，
         </div>
       </a>
@@ -788,9 +792,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2019/07/01/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2019/07/01/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" target="_self">
         <div>
-          
           java 执行流程 java 粗略执行流程 源文件编译成 .class 字节码文件 -&gt;解释执行 jre( 装载 -&gt; 字节码校验 -&gt; jvm 执行) jdk 包含了 javac jre debugging tools javap   javeSE(java标准版本) JAVAEE(java商业版) 与 JAVAME(设备专用) 一般分为这三块  第一个 java 程序1234
         </div>
       </a>
@@ -886,6 +890,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -895,6 +905,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -940,8 +974,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -950,6 +982,8 @@
 
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

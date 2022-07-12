@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -27,6 +27,8 @@
 <meta property="article:tag" content="blog&amp;life">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>积木成楼</title>
@@ -61,7 +63,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -70,6 +72,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -221,7 +225,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/11/laravel-sanctum%E5%AE%9E%E8%B7%B5/" target="_self">
+          <img src="/img/post/01.jpg" srcset="/img/loading.gif" lazyload alt="laravel-sanctum实践">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/07/11/laravel-sanctum%E5%AE%9E%E8%B7%B5/" target="_self">
@@ -229,10 +239,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/07/11/laravel-sanctum%E5%AE%9E%E8%B7%B5/" target="_self">
+      
+      <a class="index-excerpt " href="/2022/07/11/laravel-sanctum%E5%AE%9E%E8%B7%B5/" target="_self">
         <div>
-          
-          sanctum是官方新推出的认证组件laravel&#x2F;sanctum文档上表示，这个轻量化的 token 面向两类认证场景而生，思路起源为 Github 的 personal token 。 一是 为 api 令牌，发放长期 token ，认证时 在 header 头部传入。二为 基于 laravel api 的 spa 单页，将信息存入 cookie 。 对比下 jwt 与 sanctum 或者叫
+          sanctum是官方新推出的认证组件laravel&#x2F;sanctum文档上表示，这个轻量化的 token 面向两类认证场景而生，思路起源为 Github 的 personal token 。 一是 为 api 令牌，发放长期 token ，认证时 在 header 头部传入。二为 基于 laravel api 的 spa 单页，将信息存入 cookie 。 对比下 jwt 与 sanctu
         </div>
       </a>
 
@@ -294,9 +304,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/22/%E5%AE%89%E5%8D%93%E8%87%AA%E5%8A%A8%E5%8C%96-tasker-%E7%9A%84%E5%AE%9E%E8%B7%B5/" target="_self">
         <div>
-          
           安卓自动化 tasker 的实践事情是这个样子的，出于不合理工时以及废旧安卓的再利用，我需要在不root的情况下进行xxapp的自动打卡 初步思路经过Google与V站查询，大致的有这4种思路去做  自动化相关应用 tasker、autojs、hamibot   远程工具 TeamViewer   虚拟定位软件 修改 WiFi mac 地址  问题点xxapp 极速打卡可能会存在的一些检测机制
         </div>
       </a>
@@ -355,9 +365,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/03/nginx%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3/" target="_self">
         <div>
-          
           nginx 常用功能详解nginx与php-fpm的两种通信方式详解一般来说，我们配置 nginx 与 php-fpm 的通信会有两种设置，以 unix socket 与 tcp&#x2F;ip socket 的方式 通过 fast-cgi 协议进行通信 比如 1234# tcp socket 的方式fastcgi_pass  127.0.0.1:9000# unix socket 的方式fastcgi_p
         </div>
       </a>
@@ -418,10 +428,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/20/kubernetes-%E4%B8%80/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/20/kubernetes-%E4%B8%80/" target="_self">
         <div>
-          
-          kubernetes 概念 相关参考文档 https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ? 为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部署（
+          kubernetes 概念 相关参考文档  https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ?  为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部
         </div>
       </a>
 
@@ -481,10 +491,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%A6%82%E8%AE%BA(%E4%B8%80)/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%A6%82%E8%AE%BA(%E4%B8%80)/" target="_self">
         <div>
-          
-          计算机概论计算机硬件组成 中央处理器CPU(运算器&amp;控制器&amp;寄存器组&amp;内部总线) 寄存器  cpu内部用来暂时存放参与运算的数据跟结果的小单元 本质为常见的时序逻辑电路，只包含存储电路   运算器 算数逻辑单元(Arithmetic and Logic Unit, ALU) 负责数据处理，对数据的算数与逻辑运算    累加寄存器(Accumulator, AC) 通用寄存器
+          计算机概论计算机硬件组成 中央处理器CPU(运算器&amp;控制器&amp;寄存器组&amp;内部总线)  寄存器  cpu内部用来暂时存放参与运算的数据跟结果的小单元 本质为常见的时序逻辑电路，只包含存储电路   运算器 算数逻辑单元(Arithmetic and Logic Unit, ALU) 负责数据处理，对数据的算数与逻辑运算   累加寄存器(Accumulator, AC) 通用寄存器
         </div>
       </a>
 
@@ -542,9 +552,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/02/2022%E5%B9%B4%E5%BA%A6%E5%B0%8F%E7%9B%AE%E6%A0%87/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/02/2022%E5%B9%B4%E5%BA%A6%E5%B0%8F%E7%9B%AE%E6%A0%87/" target="_self">
         <div>
-          
           2022新年小目标事事关注，则事事无成。 去年的总结2021也算是完成了年初的部分计划，用 golang 做了项目，随着对计算机基础的学习，对一些技术上的概念有了自己的理解，跳槽成功，年度涨薪大约40%，达到了区域-职业-年限-行业的中游水平，在一家公司待久了就是会被倒挂，其实这也无可厚非。软件开发职业的生命周期肯定很长，但是自己还能干这行多久，我也不确定，不希望自己用干一天和尚撞一天钟的心态来面
         </div>
       </a>
@@ -603,10 +613,10 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/21/php-fpm%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/21/php-fpm%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
         <div>
-          
-          php-fpm模式下的优化思路与实践一般来说，计算机体系中所谓的优化，无非三类，串行改并行，同步转异步，以及加缓存，减少执行。 串行改并行程序执行总时间&#x3D; (不可并行子模块…) 相加 在 php-fpm 模式下 每个请求都是单进程单线程去处理，而 pcntl（php 进程处理扩展）在 fpm 模式下无法使用。所以就有了各种勉强的处理方案。 基于redis || 各种mq 队列的并行操作具体来说 就
+          php-fpm模式下的优化思路与实践一般来说，计算机体系中所谓的优化，无非三类，串行改并行，同步转异步，以及加缓存，减少执行。 串行改并行程序执行总时间&#x3D; (不可并行子模块…) 相加 在 php-fpm 模式下 每个请求都是单进程单线程去处理，而 pcntl（php 进程处理扩展）在 fpm 模式下无法使用。所以就有了各种勉强的处理方案。 基于redis || 各种mq 队列的并行操作具
         </div>
       </a>
 
@@ -664,9 +674,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/20/php8-1%E6%96%B0%E7%89%B9%E6%80%A7%E4%B8%8E%E9%83%A8%E5%88%86%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%B7%B5/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/20/php8-1%E6%96%B0%E7%89%B9%E6%80%A7%E4%B8%8E%E9%83%A8%E5%88%86%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%B7%B5/" target="_self">
         <div>
-          
           php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re
         </div>
       </a>
@@ -727,9 +737,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/10/golong-design-channel/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/10/golong-design-channel/" target="_self">
         <div>
-          
           go channel 的设计与实现golang 中推崇的金句就是 不要通过共享内存来通信，要通过通信的方式来共享内存,其通信的载体就是 channel , golang 特有的关键字（数据结构），在 golang 中要实现并发编程成本很低， 一个 go 关键词 就可以启动一个 goroutine ，那么多个 goroutine 之间的数据传输该怎么处理呢？就有了 channel 通道，这种数据类型
         </div>
       </a>
@@ -790,9 +800,9 @@
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/08/golang-design-string/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/08/golang-design-string/" target="_self">
         <div>
-          
           golang 中 字符串 的设计字符串是由字符组成的数组，C 语言中的字符串使用字符数组 char[] 表示。数组会占用一片连续的内存空间，而内存空间存储的字节共同组成了字符串，Go 语言中的字符串为一个只读的字节数组。 golang 中对于 字符串 的设计string 数据结构123456789101112&#x2F;&#x2F; reflect&#x2F;value.go type StringHeader struct
         </div>
       </a>
@@ -890,6 +900,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -899,6 +915,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -944,8 +984,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -954,6 +992,8 @@
 
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

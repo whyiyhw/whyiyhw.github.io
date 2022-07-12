@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -30,6 +30,8 @@
 <meta property="article:tag" content="php-fpm">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>nginx常用功能详解 - 积木成楼</title>
@@ -70,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -79,6 +81,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -207,7 +211,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2022-03-03 13:51" pubdate>
-          星期四, 三月 3日 2022, 1:51 下午
+          2022年3月3日 下午
         </time>
       </span>
     
@@ -230,13 +234,20 @@
         
         
         
-          <!-- compatible with older versions-->
           11 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -271,22 +282,14 @@
             <!-- SEO header -->
             <h1 style="display: none">nginx常用功能详解</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h1 id="nginx-常用功能详解"><a href="#nginx-常用功能详解" class="headerlink" title="nginx 常用功能详解"></a>nginx 常用功能详解</h1><h2 id="nginx与php-fpm的两种通信方式详解"><a href="#nginx与php-fpm的两种通信方式详解" class="headerlink" title="nginx与php-fpm的两种通信方式详解"></a>nginx与php-fpm的两种通信方式详解</h2><p>一般来说，我们配置 <code>nginx</code> 与 <code>php-fpm</code> 的通信会有两种设置，以 <code>unix socket</code> 与 <code>tcp/ip socket</code> 的方式 通过 fast-cgi 协议进行通信</p>
+              <div class="markdown-body">
+                
+                <h1 id="nginx-常用功能详解"><a href="#nginx-常用功能详解" class="headerlink" title="nginx 常用功能详解"></a>nginx 常用功能详解</h1><h2 id="nginx与php-fpm的两种通信方式详解"><a href="#nginx与php-fpm的两种通信方式详解" class="headerlink" title="nginx与php-fpm的两种通信方式详解"></a>nginx与php-fpm的两种通信方式详解</h2><p>一般来说，我们配置 <code>nginx</code> 与 <code>php-fpm</code> 的通信会有两种设置，以 <code>unix socket</code> 与 <code>tcp/ip socket</code> 的方式 通过 fast-cgi 协议进行通信</p>
 <p>比如</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># tcp socket 的方式</span><br><span class="hljs-attribute">fastcgi_pass</span>  <span class="hljs-number">127.0.0.1:9000</span><br><span class="hljs-comment"># unix socket 的方式</span><br>fastcgi_pass  /usr/run/php-fpm.sock <br></code></pre></td></tr></table></figure>
 
-<h2 id="对比-UNIX-Domain-Socket-与-TCP-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP/IP Socket"></a>对比 UNIX Domain Socket 与 TCP/IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
+<h2 id="对比-UNIX-Domain-Socket-与-TCP-x2F-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-x2F-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket"></a>对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
 <ul>
 <li><p><code>UNIX Socket</code> （同一服务器上不同进程间的通信机制）</p>
 <ul>
@@ -339,8 +342,9 @@
 </li>
 </ul>
 
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -449,6 +453,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: 'f187e802a33cc7873e9dba1b96c0d343'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -497,12 +525,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -538,6 +560,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -547,6 +575,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -592,8 +644,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -629,74 +679,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -733,6 +718,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

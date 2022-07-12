@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="HTTP 的概述 全名为 Hypertext Transfer Protocol 超文本传输协议 web 特点 基于tcp的 http协议 保证传输安全,无需考虑丢包 web 一般分为客户端(浏览器)和服务端(apache&#x2F;nginx) 我们可以将响应抽象为一个对象 响应对象,对象类型,对象长度,以及其他一些信息给客户端     资源 web 上一切的东西都是资源(哲学0.0) web 服务器 是">
+    <meta name="description" content="HTTP 的概述 全名为 Hypertext Transfer Protocol 超文本传输协议 web 特点 基于tcp的 http协议 保证传输安全,无需考虑丢包 web 一般分为客户端(浏览器)和服务端(apache&#x2F;nginx) 我们可以将响应抽象为一个对象 响应对象,对象类型,对象长度,以及其他一些信息给客户端     资源 web 上一切的东西都是资源(哲学0.0) web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读http权威指南(综述一)">
 <meta property="og:url" content="https://blogxy.cn/2019/02/05/%E8%AF%BBhttp%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E4%B8%80/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="HTTP 的概述 全名为 Hypertext Transfer Protocol 超文本传输协议 web 特点 基于tcp的 http协议 保证传输安全,无需考虑丢包 web 一般分为客户端(浏览器)和服务端(apache&#x2F;nginx) 我们可以将响应抽象为一个对象 响应对象,对象类型,对象长度,以及其他一些信息给客户端     资源 web 上一切的东西都是资源(哲学0.0) web 服务器 是">
+<meta property="og:description" content="HTTP 的概述 全名为 Hypertext Transfer Protocol 超文本传输协议 web 特点 基于tcp的 http协议 保证传输安全,无需考虑丢包 web 一般分为客户端(浏览器)和服务端(apache&#x2F;nginx) 我们可以将响应抽象为一个对象 响应对象,对象类型,对象长度,以及其他一些信息给客户端     资源 web 上一切的东西都是资源(哲学0.0) web">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-02-05T08:10:34.000Z">
 <meta property="article:modified_time" content="2022-05-21T07:29:30.272Z">
@@ -29,6 +29,8 @@
 <meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>读http权威指南(综述一) - 积木成楼</title>
@@ -69,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -78,6 +80,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -206,7 +210,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2019-02-05 16:10" pubdate>
-          星期二, 二月 5日 2019, 4:10 下午
+          2019年2月5日 下午
         </time>
       </span>
     
@@ -218,7 +222,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          987 字
+          1k 字
         
       </span>
     
@@ -229,13 +233,20 @@
         
         
         
-          <!-- compatible with older versions-->
           9 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -270,22 +281,14 @@
             <!-- SEO header -->
             <h1 style="display: none">读http权威指南(综述一)</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h2 id="HTTP-的概述"><a href="#HTTP-的概述" class="headerlink" title="HTTP 的概述"></a>HTTP 的概述</h2><ul>
+              <div class="markdown-body">
+                
+                <h2 id="HTTP-的概述"><a href="#HTTP-的概述" class="headerlink" title="HTTP 的概述"></a>HTTP 的概述</h2><ul>
 <li>全名为 Hypertext Transfer Protocol 超文本传输协议</li>
 <li>web<ul>
 <li>特点 基于tcp的 http协议 保证传输安全,无需考虑丢包</li>
-<li>web 一般分为客户端(浏览器)和服务端(apache/nginx)</li>
+<li>web 一般分为客户端(浏览器)和服务端(apache&#x2F;nginx)</li>
 <li>我们可以将响应抽象为一个对象<ul>
 <li>响应对象,对象类型,对象长度,以及其他一些信息给客户端</li>
 </ul>
@@ -301,10 +304,10 @@
 <li>http 会给每种 要通过 web传输的对象打上 MIME 类型(MIME type)的数据格式标签</li>
 <li>当web 浏览器从服务器取回一个对象时,会去查看相关的MIME 类型,根据MIME 类型去进行相应的处理</li>
 <li>例如<ul>
-<li>html 文档对应的是 text/html</li>
-<li>普通ASCII 文本文档 为 text/plain</li>
-<li>JPEG 为 image/jpge  GIF 为 image/gif</li>
-<li>Apple 的 QuickTime 电影为 video/quicktime 类型</li>
+<li>html 文档对应的是 text&#x2F;html</li>
+<li>普通ASCII 文本文档 为 text&#x2F;plain</li>
+<li>JPEG 为 image&#x2F;jpge  GIF 为 image&#x2F;gif</li>
+<li>Apple 的 QuickTime 电影为 video&#x2F;quicktime 类型</li>
 </ul>
 </li>
 <li>如 nginx 会维护一个 MIME type 的文件 里面为 所有支持的MIME 类型</li>
@@ -319,9 +322,9 @@
 <li>统一资源定位符URL 是资源标识符最常见的形式<ul>
 <li>URL 描述了一台特定服务器上某资源的特定位置.</li>
 <li>URL 一般遵循一种标准格式,包括三个部分<ul>
-<li>第一部分被称为方案(scheme) 说明了访问资源所使用的协议类型.这部分通常就是HTTP协议(http://)</li>
+<li>第一部分被称为方案(scheme) 说明了访问资源所使用的协议类型.这部分通常就是HTTP协议(http:&#x2F;&#x2F;)</li>
 <li>第二部分给出了服务器对应的域名地址 比如(<a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a>)</li>
-<li>第三部分指定了web 服务器上的某个资源(/index.html)</li>
+<li>第三部分指定了web 服务器上的某个资源(&#x2F;index.html)</li>
 <li>现在几乎所有的URI 都是URL</li>
 </ul>
 </li>
@@ -352,8 +355,9 @@
 <li>报文</li>
 </ul>
 
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -460,6 +464,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: 'bace046a2f0114915b16a4a437b3c499'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -508,12 +536,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -549,6 +571,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -558,6 +586,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -603,8 +655,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -640,74 +690,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -744,6 +729,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

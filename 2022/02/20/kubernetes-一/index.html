@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="kubernetes 概念 相关参考文档 https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ? 为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部署（">
+    <meta name="description" content="kubernetes 概念 相关参考文档  https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ?  为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubernetes(一)">
 <meta property="og:url" content="https://blogxy.cn/2022/02/20/kubernetes-%E4%B8%80/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="kubernetes 概念 相关参考文档 https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ? 为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部署（">
+<meta property="og:description" content="kubernetes 概念 相关参考文档  https:&#x2F;&#x2F;k8s.easydoc.net&#x2F;docs&#x2F;dRiQjyTY&#x2F;28366845&#x2F;6GiNOzyZ&#x2F;nd7yOvdY https:&#x2F;&#x2F;kubernetes.io&#x2F;zh&#x2F;docs&#x2F;tasks&#x2F;   什么是 kubernetes ?  为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化 运维部署的发展， 物理机部署； 虚拟化部">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-20T11:45:44.000Z">
 <meta property="article:modified_time" content="2022-05-21T07:29:30.208Z">
@@ -30,6 +30,8 @@
 <meta property="article:tag" content="minikube">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>kubernetes(一) - 积木成楼</title>
@@ -70,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"tajs":null},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -79,6 +81,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
 
   
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -207,7 +211,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2022-02-20 19:45" pubdate>
-          星期日, 二月 20日 2022, 7:45 晚上
+          2022年2月20日 晚上
         </time>
       </span>
     
@@ -230,13 +234,20 @@
         
         
         
-          <!-- compatible with older versions-->
           33 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -271,29 +282,23 @@
             <!-- SEO header -->
             <h1 style="display: none">kubernetes(一)</h1>
             
-              <p class="note note-info">
-                
-                  
-                    <!-- compatible with older versions-->
-                    本文最后更新于：2022年5月21日 下午
-                  
-                
-              </p>
             
-            <div class="markdown-body">
-              
-              <h1 id="kubernetes-概念"><a href="#kubernetes-概念" class="headerlink" title="kubernetes 概念"></a>kubernetes 概念</h1><ul>
-<li>相关参考文档<ul>
+              <div class="markdown-body">
+                
+                <h1 id="kubernetes-概念"><a href="#kubernetes-概念" class="headerlink" title="kubernetes 概念"></a>kubernetes 概念</h1><ul>
+<li><p>相关参考文档</p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://k8s.easydoc.net/docs/dRiQjyTY/28366845/6GiNOzyZ/nd7yOvdY">https://k8s.easydoc.net/docs/dRiQjyTY/28366845/6GiNOzyZ/nd7yOvdY</a></li>
 <li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/tasks/">https://kubernetes.io/zh/docs/tasks/</a></li>
 </ul>
 </li>
-<li>什么是 kubernetes ?<ul>
+<li><p>什么是 kubernetes ?</p>
+<ul>
 <li>为 容器化  应用提供集群部署和管理的开源工具，特点是 声明式，自动化</li>
 <li>运维部署的发展，<ul>
 <li>物理机部署；</li>
-<li>虚拟化部署（对物理机进行抽象=&gt;多个虚拟机（模拟完整的计算机））</li>
-<li>容器化部署（以应用为基础进行抽象=&gt;给每一个应用模拟一个完整的计算机环境，实际上是共享资源，屏蔽了底层的OS，可移植性更强，资源利用率更高，更适合微服务开发运维）</li>
+<li>虚拟化部署（对物理机进行抽象&#x3D;&gt;多个虚拟机（模拟完整的计算机））</li>
+<li>容器化部署（以应用为基础进行抽象&#x3D;&gt;给每一个应用模拟一个完整的计算机环境，实际上是共享资源，屏蔽了底层的OS，可移植性更强，资源利用率更高，更适合微服务开发运维）</li>
 </ul>
 </li>
 <li>特性 （可弹性运行分布式系统的框架）<ul>
@@ -306,7 +311,8 @@
 </li>
 </ul>
 </li>
-<li>什么时候需要 kubernetes ？<ul>
+<li><p>什么时候需要 kubernetes ？</p>
+<ul>
 <li>前提条件 - 应用容器化</li>
 <li>单机， docker + docker-compose  就足够了</li>
 <li>3，4 台机器，shell 脚本 +负载均衡 也够用了</li>
@@ -324,7 +330,7 @@
 <li>主节点 Master （控制与调度）</li>
 <li>工作节点 Worker<ul>
 <li>Pod （k8s 调度的最小单元，可以包含一个或多个容器）<ul>
-<li>虚拟 IP    </li>
+<li>虚拟 IP</li>
 </ul>
 </li>
 </ul>
@@ -336,19 +342,19 @@
 <li>etcd (存储集群信息的后端键值对数据库)</li>
 <li>kube-scheduler (监视新创建、未执行运行节点的 Pods, 选择节点 让 Pod 在上面运行)</li>
 <li>kube-controller-manager (运行控制器的组件)<ul>
-<li> 节点控制器</li>
+<li>节点控制器</li>
 <li>任务控制器</li>
 <li>端点控制器</li>
 <li>账户服务和令牌控制器</li>
 </ul>
 </li>
-<li> cloud-controller-manager (云控制器，可以将集群连接到云服务商的API上)</li>
+<li>cloud-controller-manager (云控制器，可以将集群连接到云服务商的API上)</li>
 </ul>
 <h4 id="Node-组件"><a href="#Node-组件" class="headerlink" title="Node 组件"></a>Node 组件</h4><p>  在每个节点上运行，维护运行的Pod 提供 kubernetes 运行环境</p>
 <ul>
 <li>kubelet (运行在node 上的代理，保证 容器都运行在 Pod 中, 只控制 由 kubernetes 创建的容器)</li>
 <li>kebe-proxy  (负责节点的网络代理)</li>
-<li> 容器运行时 （Container Runtime, 符合CRI 的环境 如 docker）</li>
+<li>容器运行时 （Container Runtime, 符合CRI 的环境 如 docker）</li>
 </ul>
 <h4 id="插件-Addons-提供集群级别功能"><a href="#插件-Addons-提供集群级别功能" class="headerlink" title="插件 Addons ( 提供集群级别功能)"></a>插件 Addons ( 提供集群级别功能)</h4><ul>
 <li>DNS</li>
@@ -371,7 +377,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install xdg-utils <br><br>minikube dashboard<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">出现下列信息 就已经开启</span><br>* 正在验证 dashboard 运行情况 ...<br>* Launching proxy ...<br>* 正在验证 proxy 运行状况 ...<br>http://127.0.0.1:46491/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/<br></code></pre></td></tr></table></figure>
 
 <h5 id="可能会碰到的问题"><a href="#可能会碰到的问题" class="headerlink" title="可能会碰到的问题"></a>可能会碰到的问题</h5><ul>
-<li> minikube 卡在 正在验证 proxy 运行状况 … </li>
+<li>minikube 卡在 正在验证 proxy 运行状况 …</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl stop kubectl<br>systemctl stop docker<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将防火墙 配置全部置空</span><br>iptables -F<br>iptables -X<br>iptables -P INPUT ACCEPT<br>iptables -P OUTPUT ACCEPT<br>iptables -P FORWARD ACCEPT<br><br>systemctl start kubectl<br>systemctl start docker<br></code></pre></td></tr></table></figure>
 <ul>
@@ -394,8 +400,9 @@
 </li>
 </ul>
 <h2 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h2>
-              
-            </div>
+                
+              </div>
+            
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -504,6 +511,30 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"441a14f154cbe996adde","clientSecret":"42de5ce3b897c8991bdaedb1a860dbf185e7a8f3","repo":"whyiyhw.github.io","owner":"whyiyhw","admin":["whyiyhw"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '3e9b35fba6698eca3dc3d2402429984d'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -552,12 +583,6 @@
 
 
 
-  <!-- Custom -->
-  <div class="col-lg-7 mx-auto nopadding-x-md">
-    <div class="container custom post-custom mx-auto">
-      <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
 
 
     
@@ -593,6 +618,12 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer>
@@ -602,6 +633,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -647,8 +702,6 @@
 
 
 
-
-
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -684,74 +737,9 @@
 </script>
 
 
-  <script>
-  (function() {
-    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
-    var enableCopy = CONFIG.copy_btn;
-    if (!enableLang && !enableCopy) {
-      return;
-    }
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
-    function getBgClass(ele) {
-      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
-    }
-
-    var copyTmpl = '';
-    copyTmpl += '<div class="code-widget">';
-    copyTmpl += 'LANG';
-    copyTmpl += '</div>';
-    jQuery('.markdown-body pre').each(function() {
-      var $pre = jQuery(this);
-      if ($pre.find('code.mermaid').length > 0) {
-        return;
-      }
-      if ($pre.find('span.line').length > 0) {
-        return;
-      }
-
-      var lang = '';
-
-      if (enableLang) {
-        lang = CONFIG.code_language.default;
-        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
-          lang = $pre[0].children[0].classList[1];
-        } else if ($pre[0].getAttribute('data-language')) {
-          lang = $pre[0].getAttribute('data-language');
-        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
-          lang = $pre[0].children[0].classList[1];
-          $pre.parent().addClass('code-wrapper');
-        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
-          $pre.wrap('<div class="code-wrapper"></div>');
-        }
-        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
-      }
-      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
-        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
-
-      if (enableCopy) {
-        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
-          var clipboard = new window.ClipboardJS('.copy-btn', {
-            target: function(trigger) {
-              var nodes = trigger.parentNode.childNodes;
-              for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].tagName === 'CODE') {
-                  return nodes[i];
-                }
-              }
-            }
-          });
-          clipboard.on('success', function(e) {
-            e.clearSelection();
-            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
-            setTimeout(function() {
-              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-            }, 2000);
-          });
-        });
-      }
-    });
-  })();
-</script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
   
@@ -788,6 +776,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

@@ -291,7 +291,7 @@ web_analytics:  # 网页访问统计
     # Get the attribute of the page path during statistics
     path: window.location.pathname
     # 开启后不统计本地路径( localhost 与 127.0.0.1 )
-    # If ture, ignore localhost & 127.0.0.1
+    # If true, ignore localhost & 127.0.0.1
     ignore_local: false
 
 # 对页面中的图片和评论插件进行懒加载处理，可见范围外的元素不会提前加载
@@ -727,7 +727,7 @@ post:
     enable: false
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
-    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
     type: disqus
 
 
@@ -863,6 +863,23 @@ cusdis:
   host:
   app_id:
   lang: zh-cn
+
+# Giscus
+# 基于 GitHub Discussions，类似于 Utterances
+# Based on GitHub Discussions, similar to Utterances
+# See: https://giscus.app/
+giscus:
+  repo:
+  repo-id:
+  category:
+  category-id:
+  theme-light: light
+  theme-dark: dark
+  mapping: pathname
+  reactions-enabled: 1
+  emit-metadata: 0
+  input-position: top
+  lang: zh-CN
 
 #---------------------------
 # 归档页
@@ -1014,13 +1031,13 @@ links:
     enable: false
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
-    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
     type: disqus
 
 
 #---------------------------
 # 以下是配置 JS CSS 等静态资源的 URL 前缀，可以自定义成 CDN 地址，
-# 默认的 jsDelivr CDN 可能在部分地区无法访问，如果需要修改，最好使用与默认配置相同的版本，以避免潜在的问题，
+# 如果需要修改，最好使用与默认配置相同的版本，以避免潜在的问题，
 # ** 如果你不知道如何设置，请不要做任何改动 **
 #
 # Here is the url prefix to configure the static assets. Set CDN addresses you want to customize.
@@ -1043,9 +1060,9 @@ static_prefix:
 
   bootstrap: https://lib.baomitu.com/twitter-bootstrap/4.6.1/
 
-  prismjs: https://lib.baomitu.com/prism/1.26.0/
+  prismjs: https://lib.baomitu.com/prism/1.27.0/
 
-  tocbot: https://lib.baomitu.com/tocbot/4.18.0/
+  tocbot: https://lib.baomitu.com/tocbot/4.18.2/
 
   typed: https://lib.baomitu.com/typed.js/2.0.12/
 
@@ -1053,24 +1070,24 @@ static_prefix:
 
   nprogress: https://lib.baomitu.com/nprogress/0.2.0/
 
-  mathjax: https://lib.baomitu.com/mathjax/3.2.0/
+  mathjax: https://lib.baomitu.com/mathjax/3.2.1/
 
-  katex: https://lib.baomitu.com/KaTeX/0.15.2/
+  katex: https://lib.baomitu.com/KaTeX/0.15.6/
 
   busuanzi: https://busuanzi.ibruce.info/busuanzi/2.3/
 
   clipboard: https://lib.baomitu.com/clipboard.js/2.0.10/
 
-  mermaid: https://lib.baomitu.com/mermaid/8.13.10/
+  mermaid: https://lib.baomitu.com/mermaid/8.14.0/
 
-  valine: https://lib.baomitu.com/valine/1.4.16/
+  valine: https://lib.baomitu.com/valine/1.4.17/
 
-  waline: https://lib.baomitu.com/waline/2.3.2/
+  waline: https://lib.baomitu.com/waline/2.5.1/
 
   gitalk: https://lib.baomitu.com/gitalk/1.7.2/
 
   disqusjs: https://lib.baomitu.com/disqusjs/1.3.0/
 
-  twikoo: https://lib.baomitu.com/twikoo/1.4.17/
+  twikoo: https://lib.baomitu.com/twikoo/1.5.11/
 
   hint: https://lib.baomitu.com/hint.css/2.7.0/

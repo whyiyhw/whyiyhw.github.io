@@ -1,8 +1,9 @@
 ---
 title: java学习笔记（一）
-date: 2019-07-01 22:26:23
 tags: java
 categories: program language
+abbrlink: cd1a8393
+date: 2019-07-01 22:26:23
 ---
 ## `java` 执行流程
 

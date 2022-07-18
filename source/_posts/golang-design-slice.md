@@ -1,10 +1,11 @@
 ---
 title: go design (二) slice
-date: 2022-01-02 12:50:33
-categories: golang 
+categories: golang
 tags:
-- slice
-- 《go语言设计与实现》
+  - slice
+  - 《go语言设计与实现》
+abbrlink: efa6eb50
+date: 2022-01-02 12:50:33
 ---
 
 

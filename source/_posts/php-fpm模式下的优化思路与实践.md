@@ -1,9 +1,10 @@
 ---
 title: php-fpm模式下的优化思路与实践
-date: 2022-01-21 13:28:06
 categories: php
 tags:
-- php-fpm
+  - php-fpm
+abbrlink: baf65967
+date: 2022-01-21 13:28:06
 ---
 
 # php-fpm模式下的优化思路与实践

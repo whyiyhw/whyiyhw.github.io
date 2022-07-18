@@ -1,11 +1,12 @@
 ---
-title: build yourself Linux dev env 
+title: build yourself Linux dev env
+categories: linux
+tags:
+  - php
+  - docker
+  - nginx
+abbrlink: db0de75c
 date: 2019-05-09 12:17:23
-categories: linux 
-tags: 
-- php
-- docker
-- nginx
 ---
 
 ## `ContOS7`  php多版本环境的配置

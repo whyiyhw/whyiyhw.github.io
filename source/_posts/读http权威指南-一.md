@@ -1,9 +1,10 @@
 ---
 title: 读http权威指南(综述一)
-date: 2019-02-05 16:10:34
 categories: http权威指南
 tags:
-- http
+  - http
+abbrlink: e67c0ae7
+date: 2019-02-05 16:10:34
 ---
 ## HTTP 的概述
   - 全名为 Hypertext Transfer Protocol 超文本传输协议

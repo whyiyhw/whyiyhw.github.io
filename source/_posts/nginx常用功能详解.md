@@ -1,10 +1,11 @@
 ---
 title: nginx常用功能详解
-date: 2022-03-03 13:51:56
 categories: nginx
 tags:
-- php-fpm
-- nginx
+  - php-fpm
+  - nginx
+abbrlink: 144ead03
+date: 2022-03-03 13:51:56
 ---
 
 # nginx 常用功能详解

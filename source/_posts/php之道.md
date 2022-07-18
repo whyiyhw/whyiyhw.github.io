@@ -1,9 +1,10 @@
 ---
 title: php之道
-date: 2019-05-14 11:53:24
 categories: php后端
 tags:
-- php
+  - php
+abbrlink: be3b3e4e
+date: 2019-05-14 11:53:24
 ---
 
 ## PHPer web 技能点

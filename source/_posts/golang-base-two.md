@@ -1,9 +1,10 @@
 ---
 title: golang base (two)
-date: 2019-06-08 22:37:49
 categories: golang
-tags: 
-- golang
+tags:
+  - golang
+abbrlink: 931b1dd1
+date: 2019-06-08 22:37:49
 ---
 ## map
 

@@ -1,10 +1,11 @@
 ---
 title: go design (三) map
-date: 2022-01-07 20:52:13
-categories: golang 
+categories: golang
 tags:
-- slice
-- 《go语言设计与实现》
+  - slice
+  - 《go语言设计与实现》
+abbrlink: 42a01fe6
+date: 2022-01-07 20:52:13
 ---
 # golang 中 哈希表 map 的实现
 

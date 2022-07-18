@@ -1,8 +1,9 @@
 ---
-title: '安卓自动化软件 tasker 的实践'
-date: 2022-05-22 17:38:14
+title: 安卓自动化软件 tasker 的实践
 categories: tasker
 tags: 自动打卡
+abbrlink: 292e141b
+date: 2022-05-22 17:38:14
 ---
 
 ## 安卓自动化 tasker 的实践

@@ -1,10 +1,11 @@
 ---
 title: go design (四) string
-date: 2022-01-08 11:57:55
-categories: golang 
+categories: golang
 tags:
-- string
-- 《go语言设计与实现》
+  - string
+  - 《go语言设计与实现》
+abbrlink: fa0b243f
+date: 2022-01-08 11:57:55
 ---
 
 # golang 中 字符串 的设计

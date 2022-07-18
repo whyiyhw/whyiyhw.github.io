@@ -1,10 +1,11 @@
 ---
 title: go design (一) array
-date: 2021-12-31 20:24:03
-categories: golang 
+categories: golang
 tags:
-- array
-- 《go语言设计与实现》
+  - array
+  - 《go语言设计与实现》
+abbrlink: a5d408b
+date: 2021-12-31 20:24:03
 ---
 
 # golang 中 array 的实现

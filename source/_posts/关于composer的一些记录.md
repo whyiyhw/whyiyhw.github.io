@@ -1,9 +1,10 @@
 ---
 title: 关于composer的一些记录
-date: 2019-05-15 10:33:38
 categories: php
 tags:
-- composer
+  - composer
+abbrlink: a9fab0f7
+date: 2019-05-15 10:33:38
 ---
 
 ### 为什么 上线要使用 `composer dump-autoload -o`

@@ -1,10 +1,11 @@
 ---
 title: go design (五) channel
-date: 2022-01-10 19:07:10
-categories: golang 
+categories: golang
 tags:
-- channel
-- 《go语言设计与实现》
+  - channel
+  - 《go语言设计与实现》
+abbrlink: 964d4a55
+date: 2022-01-10 19:07:10
 ---
 
 # go channel 的设计与实现

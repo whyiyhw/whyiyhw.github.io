@@ -1,10 +1,11 @@
 ---
 title: kubernetes(一)
-date: 2022-02-20 19:45:44
 categories: kubernetes
 tags:
-- 运维
-- minikube
+  - 运维
+  - minikube
+abbrlink: e2edcca7
+date: 2022-02-20 19:45:44
 ---
 
 # kubernetes 概念

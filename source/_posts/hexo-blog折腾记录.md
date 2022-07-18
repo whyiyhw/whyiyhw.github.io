@@ -1,10 +1,14 @@
 ---
 title: hexo-blog折腾记录
+categories: blog
+tags:
+  - hexo
+  - git
+  - fluid
+index_img: img/post/02.jpg
+abbrlink: 13c4aac6
 date: 2019-01-29 11:03:50
 updated: 2020-04-07 19:19:24
-categories: blog
-tags: [hexo, git, fluid]
-index_img: "img/post/02.jpg"
 ---
 
 ## 安装折腾总览

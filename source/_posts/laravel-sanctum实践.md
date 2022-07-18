@@ -1,9 +1,13 @@
 ---
 title: laravel-sanctum实践
-date: 2022-07-11 23:29:25
-tags: [laravel, sanctum, auth]
+tags:
+  - laravel
+  - sanctum
+  - auth
 categories: laravel
-index_img: "img/post/01.jpg"
+index_img: img/post/01.jpg
+abbrlink: ea31ae71
+date: 2022-07-11 23:29:25
 ---
 
 ## sanctum是官方新推出的认证组件

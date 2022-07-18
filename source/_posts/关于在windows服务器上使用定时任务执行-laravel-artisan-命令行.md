@@ -1,10 +1,11 @@
 ---
 title: 关于在windows服务器上使用定时任务执行 laravel artisan 命令行
-date: 2019-05-07 21:54:51
 categories: php
-tags: 
-- bat
-- laravel
+tags:
+  - bat
+  - laravel
+abbrlink: 24c27ca1
+date: 2019-05-07 21:54:51
 ---
 # 关于在windows服务器上使用定时任务执行 laravel artisan 命令行
 - 需解决的问题

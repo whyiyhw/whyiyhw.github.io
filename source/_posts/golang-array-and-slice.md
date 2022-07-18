@@ -1,9 +1,10 @@
 ---
 title: golang base (one)
-date: 2019-05-08 21:58:26
 categories: golang
-tags: 
-- golang
+tags:
+  - golang
+abbrlink: fd1bbd3a
+date: 2019-05-08 21:58:26
 ---
 
 ## 程序入口

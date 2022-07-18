@@ -1,10 +1,11 @@
 ---
 title: php8.1新特性与部分使用实践
-date: 2022-01-20 12:57:04
 categories: php
 tags:
-- jit
-- php8
+  - jit
+  - php8
+abbrlink: 10bdb4de
+date: 2022-01-20 12:57:04
 ---
 
 #  php8.x 的实用特性与使用

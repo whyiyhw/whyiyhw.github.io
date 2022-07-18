@@ -1,9 +1,10 @@
 ---
 title: golang base (three)
-date: 2019-06-09 21:43:37
 categories: golang
-tags: 
-- golang
+tags:
+  - golang
+abbrlink: d987e558
+date: 2019-06-09 21:43:37
 ---
 ## error 处理
 

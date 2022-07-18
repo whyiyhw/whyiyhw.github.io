@@ -5,7 +5,7 @@ tags:
   - sanctum
   - auth
 categories: laravel
-index_img: img/post/01.jpg
+index_img: /img/post/01.jpg
 abbrlink: ea31ae71
 date: 2022-07-11 23:29:25
 ---

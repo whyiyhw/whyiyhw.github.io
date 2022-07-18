@@ -5,7 +5,6 @@ tags:
   - golang-web
 categories: golang-web
 index_img: /img/post/03.jpg
-banner_img: /img/post/03.jpg
 abbrlink: 6b5ac4cc
 date: 2022-07-18 14:24:58
 ---

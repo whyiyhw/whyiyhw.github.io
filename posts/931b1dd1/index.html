@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="map 声明  12345678910&#x2F;&#x2F; 直接声明并赋值m :&#x3D; map[string]int&amp;#123;&quot;one&quot;:1,&quot;two&quot;:2,&quot;three&quot;:3&amp;#125;t.Log(m, len(m))&#x2F;&#x2F;map[one:1 two:2 three:3] len 3&#x2F;&#x2F; 声明并赋予零值m1 :&#x3D; map[string]int&amp;#123;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang base (two)">
+<meta property="og:url" content="https://blogxy.cn/posts/931b1dd1/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="map 声明  12345678910&#x2F;&#x2F; 直接声明并赋值m :&#x3D; map[string]int&amp;#123;&quot;one&quot;:1,&quot;two&quot;:2,&quot;three&quot;:3&amp;#125;t.Log(m, len(m))&#x2F;&#x2F;map[one:1 two:2 three:3] len 3&#x2F;&#x2F; 声明并赋予零值m1 :&#x3D; map[string]int&amp;#123;&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-08T14:37:49.000Z">
+<meta property="article:modified_time" content="2022-08-02T15:19:36.473Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>golang base (two) - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-exp-fill"></i>
+                进行中
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/golang-web/">
+                    <i class="iconfont icon-book"></i>
+                    golang-web框架解析
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="golang base (two)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-06-08 22:37" pubdate>
+          2019年6月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          7.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          65 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">golang base (two)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><ul>
+<li>声明</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 直接声明并赋值</span><br>m := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;one&quot;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&quot;two&quot;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&quot;three&quot;</span>:<span class="hljs-number">3</span>&#125;<br>t.Log(m, <span class="hljs-built_in">len</span>(m))<span class="hljs-comment">//map[one:1 two:2 three:3] len 3</span><br><span class="hljs-comment">// 声明并赋予零值</span><br>m1 := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;&#125;<br>m1[<span class="hljs-string">&quot;one&quot;</span>] = <span class="hljs-number">1</span><br>t.Log(m1, <span class="hljs-built_in">len</span>(m1))<span class="hljs-comment">//map[one:1] len 1</span><br><span class="hljs-comment">// slice map</span><br>m2 :=<span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>,<span class="hljs-number">5</span><span class="hljs-comment">/*cap 实际上预先设定了5的容量*/</span>)<span class="hljs-comment">// map 类型 ,len</span><br>t.Log(m2,<span class="hljs-built_in">len</span>(m2))<span class="hljs-comment">//map[] len 0</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>访问不存在的key</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go">m3 := <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>&#123;&#125;<br>t.Log(m3[<span class="hljs-number">1</span>]) <span class="hljs-comment">// 0</span><br>m3[<span class="hljs-number">2</span>] = <span class="hljs-number">0</span><br>t.Log(m3[<span class="hljs-number">2</span>]) <span class="hljs-comment">// 0</span><br>m3[<span class="hljs-number">3</span>] = <span class="hljs-number">0</span>;<br><span class="hljs-comment">// 判断存在或者为 零值</span><br><span class="hljs-keyword">if</span> v, ok := m3[<span class="hljs-number">3</span>]; ok &#123;<br>    t.Log(v, <span class="hljs-string">&quot;key 3 is exist.&quot;</span>)<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    t.Log(<span class="hljs-string">&quot;KEY 3 is not existing.&quot;</span>)<br>&#125;<br><span class="hljs-comment">// 在访问 不存在的 key 的时候 会返回对应的零值 而不是异常</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>遍历</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">m := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-string">&quot;one&quot;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&quot;two&quot;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&quot;three&quot;</span>: <span class="hljs-number">3</span>&#125;<br><span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> m &#123;<br>    t.Log(k, <span class="hljs-string">&quot;=&gt;&quot;</span>, v)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>map 实现工厂模式</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">m := <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>&#123;&#125;<span class="hljs-comment">//</span><br>m[<span class="hljs-number">1</span>] = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;<br>    <span class="hljs-keyword">return</span> op<br>&#125;<br>m[<span class="hljs-number">2</span>] = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;<br>    <span class="hljs-keyword">return</span> op * op<br>&#125;<br>m[<span class="hljs-number">3</span>] = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;<br>    <span class="hljs-keyword">return</span> op *op* op<br>&#125;<br>t.Log(m[<span class="hljs-number">1</span>](<span class="hljs-number">2</span>),m[<span class="hljs-number">2</span>](<span class="hljs-number">2</span>),m[<span class="hljs-number">3</span>](<span class="hljs-number">2</span>))<span class="hljs-comment">// 2 4 8</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>用 <code>map</code> 实现 <code>set</code> 的功能</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 元素是唯一的</span><br><span class="hljs-comment">// 1) 添加元素</span><br><span class="hljs-comment">// 2) 判断元素是否存在</span><br><span class="hljs-comment">// 3) 删除元素</span><br><span class="hljs-comment">// 4) 元素个数</span><br>    mySet := <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">bool</span>&#123;&#125;<br>    mySet[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span><br>    mySet[<span class="hljs-number">3</span>] = <span class="hljs-literal">true</span><br>    n:= <span class="hljs-number">3</span><br>    <span class="hljs-keyword">if</span> mySet[n]&#123;<br>        t.Logf(<span class="hljs-string">&quot;%d is existing&quot;</span>,n)<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        t.Logf(<span class="hljs-string">&quot;%d is not existing&quot;</span>,n)<br>        t.Log(mySet[n])<br>    &#125;<br><br>    t.Log(<span class="hljs-built_in">len</span>(mySet))<br>    <span class="hljs-built_in">delete</span>(mySet, n)<br><br>    <span class="hljs-keyword">if</span> mySet[n]&#123;<br>        t.Logf(<span class="hljs-string">&quot;%d is existing&quot;</span>,n)<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        t.Logf(<span class="hljs-string">&quot;%d is not existing&quot;</span>,n)<br>        t.Log(mySet[n])<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li><code>string</code> 是数据类型,不是引用或是指针类型,零值为空字符串</li>
+<li><code>string</code> 是 只读的 <code>byte</code> <code>slice</code> , <code>len</code> 函数可以展示它所包含的 <code>byte</code></li>
+<li><code>string</code> 的 <code>byte</code> 数组可以存放任何数据</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> s <span class="hljs-type">string</span><br>t.Log(s)<span class="hljs-comment">// &quot;&quot;</span><br>s = <span class="hljs-string">&quot;hello&quot;</span><br><span class="hljs-comment">// s[1] = &#x27;2&#x27;//can&#x27;t assign s[1]</span><br>t.Log(<span class="hljs-built_in">len</span>(s))<span class="hljs-comment">// 5</span><br>s = <span class="hljs-string">&quot;\xE4\xB8\xA5&quot;</span><br>t.Log(s,<span class="hljs-built_in">len</span>(s))<span class="hljs-comment">// 严 3 len 是 byte 长度</span><br><span class="hljs-comment">// Unicode 是一种字符集（code point) 只规定了对应关系，没有规定怎么实现</span><br><span class="hljs-comment">// UTF8 是 unicode 的存储实现（转换为字节序列的规则）</span><br><br>s =<span class="hljs-string">&quot;中&quot;</span><br>t.Log(<span class="hljs-built_in">len</span>(s))<span class="hljs-comment">// byte 数 3</span><br><br>c:=[]<span class="hljs-type">rune</span>(s)<br>t.Log(<span class="hljs-built_in">len</span>(c))<span class="hljs-comment">// 1</span><br>t.Log(<span class="hljs-string">&quot;rune size :&quot;</span>, unsafe.Sizeof(c))<span class="hljs-comment">// 24 3*8 就是 3 byte 24字节</span><br><br>t.Logf(<span class="hljs-string">&quot;中 unicode %x&quot;</span>,c[<span class="hljs-number">0</span>])<br>t.Logf(<span class="hljs-string">&quot;中 UTF8 %x&quot;</span>,s)<br><br><span class="hljs-comment">// 遍历string的时候，实际自动把string转成了rune再遍历。</span><br><span class="hljs-comment">// 而不是根据 len(string)的byte数组个数</span><br>s = <span class="hljs-string">&quot;中华人民共和国&quot;</span><br><span class="hljs-keyword">for</span> _,v := <span class="hljs-keyword">range</span> s &#123;<br>    t.Logf(<span class="hljs-string">&quot;%[1]c %[1]x&quot;</span>,v)<br>&#125;<br><br><span class="hljs-comment">// strings strconv</span><br><span class="hljs-comment">// 字符串分割 string</span><br>s = <span class="hljs-string">&quot;A,B,C&quot;</span><br>parts := strings.Split(s,<span class="hljs-string">&quot;,&quot;</span>)<span class="hljs-comment">// []string 的切片</span><br>t.Logf(<span class="hljs-string">&quot;%T&quot;</span>, parts)<br><span class="hljs-keyword">for</span> _,v := <span class="hljs-keyword">range</span> parts&#123;<br>    t.Logf(<span class="hljs-string">&quot;%T&quot;</span>, v)<span class="hljs-comment">// string</span><br>&#125;<br><span class="hljs-comment">// 合并</span><br>t.Log(strings.Join(parts,<span class="hljs-string">&quot;-&quot;</span>))<br><span class="hljs-comment">// 转换</span><br>s1 := strconv.Itoa(<span class="hljs-number">10</span>)<span class="hljs-comment">// Itoa AtoI</span><br>t.Log(<span class="hljs-string">&quot;str &quot;</span>+ s1)<br><span class="hljs-keyword">if</span> s2,err := strconv.Atoi(s1);err == <span class="hljs-literal">nil</span>&#123;<br>    t.Log(<span class="hljs-number">10</span>+s2)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>函数是一等公民<ul>
+<li>函数有多个返回值</li>
+<li>所有参数都是值传递：<code>slice</code> <code>map</code> <code>channel</code> 会有传引用的错觉</li>
+<li>函数可以作为变量的值</li>
+<li>函数可以作为参数和返回值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 支持多返回值</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">returnMultiValues</span><span class="hljs-params">()</span></span> (a, b <span class="hljs-type">int</span>) &#123;<br>    <span class="hljs-keyword">return</span> rand.Intn(<span class="hljs-number">10</span>), rand.Intn(<span class="hljs-number">20</span>)<br>&#125;<br><span class="hljs-comment">// 可以作为参数与返回值</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">timeSpent</span><span class="hljs-params">(inner <span class="hljs-keyword">func</span>(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>) (<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;<br>        start := time.Now()<br>        ret := inner(n)<br>        fmt.Println(<span class="hljs-string">&quot;time Spent:&quot;</span>,time.Since(start).Seconds())<br>        <span class="hljs-keyword">return</span> ret<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">slowFun</span><span class="hljs-params">(op <span class="hljs-type">int</span>)</span></span><span class="hljs-type">int</span>&#123;<br>    time.Sleep(time.Second*<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">return</span>  op<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestFn</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    i, l := returnMultiValues()<br>    t.Log(i, l)<br><br>    tsSF := timeSpent(slowFun)<br>    t.Log(tsSF(<span class="hljs-number">10</span>))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="可变长参数与-defer"><a href="#可变长参数与-defer" class="headerlink" title="可变长参数与 defer"></a>可变长参数与 <code>defer</code></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 可变长参数 参数类型一致</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Sum</span><span class="hljs-params">(ops ...<span class="hljs-type">int</span>)</span></span>(res <span class="hljs-type">int</span>)&#123;<br>    res = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> _,v := <span class="hljs-keyword">range</span> ops&#123;<br>        res += v<br>    &#125;<br>    <span class="hljs-keyword">return</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestFn1</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    t.Log(Sum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>))<br>    t.Log(Sum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>))<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Clear</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;errs&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;close&quot;</span>)<br>    <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;err&quot;</span>)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Clear2</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;errs2&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;close2&quot;</span>)<br>    <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;err&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDefer</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    <span class="hljs-keyword">defer</span> Clear()<br>    <span class="hljs-keyword">defer</span> Clear2()<br>    fmt.Println(<span class="hljs-string">&quot;Start&quot;</span>)<br>    <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;err&quot;</span>)<br>&#125;<br><span class="hljs-comment">// 执行顺序为</span><br><span class="hljs-comment">// Start close2 errs2 close errs</span><br><span class="hljs-comment">// defer 类似于栈结构 先进后出</span><br><span class="hljs-comment">// 在 defer 中引发 panic 只会导致当前的 defer 体里面的程序中断</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h3 id="封装数据和行为（方法）"><a href="#封装数据和行为（方法）" class="headerlink" title="封装数据和行为（方法）"></a>封装数据和行为（方法）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 数据封装</span><br><span class="hljs-keyword">type</span> Employee <span class="hljs-keyword">struct</span> &#123;<br>    Id   <span class="hljs-type">string</span><br>    Name <span class="hljs-type">string</span><br>    Age  <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestCreateEmployeeObj</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    e:= Employee&#123;<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;张三&quot;</span>,<span class="hljs-number">23</span>&#125;<br>    e1 := Employee&#123;Id:<span class="hljs-string">&quot;张三&quot;</span>,Name:<span class="hljs-string">&quot;李四&quot;</span>,Age:<span class="hljs-number">25</span>&#125;<br>    e2 := <span class="hljs-built_in">new</span>(Employee) <span class="hljs-comment">// 返回的是一个指针</span><br>    e2.Age = <span class="hljs-number">29</span><br>    e2.Name = <span class="hljs-string">&quot;王五&quot;</span><br>    e2.Id = <span class="hljs-string">&quot;3&quot;</span><br>    t.Log(e)<br>    t.Log(e1)<br>    t.Log(e2)<br>    t.Logf(<span class="hljs-string">&quot;e is %T&quot;</span>, e)<br>    t.Logf(<span class="hljs-string">&quot;e2 is %T&quot;</span>, e2)<br>&#125;<br><br><span class="hljs-comment">//    main_test.go:437: &#123;0 张三 23&#125;</span><br><span class="hljs-comment">//    main_test.go:438: &#123;张三 李四 25&#125;</span><br><span class="hljs-comment">//    main_test.go:439: &amp;&#123;3 王五 29&#125;</span><br><span class="hljs-comment">//    main_test.go:440: e is main.Employee</span><br><span class="hljs-comment">//    main_test.go:441: e2 is *main.Employee</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 行为封装</span><br><span class="hljs-comment">// 通过引用去使用这个方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Employee)</span></span> String() <span class="hljs-type">string</span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;Address is %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name))<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;ID:%s-Name:%s-Age:%d&quot;</span>, e.Id, e.Name, e.Age)<br>&#125;<br><span class="hljs-comment">// 通过值拷贝去使用这个方法 这种会带来更大的内存消耗</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e Employee)</span></span> String() <span class="hljs-type">string</span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;Address is %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name))<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;ID:%s-Name:%s-Age:%d&quot;</span>, e.Id, e.Name, e.Age)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="接口的定义"><a href="#接口的定义" class="headerlink" title="接口的定义"></a>接口的定义</h3><ul>
+<li>非入侵的，实现不依赖接口定义</li>
+<li>所以接口的定义可以包含在接口使用者包内</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Programmer <span class="hljs-keyword">interface</span> &#123;<br>    WriterHelloWorld() <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-keyword">type</span>  GoProgrammer <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(to *GoProgrammer)</span></span> WriterHelloWorld() <span class="hljs-type">string</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;fmt.Println(\&quot;hello world!\&quot;)&quot;</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestClient</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    <span class="hljs-keyword">var</span> p Programmer<br>    p = <span class="hljs-built_in">new</span>(GoProgrammer)<br>    t.Log(p.WriterHelloWorld())<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="接口变量"><a href="#接口变量" class="headerlink" title="接口变量"></a>接口变量</h3><ul>
+<li>声明 <code>var prog Coder = &amp;GoPaogrammer&#123;&#125;</code></li>
+<li>prog 由两部分组成<ul>
+<li><code>type GoPaogrammer struct&#123;&#125;</code> 数据类型</li>
+<li><code>&amp;GoPaogrammer&#123;&#125;</code> 数据实例</li>
+</ul>
+</li>
+</ul>
+<h3 id="继承与组合"><a href="#继承与组合" class="headerlink" title="继承与组合"></a>继承与组合</h3><ul>
+<li>golang 中组合的成分高于继承,甚至可以说没有一般语言的继承概念</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Pet <span class="hljs-keyword">struct</span> &#123;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Pet)</span></span> Speck()  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;...&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Pet)</span></span> SpeckTo(host <span class="hljs-type">string</span>) &#123;<br>    p.Speck()<br>    fmt.Println(<span class="hljs-string">&quot; &quot;</span>, host)<br>&#125;<br><br><span class="hljs-keyword">type</span> Dog <span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-comment">//p *Pet // 复合</span><br>    Pet<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dog)</span></span> Speck()  &#123;<br>    fmt.Println(<span class="hljs-string">&quot;www&quot;</span>)<br>    d.SpeckTo(<span class="hljs-string">&quot;laowan&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">//func (d *Dog) SpeckTo(host string) &#123;</span><br><span class="hljs-comment">//  //d.SpeckTo(host)</span><br><span class="hljs-comment">//  d.Speck()</span><br><span class="hljs-comment">//  fmt.Println(host)</span><br><span class="hljs-comment">//&#125;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestInherit</span><span class="hljs-params">(t *testing.T)</span></span>&#123;<br>    <span class="hljs-comment">// var dog Pet = new(Dog) 不能使用 Dog 去作为 Pat 类型</span><br>    <span class="hljs-keyword">var</span> dog = <span class="hljs-built_in">new</span>(Dog)<br>    <span class="hljs-comment">//dog.SpeckTo(&quot;张三&quot;) // ... 张三 匿名变量 只能调用 变量自己的方法</span><br>    dog.Speck() <span class="hljs-comment">//www ... lanwan</span><br>    <span class="hljs-comment">// 子类可以调用 匿名变量的方法但是这不算是完整意义上的继承</span><br><br>    <span class="hljs-comment">// 关于继承这部分 跟 php 差距很大，与其说是继承，我更加倾向于说这是 组合</span><br>    <span class="hljs-comment">// 类似于 php 中的 traits 但又不像，因为匿名变量分界线很清楚，</span><br>    <span class="hljs-comment">// traits 是可以在被使用后 根据使用者的情况展示不同的特性</span><br>    <span class="hljs-comment">// 是你的就是你的，是我的就是我的，你用我的，那就是我的，上层不能使用下层的方法</span><br>    <span class="hljs-comment">// 下层在使用上层的方法时候，可以理解为全在上层使用</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="接口与多态"><a href="#接口与多态" class="headerlink" title="接口与多态"></a>接口与多态</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Code <span class="hljs-type">string</span><br><span class="hljs-keyword">type</span> Programmer <span class="hljs-keyword">interface</span> &#123;<br>    WriterHelloWorld() Code<br>&#125;<br><br><span class="hljs-keyword">type</span> GoProgrammer <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(to *GoProgrammer)</span></span> WriterHelloWorld() Code &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;fmt.Println(\&quot;hello world!\&quot;)&quot;</span><br>&#125;<br><br><span class="hljs-keyword">type</span> JavaProgrammer <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(to *JavaProgrammer)</span></span> WriterHelloWorld() Code &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;fmt.Println(\&quot;hello world!\&quot;)&quot;</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">WriterFirstProgrammer</span><span class="hljs-params">(programmer Programmer)</span></span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;%T %v\n&quot;</span>, programmer, programmer.WriterHelloWorld())<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestPolymorphism</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    goProg := <span class="hljs-built_in">new</span>(GoProgrammer)<span class="hljs-comment">// 指针</span><br>    javaProg := <span class="hljs-built_in">new</span>(JavaProgrammer)<span class="hljs-comment">// 指针</span><br>    WriterFirstProgrammer(goProg)<br>    WriterFirstProgrammer(javaProg)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="空接口与断言"><a href="#空接口与断言" class="headerlink" title="空接口与断言"></a>空接口与断言</h3><ul>
+<li><p>空接口可以表示任何类型</p>
+</li>
+<li><p>通过断言来将空接口转换为指定类型</p>
+<ul>
+<li>v,ok :&#x3D; p.(int) &#x2F;&#x2F; ok&#x3D;true 时为转换成功</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DoSomething</span><span class="hljs-params">(p <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> &#123;<br>  <span class="hljs-comment">//if i,ok := p.(int);ok&#123;</span><br>  <span class="hljs-comment">// fmt.Println(&quot;Integer&quot;, i)</span><br>  <span class="hljs-comment">// return</span><br>  <span class="hljs-comment">//&#125;</span><br>  <span class="hljs-comment">//if i,ok := p.(string);ok&#123;</span><br>  <span class="hljs-comment">// fmt.Println(&quot;String&quot;, i)</span><br>  <span class="hljs-comment">// return</span><br>  <span class="hljs-comment">//&#125;</span><br>  <span class="hljs-keyword">switch</span> i := p.(<span class="hljs-keyword">type</span>) &#123;<br>  <span class="hljs-keyword">case</span> <span class="hljs-type">int</span>:<br>      fmt.Println(<span class="hljs-string">&quot;Integer&quot;</span>, i)<br>      <span class="hljs-keyword">return</span><br>  <span class="hljs-keyword">case</span> <span class="hljs-type">string</span>:<br>      fmt.Println(<span class="hljs-string">&quot;String&quot;</span>, i)<br>      <span class="hljs-keyword">return</span><br>  <span class="hljs-keyword">default</span>:<br>      fmt.Println(<span class="hljs-string">&quot;unKnow Type&quot;</span>)<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDoSomething</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>  DoSomething(<span class="hljs-number">10</span>)<br>  DoSomething(<span class="hljs-string">&quot;10&quot;</span>)<br>  DoSomething(<span class="hljs-string">&#x27;1&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Go接口最佳实践"><a href="#Go接口最佳实践" class="headerlink" title="Go接口最佳实践"></a>Go接口最佳实践</h3><ul>
+<li><p>倾向于使用小的接口定义，很多接口只包含一个方法（对于实现者负担更新 single Interface）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Reader <span class="hljs-keyword">interface</span>&#123;<br>    Read(p []<span class="hljs-type">byte</span>)(n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br>&#125;  <br><span class="hljs-keyword">type</span> Writer <span class="hljs-keyword">interface</span>&#123;<br>    Write(p []<span class="hljs-type">byte</span>)(n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>)<br>&#125;  <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>较大的接口定义，可以由多个小接口定义组合而成</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> ReadWriter <span class="hljs-keyword">interface</span>&#123;<br>    Reader<br>    Writer<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>只依赖必要功能的最小接口(会使方法的复用性更强)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreData</span><span class="hljs-params">(reader Reader)</span></span> <span class="hljs-type">error</span>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/golang/" class="category-chain-item">golang</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/golang/">#golang</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>golang base (two)</div>
+      <div>https://blogxy.cn/posts/931b1dd1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>YI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年6月8日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/d987e558/" title="golang base (three)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">golang base (three)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/a9fab0f7/" title="关于composer的一些记录">
+                        <span class="hidden-mobile">关于composer的一些记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

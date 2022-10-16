@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="从 http 包开始我们都知道在 golang 中构建一个 http 服务很容易 12345678910package main    import &quot;net&#x2F;http&quot;func main()&amp;#123;	http.HandleFunc(&quot;&#x2F;ping&quot;, func(w http.ResponseWriter, r *http.Request) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang-web(一) 从http开始">
+<meta property="og:url" content="https://blogxy.cn/posts/6b5ac4cc/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="从 http 包开始我们都知道在 golang 中构建一个 http 服务很容易 12345678910package main    import &quot;net&#x2F;http&quot;func main()&amp;#123;	http.HandleFunc(&quot;&#x2F;ping&quot;, func(w http.ResponseWriter, r *http.Request) &amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogxy.cn/img/post/03.jpg">
+<meta property="article:published_time" content="2022-07-18T06:24:58.000Z">
+<meta property="article:modified_time" content="2022-08-02T15:19:36.473Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="golang-web">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blogxy.cn/img/post/03.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>golang-web(一) 从http开始 - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-exp-fill"></i>
+                进行中
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/golang-web/">
+                    <i class="iconfont icon-book"></i>
+                    golang-web框架解析
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="golang-web(一) 从http开始"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-18 14:24" pubdate>
+          2022年7月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          5.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">golang-web(一) 从http开始</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="从-http-包开始"><a href="#从-http-包开始" class="headerlink" title="从 http 包开始"></a>从 <code>http</code> 包开始</h2><p>我们都知道在 golang 中构建一个 http 服务很容易</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main  <br>  <br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;net/http&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	http.HandleFunc(<span class="hljs-string">&quot;/ping&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;  <br>	   _, _ = w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;pong&quot;</span>))  <br>	&#125;)<br>	_ = http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, <span class="hljs-literal">nil</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>有过现代 web api 开发的经验的人都能从中发现对应轻量级框架 的影子(如 express.js、 php slim)。<br>对应的概念有 <strong>路由</strong>、<strong>处理函数</strong>、<strong>请求对象&#x2F;结构体</strong>、<strong>响应对象&#x2F;结构体</strong></p>
+<p>因为 <code>http1.1 - 2</code> 是通过 tcp 实现的，<br>上面这个的代码隐藏了一些细节，我们来通过源码闭环整个 注册路由，监听与请求过程</p>
+<h3 id="注册路由"><a href="#注册路由" class="headerlink" title="注册路由"></a>注册路由</h3><ol>
+<li><p>用了一个 DefaultServeMux 结构， 来处理路由与处理函数的绑定</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// net/http/server.go:2488</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">HandleFunc</span><span class="hljs-params">(pattern <span class="hljs-type">string</span>, handler <span class="hljs-keyword">func</span>(ResponseWriter, *Request)</span></span>) &#123;  <br>   DefaultServeMux.HandleFunc(pattern, handler)  <br>&#125;<br><br><span class="hljs-comment">// net/http/server.go:2472</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mux *ServeMux)</span></span> HandleFunc(pattern <span class="hljs-type">string</span>, handler <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ResponseWriter, *Request)</span></span>) &#123;  <br>   <span class="hljs-keyword">if</span> handler == <span class="hljs-literal">nil</span> &#123;  <br>      <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;http: nil handler&quot;</span>)  <br>   &#125;   <br>   mux.Handle(pattern, HandlerFunc(handler))  <br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>里面的实现的比较简陋, 就是一个路由与 handler 函数 对应的 大 map 。</p>
+</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// net/http/server.go:2429</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mux *ServeMux)</span></span> Handle(pattern <span class="hljs-type">string</span>, handler Handler) &#123;  <br>   mux.mu.Lock()  <br>   <span class="hljs-keyword">defer</span> mux.mu.Unlock()  <br>  <br>   <span class="hljs-keyword">if</span> pattern == <span class="hljs-string">&quot;&quot;</span> &#123;  <br>      <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;http: invalid pattern&quot;</span>)  <br>   &#125;   <br>   <span class="hljs-keyword">if</span> handler == <span class="hljs-literal">nil</span> &#123;  <br>      <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;http: nil handler&quot;</span>)  <br>   &#125;   <br>   <span class="hljs-keyword">if</span> _, exist := mux.m[pattern]; exist &#123;  <br>      <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;http: multiple registrations for &quot;</span> + pattern)  <br>   &#125;  <br>   <span class="hljs-keyword">if</span> mux.m == <span class="hljs-literal">nil</span> &#123;  <br>      mux.m = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]muxEntry)  <br>   &#125;   <br>   e := muxEntry&#123;h: handler, pattern: pattern&#125;  <br>   mux.m[pattern] = e  <br>   <span class="hljs-keyword">if</span> pattern[<span class="hljs-built_in">len</span>(pattern)<span class="hljs-number">-1</span>] == <span class="hljs-string">&#x27;/&#x27;</span> &#123;  <br>      mux.es = appendSorted(mux.es, e)  <br>   &#125;  <br>   <span class="hljs-keyword">if</span> pattern[<span class="hljs-number">0</span>] != <span class="hljs-string">&#x27;/&#x27;</span> &#123;  <br>      mux.hosts = <span class="hljs-literal">true</span>  <br>   &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注册完之后，就看看 监听与处理部分</p>
+<h3 id="事件监听与任务分派"><a href="#事件监听与任务分派" class="headerlink" title="事件监听与任务分派"></a>事件监听与任务分派</h3><ol>
+<li>先是打开了一个 tcp socket 并调用了 Serve 方法去监听</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// net/http/server.go:3182</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ListenAndServe</span><span class="hljs-params">(addr <span class="hljs-type">string</span>, handler Handler)</span></span> <span class="hljs-type">error</span> &#123;  <br>   server := &amp;Server&#123;Addr: addr, Handler: handler&#125;  <br>   <span class="hljs-keyword">return</span> server.ListenAndServe()  <br>&#125;<br><br><span class="hljs-comment">// net/http/server.go:2918</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(srv *Server)</span></span> ListenAndServe() <span class="hljs-type">error</span> &#123;  <br>   <span class="hljs-keyword">if</span> srv.shuttingDown() &#123;  <br>      <span class="hljs-keyword">return</span> ErrServerClosed  <br>   &#125;  <br>   addr := srv.Addr  <br>   <span class="hljs-keyword">if</span> addr == <span class="hljs-string">&quot;&quot;</span> &#123;  <br>      addr = <span class="hljs-string">&quot;:http&quot;</span>  <br>   &#125;  <br>   ln, err := net.Listen(<span class="hljs-string">&quot;tcp&quot;</span>, addr)  <br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;  <br>      <span class="hljs-keyword">return</span> err  <br>   &#125;<br>   <span class="hljs-keyword">return</span> srv.Serve(ln)  <br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>开启监听 ，并用协程去处理真正的逻辑<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// net/http/server.go:2971</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(srv *Server)</span></span> Serve(l net.Listener) <span class="hljs-type">error</span> &#123;  <br><span class="hljs-comment">// ......</span><br>   ctx := context.WithValue(baseCtx, ServerContextKey, srv)<br>   <span class="hljs-keyword">for</span> &#123;  <br>   <span class="hljs-comment">// 等待请求 </span><br>      rw, err := l.Accept()  <br>   <span class="hljs-comment">// ...省略</span><br>      connCtx := ctx  <br>   <span class="hljs-comment">// ...省略 </span><br>      <span class="hljs-keyword">go</span> c.serve(connCtx)  <br>   &#125;&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="路由匹配与逻辑处理"><a href="#路由匹配与逻辑处理" class="headerlink" title="路由匹配与逻辑处理"></a>路由匹配与逻辑处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *conn)</span></span> serve(ctx context.Context) &#123;  <br>   <span class="hljs-comment">// ... net/http/server.go:1929   </span><br>   serverHandler&#123;c.server&#125;.ServeHTTP(w, w.req)  <br>   <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>最重点</strong>就是这一句，<code>serverHandler&#123;c.server&#125;</code> 调用 <code>ServeHTTP</code> 方法 ，<code>serverHandler&#123;c.server&#125;</code> 的类型在这里实际上是我们注入 <code>DefaultServeMux ServeMux</code> 调用了自己的 <code>ServeHTTP()</code>  其它框架无法就是对于这个 <code>Handler</code> 的实现与替换</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// net/http/server:2415</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mux *ServeMux)</span></span> ServeHTTP(w ResponseWriter, r *Request) &#123;  <br>   <span class="hljs-keyword">if</span> r.RequestURI == <span class="hljs-string">&quot;*&quot;</span> &#123;  <br>      <span class="hljs-keyword">if</span> r.ProtoAtLeast(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) &#123;  <br>         w.Header().Set(<span class="hljs-string">&quot;Connection&quot;</span>, <span class="hljs-string">&quot;close&quot;</span>)  <br>      &#125;      w.WriteHeader(StatusBadRequest)  <br>      <span class="hljs-keyword">return</span>  <br>   &#125;  <br>   h, _ := mux.Handler(r)  <br>   <span class="hljs-comment">// h 就是 Handler 的一个实例</span><br>   h.ServeHTTP(w, r)  <br>&#125;<br><br> <br><span class="hljs-comment">// net/http/server:2396</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mux *ServeMux)</span></span> handler(host, path <span class="hljs-type">string</span>) (h Handler, pattern <span class="hljs-type">string</span>) &#123;  <br>   mux.mu.RLock()  <br>   <span class="hljs-keyword">defer</span> mux.mu.RUnlock()  <br>  <br>   <span class="hljs-comment">// Host-specific pattern takes precedence over generic ones  </span><br>   <span class="hljs-keyword">if</span> mux.hosts &#123;  <br>      h, pattern = mux.match(host + path)  <br>   &#125;   <span class="hljs-keyword">if</span> h == <span class="hljs-literal">nil</span> &#123;  <br>      h, pattern = mux.match(path)  <br>   &#125;   <span class="hljs-keyword">if</span> h == <span class="hljs-literal">nil</span> &#123;  <br>      h, pattern = NotFoundHandler(), <span class="hljs-string">&quot;&quot;</span>  <br>   &#125;  <br>   <span class="hljs-keyword">return</span>  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>去 map 里面匹配到了 注入的 HandlerFunc 最终调用了 HandlerFunc 的 ServeHttp ,执行了我们最开始的逻辑函数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">//server:2046</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(f HandlerFunc)</span></span> ServeHTTP(w ResponseWriter, r *Request) &#123;  <br>   f(w, r)  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>整体的流程下来就是<br><strong>路由注册，开启监听 ，监听到请求，开协程去匹配路由，并根据注册的处理函数来处理请求</strong><br>官方包已经给了一整套完整的实现，有改进空间的点在于 路由注册&#x2F;匹配这一块，再补上 log config 等一些基础包，每个人都可以实现自己的框架</p>
+<h3 id="自定义-Handler"><a href="#自定义-Handler" class="headerlink" title="自定义 Handler"></a>自定义 Handler</h3><p>上面的例子中，我们使用了默认的 <code>http.DefaultServeMux </code>  来实现 <code>handle</code><br><code>Handler Handler // handler to invoke, http.DefaultServeMux if nil</code>  </p>
+<p> <code>handle</code> 最主要就做了两件事<br>第一是定义了 map 来存储路由与处理逻辑函数<br>第二个就是实现了 <code>Handler interface </code> 定义了一个 <code>ServeHTTP(ResponseWriter, *Request)</code> 来处理 传入的 http  请求。</p>
+<p>这两件事，不依赖官方，我们自己去做可行？很显然可行，到这里我们已经往自定义框架的路上走了一大步。</p>
+<h4 id="Pong-http-服务"><a href="#Pong-http-服务" class="headerlink" title="Pong http 服务"></a>Pong http 服务</h4><p>一起来实现一个 pong http 服务，不管你请求什么 我都会响应 pong </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main  <br>  <br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;net/http&quot;</span><br><br><span class="hljs-keyword">type</span> pongHandler <span class="hljs-keyword">struct</span> &#123;  <br>   content <span class="hljs-type">string</span>  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pH *pongHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;  <br>   _, _ = w.Write([]<span class="hljs-type">byte</span>(pH.content))  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>   _ = http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, &amp;pongHandler&#123;<span class="hljs-string">&quot;pong&quot;</span>&#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在我们就得到了一个不管你怎么访问我都是响应 pong 的 http 服务， 而没有使用  <code>ServeMux</code>  ，接下来 我们来实现简易路由的存储与匹配</p>
+<h4 id="路由的存储与匹配"><a href="#路由的存储与匹配" class="headerlink" title="路由的存储与匹配"></a>路由的存储与匹配</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main  <br>  <br><span class="hljs-keyword">import</span> (  <br>   <span class="hljs-string">&quot;net/http&quot;</span>  <br>)  <br>  <br><span class="hljs-keyword">type</span> pingHandler <span class="hljs-keyword">struct</span> &#123;  <br>   content <span class="hljs-type">string</span>  <br>   trees   <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*node  <br>&#125;  <br>  <br><span class="hljs-keyword">type</span> node <span class="hljs-keyword">struct</span> &#123;  <br>   method  <span class="hljs-type">string</span>  <br>   handler <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(http.ResponseWriter, *http.Request)</span></span>  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pH *pingHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;  <br>  <br>   <span class="hljs-keyword">if</span> n, ok := pH.trees[r.Method+r.RequestURI]; !ok &#123;  <br>      _, _ = w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;404 Not Found&quot;</span>))  <br>      <span class="hljs-keyword">return</span>  <br>   &#125; <span class="hljs-keyword">else</span> &#123;  <br>      <span class="hljs-keyword">if</span> n.method != r.Method &#123;  <br>         _, _ = w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;Method Not Match&quot;</span>))  <br>      &#125; <span class="hljs-keyword">else</span> &#123;  <br>         n.handler(w, r)  <br>      &#125;   <br>   &#125;<br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pH *pingHandler)</span></span> Get(route <span class="hljs-type">string</span>, logic <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span>) &#123;  <br>   n := node&#123;http.MethodGet, logic&#125;  <br>   pH.trees[http.MethodGet+route] = &amp;n  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pH *pingHandler)</span></span> Post(route <span class="hljs-type">string</span>, logic <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span>) &#123;  <br>   n := node&#123;http.MethodPost, logic&#125;  <br>   pH.trees[http.MethodPost+route] = &amp;n  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>  <br>   r := pingHandler&#123;<span class="hljs-string">&quot;pong&quot;</span>, <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*node)&#125;  <br>  <br>   r.Get(<span class="hljs-string">&quot;/ping&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;  <br>      _, _ = w.Write([]<span class="hljs-type">byte</span>(r.RequestURI + <span class="hljs-string">&quot;:&quot;</span> + r.Method))  <br>   &#125;)  <br>   r.Post(<span class="hljs-string">&quot;/ping&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;  <br>      _, _ = w.Write([]<span class="hljs-type">byte</span>(r.RequestURI + <span class="hljs-string">&quot;:&quot;</span> + r.Method))  <br>   &#125;)  <br>   _ = http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, &amp;r)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>几行代码就生成了一个简易的路由存储与匹配机制，对路由存储与匹配感兴趣的小伙伴可以参考<br><a target="_blank" rel="noopener" href="https://github.com/gorilla/mux">github.com&#x2F;gorilla&#x2F;mux</a>  功能更丰富、 <a target="_blank" rel="noopener" href="https://github.com/julienschmidt/httprouter">github.com&#x2F;julienschmidt&#x2F;httprouter</a>  性能更好，对应的知识点 有 [[前缀树trie算法]]  ，基于 hash 的路由匹配…  此处就不再深入了，接下来的一章，我们去看看官方推荐的 gin 框架相关功能是如何实现的？</p>
+<h3 id="其它细节点待补充"><a href="#其它细节点待补充" class="headerlink" title="其它细节点待补充"></a>其它细节点待补充</h3><ul>
+<li>TODO <ul>
+<li>socket 细节</li>
+<li>路由匹配算法</li>
+<li>服务抽象思维与接口实现重写</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/golang-web/" class="category-chain-item">golang-web</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/golang/">#golang</a>
+      
+        <a href="/tags/golang-web/">#golang-web</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>golang-web(一) 从http开始</div>
+      <div>https://blogxy.cn/posts/6b5ac4cc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>YI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/b93583de/" title="生成式AI-图像类-stable-diffusion-webui（概述）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">生成式AI-图像类-stable-diffusion-webui（概述）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/ea31ae71/" title="laravel-sanctum实践">
+                        <span class="hidden-mobile">laravel-sanctum实践</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

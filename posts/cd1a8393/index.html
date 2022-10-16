@@ -1,0 +1,1143 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YI">
+  <meta name="keywords" content="blog&amp;life">
+  
+    <meta name="description" content="java 执行流程 java 粗略执行流程 源文件编译成 .class 字节码文件 -&gt;解释执行 jre( 装载 -&gt; 字节码校验 -&gt; jvm 执行) jdk 包含了 javac jre debugging tools javap   javeSE(java标准版本) JAVAEE(java商业版) 与 JAVAME(设备专用) 一般分为这三块  第一个 java 程序1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java学习笔记（一）">
+<meta property="og:url" content="https://blogxy.cn/posts/cd1a8393/index.html">
+<meta property="og:site_name" content="积木成楼">
+<meta property="og:description" content="java 执行流程 java 粗略执行流程 源文件编译成 .class 字节码文件 -&gt;解释执行 jre( 装载 -&gt; 字节码校验 -&gt; jvm 执行) jdk 包含了 javac jre debugging tools javap   javeSE(java标准版本) JAVAEE(java商业版) 与 JAVAME(设备专用) 一般分为这三块  第一个 java 程序1234">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-01T14:26:23.000Z">
+<meta property="article:modified_time" content="2022-08-02T15:19:36.473Z">
+<meta property="article:author" content="YI">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>java学习笔记（一） - 积木成楼</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>积木成楼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-exp-fill"></i>
+                进行中
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/golang-web/">
+                    <i class="iconfont icon-book"></i>
+                    golang-web框架解析
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="java学习笔记（一）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-01 22:26" pubdate>
+          2019年7月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java学习笔记（一）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="java-执行流程"><a href="#java-执行流程" class="headerlink" title="java 执行流程"></a><code>java</code> 执行流程</h2><ul>
+<li><code>java</code> 粗略执行流程<ul>
+<li>源文件编译成 <code>.class</code> 字节码文件 <code>-&gt;</code>解释执行 <code>jre</code>( 装载 <code>-&gt;</code> 字节码校验 <code>-&gt;</code> <code>jvm</code> 执行)</li>
+<li><code>jdk</code> 包含了 <code>javac</code> <code>jre</code> <code>debugging</code> <code>tools</code> <code>javap</code></li>
+</ul>
+</li>
+<li><code>javeSE</code>(<code>java</code>标准版本) <code>JAVAEE</code>(<code>java</code>商业版) 与 <code>JAVAME</code>(设备专用) 一般分为这三块</li>
+</ul>
+<h3 id="第一个-java-程序"><a href="#第一个-java-程序" class="headerlink" title="第一个 java 程序"></a>第一个 java 程序</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">hello</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String [] args)</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;hello world&quot;</span>);<span class="hljs-comment">// 这里的分号必加</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>注意点</p>
+<ul>
+<li>需要先使用 <code>javac</code> 编译出 <code>.class</code> 文件 再执行 <code>java</code></li>
+<li>源文件只能有一个跟文件名相同的 <code>public</code> 类名</li>
+<li><code>main</code> 方法为 <code>java</code> 固定入口 有固定的书写格式 <code>public static void main(String[] args)&#123;&#125;</code></li>
+<li><code>JAVA</code> 对大小写敏感</li>
+<li><code>windows</code> 安装后 1.5以上只需要 设置 <code>JAVAHOME /path/to</code> 与<code>%JAVA_HOME%\bin</code> 便于执行 <code>java -version</code> <code>javac</code>…</li>
+</ul>
+</li>
+<li><p><code>eclipse</code> 编辑器<a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/">下载地址</a> 确实下的很慢</p>
+<ul>
+<li>如何打开 <code>package explorer</code> 在 <code>windows</code> 里面的 <code>show view</code> 下的 <code>package explorer</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
+<li>&#x2F;&#x2F; 单行注释</li>
+<li>&#x2F;* 多行注释 *&#x2F;</li>
+<li>&#x2F;** 文档注释 *&#x2F;</li>
+<li>注释是不会出现在字节码文件中的</li>
+</ul>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><ul>
+<li>可以用 <code>_ $</code> 字母 开头 建议使用小驼峰，不要使用 <code>$</code>与 <code>_</code> 开头</li>
+<li>大小写敏感，不能用关键字</li>
+<li>类名 大驼峰 , 其它小驼峰</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
+<li><p>变量名称</p>
+<ul>
+<li>见标识符</li>
+</ul>
+</li>
+<li><p>变量类型</p>
+</li>
+<li><p>变量作用域</p>
+<ul>
+<li><p>局部变量</p>
+<ul>
+<li>方法或者语句块中定义的变量</li>
+<li>使用时必须要先 &#x3D;&#x3D;初始化&#x3D;&#x3D;</li>
+<li>生命周期从声明位置开始到语句块 比如<code>&#123;&#125;</code> 或者 方法执行完毕为止</li>
+</ul>
+</li>
+<li><p>成员变量</p>
+<ul>
+<li><p>也叫实例对象(member variable)方法外部，类的内部定义的变量，从属于&#x3D;&#x3D;对象&#x3D;&#x3D;，</p>
+</li>
+<li><p>生命周期伴随对象始终</p>
+</li>
+<li><p>如果不赋值，它会自动初始化成该类型的默认初始化值</p>
+<table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">实例化初始值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">0.0</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center"><code>&#39;\u0000&#39;</code></td>
+</tr>
+<tr>
+<td align="center">boolean</td>
+<td align="center">false</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>静态变量</p>
+<ul>
+<li>使用 static 定义，从属于&#x3D;&#x3D;类&#x3D;&#x3D;，生命周期伴随类始终，从类加载到卸载</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>变量声明 与 初始化</p>
+<ul>
+<li>int ss 声明</li>
+<li>int ss &#x3D; 2 声明并赋值</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量（Constant）"><a href="#常量（Constant）" class="headerlink" title="常量（Constant）"></a>常量（Constant）</h3><ul>
+<li>声明后值不会改变的量叫常量</li>
+<li>使用 <code>final</code> 关键字可以将变量转为<code>符号常量</code></li>
+<li>1,’2’,3,”hello” 属于<code>字面常量</code> 也就是说直接写出来的常量</li>
+</ul>
+<h3 id="基本数据类型（primitive-data-type）"><a href="#基本数据类型（primitive-data-type）" class="headerlink" title="基本数据类型（primitive data type）"></a>基本数据类型（primitive data type）</h3><ul>
+<li>数值<ul>
+<li>整数类型(<code>byte 1字节8位,short 2,int 4,long 8</code>)</li>
+<li>浮点类型(<code>float 4,double 8</code>)字节</li>
+<li>字符型（<code>char</code>）2字节</li>
+<li>布尔型（<code>boolean</code>）1位</li>
+</ul>
+</li>
+<li>引用数据类型 <code>4字节存储对象的地址</code><ul>
+<li>类 <code>class</code></li>
+<li>接口 <code>interface</code></li>
+<li>数组 <code>array</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="数值型"><a href="#数值型" class="headerlink" title="数值型"></a>数值型</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>占用存储空间</th>
+<th>表示范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>1字节 8位</td>
+<td>-2^7 ~ 2^7-1(-128~127)</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节 16位</td>
+<td>-2^15 ~ 2^15-1(-32768~32767)</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4字节 32位</td>
+<td>-2^31 ~ 2^31-1 约21亿</td>
+</tr>
+<tr>
+<td>log</td>
+<td>8字节 64位</td>
+<td>-2^63 ~ 2^63-1</td>
+</tr>
+</tbody></table>
+<ul>
+<li>进制<ul>
+<li>八进制 以 0 开头</li>
+<li>十六进制 以 <code>0x</code>或者 <code>0X</code> 开头 <code>0x15</code></li>
+<li>二进制 要求以 <code>0b</code>或者<code>0B</code>开头， <code>0b01110011</code></li>
+</ul>
+</li>
+<li><strong>long 类型需要显示的加上 &#x3D;&#x3D;L&#x3D;&#x3D;</strong> 不加<code>l</code> 是避免混淆<ul>
+<li><code>long e = 222222222L</code>;</li>
+</ul>
+</li>
+</ul>
+<h4 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>占用存储空间</th>
+<th>表示范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>float</td>
+<td>4字节 32位</td>
+<td><code>-3.403E38</code> ~&#96; 3.403E38&#96;</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节 64位</td>
+<td><code>-1.798E308</code> ~ <code>1.798E308</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li>浮点数的表示形式<ul>
+<li>十进制 3.14 314.0 0.314</li>
+<li>科学计数法 <code>314e2 314*100</code> <code>134E-2 314/100</code></li>
+</ul>
+</li>
+<li><code>float</code> 可以表示&#x3D;&#x3D;7&#x3D;&#x3D;位有效数字<ul>
+<li><code>float</code> 类型 &#x3D;&#x3D;<strong>必须</strong>&#x3D;&#x3D; 要 在后面加上 <strong>F</strong></li>
+</ul>
+</li>
+<li><code>double</code> 可以表示&#x3D;&#x3D;15&#x3D;&#x3D;位有效数字<ul>
+<li><code>bouble</code> 为<code>默认小数的类型</code> 如 <code>3.13 或 3.14D</code> 也可以在后面加上 <code>D</code></li>
+</ul>
+</li>
+<li>浮点数<code>运算</code>与<code>比较</code>都是不精确的，一般使用 <code>java.math</code>的 <code>BigInterge</code>,<code>BigDecimal</code> 类用于不容许舍入误差的金融计算领域</li>
+</ul>
+<h4 id="字符型"><a href="#字符型" class="headerlink" title="字符型"></a>字符型</h4><ul>
+<li><code>char</code> 是表示 <code>Unicode</code> 编码的一种实现 <code>2</code>字节 <code>65535</code></li>
+</ul>
+<h4 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h4><ul>
+<li><code>true</code> | <code>false</code></li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><table>
+<thead>
+<tr>
+<th>-</th>
+<th>-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术运算符</td>
+<td>二元运算符</td>
+<td>+，-，*，&#x2F;，%</td>
+</tr>
+<tr>
+<td>算术运算符</td>
+<td>一元运算符</td>
+<td>++，–</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>扩展运算符</td>
+<td>+&#x3D;，-&#x3D;，*&#x3D;，&#x2F;&#x3D;</td>
+</tr>
+<tr>
+<td>关系运算符</td>
+<td>&gt;,&lt;, &gt;&#x3D; ,&lt;&#x3D;,&#x3D;&#x3D; ,!&#x3D;, <code>instanceof</code></td>
+</tr>
+<tr>
+<td>逻辑运算符</td>
+<td><code>&amp;&amp;</code>,&#96;</td>
+</tr>
+<tr>
+<td>位运算符</td>
+<td><code>&amp;</code> ，&#96;</td>
+</tr>
+<tr>
+<td>条件运算符</td>
+<td>？</td>
+</tr>
+<tr>
+<td>字符串连接运算符</td>
+<td>+</td>
+</tr>
+</tbody></table>
+<h4 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h4><ul>
+<li>算术运算符<ul>
+<li>整数运算<ul>
+<li>两个操作数，只要有一个为<code>long</code> 结果为<code>long</code></li>
+<li>没有<code>long</code> 时结果为<code>int</code>,即使操作数全为<code>short</code> 或 <code>byte</code> 结果也是 <code>int</code></li>
+</ul>
+</li>
+<li>浮点运算<ul>
+<li>如果两个数有一个为 <code>double</code> 结果为 <code>double</code></li>
+<li>&#x3D;&#x3D;只有两个数都是&#x3D;&#x3D; <code>float</code> 结果才是 <code>float</code></li>
+</ul>
+</li>
+<li>取模运算<ul>
+<li>其操作数可以为<strong>浮点数</strong>，结果为还是按上面规则走</li>
+<li>余数的符号跟&#x3D;&#x3D;左边操作数的符号&#x3D;&#x3D;相同</li>
+<li><code>7%3=1</code> <code>-7%3=-1</code> <code>7%-3=1</code> <code>3.14%3=0.14000000000000012</code></li>
+</ul>
+</li>
+<li><code>++</code> <code>--</code><ul>
+<li><code>前++</code> 与<code>后++</code> 的区别 先赋值还是后赋值的问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="赋值运算符与扩展运算符"><a href="#赋值运算符与扩展运算符" class="headerlink" title="赋值运算符与扩展运算符"></a>赋值运算符与扩展运算符</h4><ul>
+<li><code>=</code> <code>+=</code> …</li>
+</ul>
+<h4 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h4><ul>
+<li><code>&lt;,&gt;,&lt;=,=&gt;,!=</code> 结果为 <code>boolean</code></li>
+</ul>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h4><ul>
+<li><code>^</code> 相同为 <code>false</code> 不同为 <code>true</code> <code>&amp; | !</code> 用与<code>bool</code>数之间是比较 用于 <code>int</code> 数之间为位运算</li>
+<li>注意 <code>&amp;</code>与<code>|</code> 还有 <code>&amp;&amp;</code> 与 <code>||</code> 的 逻辑短路现象</li>
+</ul>
+<h4 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h4><ul>
+<li><code>&lt;&lt; 1</code>乘<code>2</code>   <code>&gt;&gt; 1</code>除以<code>2</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">as</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> <span class="hljs-variable">bs</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;<br>System.out.println(~as); <span class="hljs-comment">//-2</span><br>System.out.println(bs&lt;&lt;<span class="hljs-number">2</span>); <span class="hljs-comment">//8</span><br>System.out.println(bs&gt;&gt;<span class="hljs-number">1</span>); <span class="hljs-comment">//1</span><br>System.out.println(bs&gt;&gt;<span class="hljs-number">3</span>); <span class="hljs-comment">//0</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="字符串连接符"><a href="#字符串连接符" class="headerlink" title="字符串连接符"></a>字符串连接符</h4><ul>
+<li><code>+</code> 前后 如果有一者为 字符串 那么就变成字符串连接操作</li>
+</ul>
+<h4 id="条件运算符"><a href="#条件运算符" class="headerlink" title="条件运算符"></a>条件运算符</h4><ul>
+<li>三目（元）运算符 <code>a?x:y;</code></li>
+</ul>
+<h4 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h4><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>运算符</th>
+<th>类</th>
+<th>结合性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>&#123;&#125;</code></td>
+<td>括号运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>！</code>，<code>+</code>（正号），<code>-</code>（负号）</td>
+<td>一元运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>~</code></td>
+<td>位逻辑运算符</td>
+<td>由右至左</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>++</code>，<code>--</code></td>
+<td>递增递减运算符</td>
+<td>由右至左</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>*</code>，<code>/</code>，<code>%</code></td>
+<td>算术运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>+</code>，<code>-</code></td>
+<td>算术运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;&lt;</code>，<code>&gt;&gt;</code></td>
+<td>位运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;</code>,<code>&gt;</code>，<code>&gt;=</code>,<code>&lt;=</code></td>
+<td>关系运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>==</code>，<code>!=</code></td>
+<td>关系运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&amp;</code></td>
+<td>位运算符,逻辑运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>^</code></td>
+<td>位运算符，逻辑运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>10</td>
+<td>&#96;</td>
+<td>&#96;</td>
+<td>位运算符，逻辑运算符</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&amp;&amp;</code></td>
+<td>逻辑运算符</td>
+<td>由左至右</td>
+</tr>
+<tr>
+<td>12</td>
+<td>&#96;</td>
+<td></td>
+<td>&#96;</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>?:</code></td>
+<td>条件运算符</td>
+<td>由右至左</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>=</code>,<code>+=</code>,<code>-=</code>,<code>*=</code>,<code>/=</code>,<code>%=</code></td>
+<td>赋值运算符，扩展运算符</td>
+<td>由右至左</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>！</code>&gt;<code>&amp;</code>&gt;<code>^</code>&gt;<code>|</code>&gt;<code>&amp;&amp;</code>&gt;<code>||</code></li>
+<li>a||b&amp;&amp;c 意思是 a||(b&amp;&amp;c)</li>
+<li>简记为 &#x3D;&#x3D;算术&gt;关系&gt;逻辑&#x3D;&#x3D; 也就是先运算再比较最后为赋值</li>
+</ul>
+<h4 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h4><ul>
+<li>原则为 容量小转换为 容量大的 （不一定是字节数）</li>
+<li><code>byte--&gt;short--&gt;int--&gt;long</code></li>
+<li><code>char--&gt;int</code></li>
+<li><code>int--&gt;double</code></li>
+<li><code>int--&gt;float</code>(精度丢失)</li>
+<li><code>int--&gt;double</code></li>
+<li><code>long--&gt;float</code>(精度丢失)</li>
+<li><code>long--&gt;double</code> (精度丢失)</li>
+<li><code>float--&gt;double</code></li>
+</ul>
+<h4 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h4><ul>
+<li>强制类型转换进行运算的时候先要考虑溢出情况</li>
+<li>只需要在变量前面加上<code>（type）</code> 就能强制转换，可强制转换的 type 只包括数值与字符类型</li>
+<li><code>double x = 3.14;</code> <code>int nx = (int)x</code></li>
+</ul>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h4 id="顺序结构"><a href="#顺序结构" class="headerlink" title="顺序结构"></a>顺序结构</h4><h4 id="选择结构"><a href="#选择结构" class="headerlink" title="选择结构"></a>选择结构</h4><ul>
+<li>if 单选择结构</li>
+<li>if else 双选择结构</li>
+<li>if else if else 多选择结构<ul>
+<li>else if 中间必须加空格</li>
+</ul>
+<p>	</p>
+</li>
+<li>switch 多选择结构<ul>
+<li>跟 <code>php</code> 没什么区别	</li>
+<li>switch中<code>case</code>标签在 <code>jdk1.5</code> 以前必须是整数（long类型除外）或者，枚举，不能是字符串</li>
+<li>在 <code>jdk1.7</code> 以后允许使用字符串（String）</li>
+</ul>
+</li>
+</ul>
+<h4 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h4><ul>
+<li>while(布尔表达式){ 循环体 }</li>
+<li>do{ 循环体 }while(布尔表达式)</li>
+<li>for(赋值,赋值;比较条件,默认值){ 循环体 }<ul>
+<li>支持逗号隔开的多重初始化</li>
+<li>赋值的作用域仅限于循环内部使用</li>
+</ul>
+</li>
+<li>break &#x2F; continue<ul>
+<li>带标签的break   <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-built_in">int</span> i =<span class="hljs-number">1</span>;<br>outime:<span class="hljs-keyword">while</span>(i&lt;=<span class="hljs-number">100</span>) &#123;<br>	<span class="hljs-keyword">while</span>(i&lt;=<span class="hljs-number">100</span>) &#123;<br>		<span class="hljs-keyword">if</span>(i == <span class="hljs-number">22</span>) &#123;<br>			<span class="hljs-keyword">break</span> outime;<br>		&#125;<br>		i++;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>没有 goto 语法，标签仅限于一个循环（单&#x2F;嵌套）体内部使用</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/program-language/" class="category-chain-item">program language</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/">#java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>java学习笔记（一）</div>
+      <div>https://blogxy.cn/posts/cd1a8393/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>YI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/99abd062/" title="关于php后端的100个话题（一）消息队列">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于php后端的100个话题（一）消息队列</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/344cac0c/" title="工作中的方法论">
+                        <span class="hidden-mobile">工作中的方法论</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="https://cdn.learnku.com/uploads/avatars/19292_1528081891.jpg!/both/400x400" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>go-zero单体化改造（一）gorm的接入</title>
+    <link href="/posts/500f78a8/"/>
+    <url>/posts/500f78a8/</url>
+    
+    <content type="html"><![CDATA[<p>主要分三点讨论如何在 go-zero 中 接入与使用 gorm 。</p><p>大多数时候，应用都是单体架构，go-zero 的好处就是，可以快速的搭建一个单体应用，但是随着业务的发展，单体应用的压力也会越来越大，这时候就需要对单体应用进行拆分，拆分的方式有很多，比如拆分成微服务，多个单体应用，多个模块…</p><p>而 go-zero 提供了方案，可以在业务小的时候单体，规模变大时候，很方便的拆分成微服务，这就是 go-zero 的独特魅力。</p><p>对于 go-zero 中，我最难受的点就在db 这部分，写过 laravel 的人，再去写 go-zero 的 db 部分，会觉得很难受，因为单体应用也很难达到，数据承压的极限，所以我最终选择用 gorm 这种 orm 框架，一个是快速开发，第二个是我的开源项目会用到 pgsql.</p><p>之前已经在项目中用 MySQL 实现了 基础的业务逻辑，所以目前主要就是对 db 部分进行替换。</p><p>第一步 <code>service/demo/api/internal/svc/servicecontext.go</code> 修改 服务上下文</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> svc<br><br><span class="hljs-keyword">import</span><span class="hljs-string">&quot;gorm.io/driver/postgres&quot;</span><br><span class="hljs-keyword">import</span><span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br><br><span class="hljs-keyword">type</span> ServiceContext <span class="hljs-keyword">struct</span> &#123;<br>Config    config.Config<br>DbEngin   *gorm.DB<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewServiceContext</span><span class="hljs-params">(c config.Config)</span></span> *ServiceContext &#123;<br><span class="hljs-comment">//启动Gorm支持</span><br>db, err := gorm.Open(postgres.New(postgres.Config&#123;<br>DSN:                  c.PGSql.DataSource,<br>PreferSimpleProtocol: <span class="hljs-literal">true</span>, <span class="hljs-comment">// disables implicit prepared statement usage</span><br>&#125;), &amp;gorm.Config&#123;&#125;)<br><br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br><span class="hljs-built_in">panic</span>(err)<br>&#125;<br><br><span class="hljs-keyword">return</span> &amp;ServiceContext&#123;<br>Config:    c,<br>DbEngin:   db,<br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>这样就可以在服务上下文中，添加 gorm 的支持，然后在 <code>service/demo/api/internal/config/config.go</code> 中添加 pgsql 的配置</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Config <span class="hljs-keyword">struct</span> &#123;<br><br>PGSql <span class="hljs-keyword">struct</span> &#123;<br>DataSource <span class="hljs-type">string</span><br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>改造就完成了，是的就是这么简单，但是现在的易用性很差，各种方法也都需要自己去封装。用 gorm 肯定会定义 model, 我这个时候，发现了一个新的工具</p><p>第二步 orm 的易用性工具</p><ul><li><code>gentool</code> 用于生成 gorm 的 model 与对应的实用方法</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">go install gorm.io/gen/tools/gentool@latest<br></code></pre></td></tr></table></figure><p>比如 在项目根目录下执行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gentool -db &quot;postgres&quot; -dsn &quot;host=localhost user=root password=123456 dbname=demo port=18886 sslmode=disable TimeZone=Asia/Shanghai&quot; -outPath &quot;./service/demo/dao&quot;<br></code></pre></td></tr></table></figure><p><img src="/img/post/go-zero01.png" alt="/img/post/go-zero01.png"></p><p>可以看到连接数据库后，自动生成对应的结构体，基础的 curd 方法都实现了，很久没有用 gorm ，再次使用，给我的感受是，emmm 还挺不错的~ 易用性加强了很多</p><p>然后再次修改 <code>service/demo/api/internal/svc/servicecontext.go</code> 服务上下文</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">type</span> ServiceContext <span class="hljs-keyword">struct</span> &#123;<br>UserModel *dao.Query<br>&#125;<br><br><span class="hljs-keyword">return</span> &amp;ServiceContext&#123;<br>    Config:    c,<br>    UserModel: dao.Use(db),<br>&#125;<br></code></pre></td></tr></table></figure><p>最后就就可以在 <code>service/demo/api/internal/logic</code> 中使用了</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 用户是否存在</span><br>table := l.svcCtx.UserModel.User<br><br>user, selectErr := table.WithContext(l.ctx).Where(table.ID.Eq(req.ID)).First()<br><br><span class="hljs-keyword">if</span> !errors.Is(selectErr, gorm.ErrRecordNotFound) &amp;&amp; err != <span class="hljs-literal">nil</span> &#123;<br>    err = errors.Wrapf(xerr.NewErrCodeMsg(xerr.DBError, <span class="hljs-string">&quot;查询用户失败&quot;</span>), <span class="hljs-string">&quot;查询用户失败 %v&quot;</span>, err)<br>    <span class="hljs-keyword">return</span><br>&#125;<br><br></code></pre></td></tr></table></figure><p>一个简单的逻辑，但是已经可以看到，使用 gorm 后，代码的可读性，易用性都提高了很多。</p><p>比较坑的是 <code>gorm.ErrRecordNotFound</code> 这个 error , 一开始我以为是 db 的错误，但是后来发现，这个错误是 gorm 的一个特性，如果查询不到数据，会返回这个错误，数据会给一个 null。</p><p>以上就是我在 go-zero 中接入 gorm 的过程，如果你也在用 go-zero ，可以参考一下，如果你有更好的方法，欢迎留言讨论。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>golang</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>golang</tag>
+      
+      <tag>go-zero</tag>
+      
+      <tag>gorm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>生成式AI-图像类-stable-diffusion-webui（概述）</title>
     <link href="/posts/b93583de/"/>
     <url>/posts/b93583de/</url>

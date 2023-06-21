@@ -1,5 +1,5 @@
 ---
-title: laravel-sanctum实践
+title: laravel-sanctum优化
 tags:
   - laravel
   - sanctum

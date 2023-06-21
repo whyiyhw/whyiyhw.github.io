@@ -2,7 +2,8 @@
 title: 生成式AI-图像类-stable-diffusion-webui（概述）
 tags:
   - ai
-categories: 图像生成
+  - stable-diffusion
+categories: ai
 index_img: /img/post/04.png
 abbrlink: b93583de
 date: 2022-10-16 23:12:32

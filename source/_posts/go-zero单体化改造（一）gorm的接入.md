@@ -10,17 +10,17 @@ tags:
   - gorm
 ---
 
-主要分三点讨论如何在 go-zero 中 接入与使用 gorm 。
+## 在 go-zero 中 接入与使用 gorm 只需要三步。
 
 大多数时候，应用都是单体架构，go-zero 的好处就是，可以快速的搭建一个单体应用，但是随着业务的发展，单体应用的压力也会越来越大，这时候就需要对单体应用进行拆分，拆分的方式有很多，比如拆分成微服务，多个单体应用，多个模块...
 
 而 go-zero 提供了方案，可以在业务小的时候单体，规模变大时候，很方便的拆分成微服务，这就是 go-zero 的独特魅力。
 
-对于 go-zero 中，我最难受的点就在db 这部分，写过 laravel 的人，再去写 go-zero 的 db 部分，会觉得很难受，因为单体应用也很难达到，数据承压的极限，所以我最终选择用 gorm 这种 orm 框架，一个是快速开发，第二个是我的开源项目会用到 pgsql.
+对于 go-zero 中，我最难受的点就在db 这部分，写过 laravel 的人，再去写 go-zero 的 db 部分，会觉得很难受，因为单体应用也很难达到，数据库承压的极限，所以我最终选择用 gorm 这种 orm 框架，一个是快速开发，第二个是我的开源项目会用到 pgsql , 用 gorm 可以抹平 mysql 与 pgsql 的语法差异。
 
 之前已经在项目中用 MySQL 实现了 基础的业务逻辑，所以目前主要就是对 db 部分进行替换。
 
-第一步 `service/demo/api/internal/svc/servicecontext.go` 修改 服务上下文
+### 第一步 `service/demo/api/internal/svc/servicecontext.go` 修改 服务上下文
 
 ```go
 package svc
@@ -55,7 +55,9 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 ```go
 type Config struct {
-
+	
+	...
+	
 	PGSql struct {
 		DataSource string
 	}
@@ -63,7 +65,7 @@ type Config struct {
 ```
 改造就完成了，是的就是这么简单，但是现在的易用性很差，各种方法也都需要自己去封装。用 gorm 肯定会定义 model, 我这个时候，发现了一个新的工具
 
-第二步 orm 的易用性工具
+### 第二步 orm 的易用性工具
 
 - `gentool` 用于生成 gorm 的 model 与对应的实用方法
 
@@ -76,7 +78,7 @@ go install gorm.io/gen/tools/gentool@latest
 gentool -db "postgres" -dsn "host=localhost user=root password=123456 dbname=demo port=18886 sslmode=disable TimeZone=Asia/Shanghai" -outPath "./service/demo/dao"
 ```
 
-![/img/post/go-zero01.png](/img/post/go-zero01.png)
+![/img/go-zero01.png](/img/go-zero01.png)
 
 可以看到连接数据库后，自动生成对应的结构体，基础的 curd 方法都实现了，很久没有用 gorm ，再次使用，给我的感受是，emmm 还挺不错的~ 易用性加强了很多
 
@@ -85,15 +87,18 @@ gentool -db "postgres" -dsn "host=localhost user=root password=123456 dbname=dem
 ```go
 
 type ServiceContext struct {
+	...
 	UserModel *dao.Query
 }
 
 return &ServiceContext{
     Config:    c,
     UserModel: dao.Use(db),
+	...
 }
 ```
 
+### 业务使用
 最后就就可以在 `service/demo/api/internal/logic` 中使用了
 
 ```go

@@ -33,17 +33,33 @@ updated: 2020-04-07 19:19:24
 
 - `npm` 跟 `cnpm` 的区别就不说了
 
+  - 安装 `hexo` 
     ```shell
-    `npm install hexo -g` #安装 `hexo` 
-    `hexo -v`  #查看版本
+    npm install hexo -g 
     ```
-
+  - 验证版本
     ```shell
-    `hexo init dir`                          # 初始化目录
-    `hexo new post "关于hexo的安装的一些记录"` # 新建文件
-    `hexo s`                                 # 启动服务，可访问 http://localhost:4000 进行预览
-    `hexo generate --deploy`                 # 编译生成静态文件，并上传至 git 服务上
-    `hexo clean && hexo d -g`                # 上传前需要清理缓存来避免样式错乱问题，编译缩写
+    hexo -v
+    ```
+  - 初始化目录
+    ```shell
+    hexo init dir
+    ```
+  - 新建文章
+    ```shell
+    hexo new post "关于hexo的安装的一些记录"
+    ```
+  - 启动服务，可访问 [http://localhost:4000](http://localhost:4000) 进行预览
+    ```shell
+    hexo s
+    ```
+  - 编译生成静态文件，并上传至 git 服务上
+    ```shell
+    hexo generate --deploy
+    ```
+  - 上传前需要清理缓存来避免样式错乱问题，编译缩写
+    ```shell
+    hexo clean && hexo d -g
     ```
 
 ## hexo 的主题 next 与 fluid 的修改 `hexo`  进阶 `next`
@@ -53,7 +69,6 @@ updated: 2020-04-07 19:19:24
 ```shell
   cd themes # 进入主题目录
   git clone https://github.com/iissnan/hexo-theme-next themes/next #克隆主题文件
-  // 主要参考 : https://www.jianshu.com/p/9f0e90cc32c2
 ```
 
 - fluid 主题相关
@@ -105,6 +120,20 @@ npm install hexo-deployer-git --save # 重新生成 钩子才能上传成功
 
 - `npm install hexo-deployer-git --save` #重新生成 钩子才能上传成功
 
+### deployer 失败
+`Please make sure you have the correct access rights. and the repository exists.`
+
+- 重新生成 ssh key
+```shell
+ssh-keygen -t rsa -C "your mail address "
+```
+- 一路 enter 生成 ssh key, 然后将生成的 key 添加到 github 上
+```shell
+cat ~/.ssh/id_rsa.pub
+```
+- 然后在 github 上添加 ssh key [https://github.com/settings/keys](https://github.com/settings/keys)
+
+
 ### hexo 怎么删除文章？
 
 - 先使用 hexo clean 再删除
@@ -137,3 +166,4 @@ Authorization callback URL   // 填自己要使用 `Gitalk` 的博客地址，�
 **参考**
 [hexo官方文档](https://hexo.io/zh-cn/docs/)
 [fluid官方文档](https://hexo.fluid-dev.com/)
+[配置相关说明](https://www.jianshu.com/p/9f0e90cc32c2)

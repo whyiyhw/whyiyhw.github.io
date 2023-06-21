@@ -251,7 +251,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2k 字
+          2.2k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          17 分钟
+          19 分钟
         
       </span>
     
@@ -377,6 +377,12 @@
 </ul>
 <h3 id="搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误"><a href="#搭建-hexo，在执行-hexo-deploy-时-出现-ERROR-Deployer-not-found-git-的错误" class="headerlink" title="搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误"></a>搭建 hexo，在执行 hexo deploy 时,出现 ERROR Deployer not found: git 的错误</h3><ul>
 <li><code>npm install hexo-deployer-git --save</code> #重新生成 钩子才能上传成功</li>
+</ul>
+<h3 id="deployer-失败"><a href="#deployer-失败" class="headerlink" title="deployer 失败"></a>deployer 失败</h3><p><code>Please make sure you have the correct access rights. and the repository exists.</code></p>
+<ul>
+<li>重新生成 ssh key<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -C &quot;your mail address &quot;<br></code></pre></td></tr></table></figure></li>
+<li>一路 enter 生成 ssh key, 然后将生成的 key 添加到 github 上<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure></li>
+<li>然后在 github 上添加 ssh key <a target="_blank" rel="noopener" href="https://github.com/settings/keys">https://github.com/settings/keys</a></li>
 </ul>
 <h3 id="hexo-怎么删除文章？"><a href="#hexo-怎么删除文章？" class="headerlink" title="hexo 怎么删除文章？"></a>hexo 怎么删除文章？</h3><ul>
 <li>先使用 hexo clean 再删除</li>

@@ -34,7 +34,7 @@ Copilot 的主要功能只有一个，就是根据上下文推测接下来的文
 
 ### 配置代理
 
-为什么要把这个放在最前面，因为代理的响应速度会极大的影响 coding 体验。[相关链接](https://mp.weixin.qq.com/s/dxowVu3BIbNG70C8Yn-D_A#:~:text=Copilot%20%E5%9B%A2%E9%98%9F%E6%94%B6%E9%9B%86%E4%BA%86%E4%B8%80%E5%A4%A7%E5%A0%86%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E6%84%8F%E8%AF%86%E5%88%B0%E9%80%9F%E5%BA%A6%E5%9C%A8%E4%BB%BB%E4%BD%95%E7%BE%A4%E4%BD%93%E4%B8%AD%E9%83%BD%E6%98%AF%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%8C%87%E6%A0%87%E3%80%82%E2%80%9C%E6%88%91%E4%BB%AC%E5%8F%91%E7%8E%B0%E5%BB%B6%E8%BF%9F%E6%AF%8F%E5%A2%9E%E5%8A%A0%2010%20%E6%AF%AB%E7%A7%92%EF%BC%8C%E5%B0%B1%E4%BC%9A%E6%9C%89%201%25%20%E7%9A%84%E7%94%A8%E6%88%B7%E6%94%BE%E5%BC%83%E8%BF%99%E9%A1%B9%E5%8A%9F%E8%83%BD%E3%80%82%E5%8F%A6%E5%A4%96%E5%9C%A8%E6%96%B0%E5%8A%9F%E8%83%BD%E5%85%AC%E5%BC%80%E5%8F%91%E5%B8%83%E7%9A%84%E5%A4%B4%E5%87%A0%E4%B8%AA%E6%9C%88%EF%BC%8C%E5%8D%B0%E5%BA%A6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%AE%8C%E6%88%90%E7%8E%87%E6%98%AF%E6%9C%80%E4%BD%8E%E7%9A%84%E2%80%94%E2%80%94%E4%B8%8D%E7%A1%AE%E5%AE%9A%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%8C%E4%BD%86%E5%AE%8C%E6%88%90%E7%8E%87%E7%A1%AE%E5%AE%9E%E6%98%8E%E6%98%BE%E4%BD%8E%E4%BA%8E%E6%AC%A7%E6%B4%B2%E3%80%82%E2%80%9D)
+为什么要把这个放在最前面，因为代理的响应速度会极大的影响 coding 体验。<sup><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99:~:4.&text=GitHub%20Copilot%EF%BC%9A%E5%81%9A%E5%87%BA%E4%B8%80%E4%B8%AA%E5%88%92%E6%97%B6%E4%BB%A3%E7%9A%84%E4%BA%A7%E5%93%81%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%206%20%E4%B8%AA%E4%BA%BA" id="ref1">[^4]</a></sup>    
 
 vscode 配置
 ![/img/github-copilot-proxy-01](/img/github-copilot-proxy-01.png)
@@ -65,6 +65,9 @@ const STATUS_NORMAL = 1; # 正常
 根据注释，Copilot 会自动帮你补全常量的定义。
 ![/img/github-copilot-02](/img/github-copilot-02.png)
 根据注释，Copilot 会自动帮你补全注释。
+
+- **重点 copilot 会学习你的代码风格，会读取你光标所在位置跟 ide 打开页面的上下文，所以你要写的代码跟这些上下文关联越紧密，copilot 生成的代码就越准确。** <sup><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99:~:text=2023%2D05%2D17%2Dhow%2Dgithub%2Dcopilot%2Dis%2Dgetting%2Dbetter%2Dat%2Dunderstanding%2Dyour%2Dcode" id="ref1">[^3]</a></sup>
+
 
 #### 代码转换
 ```javascript
@@ -175,6 +178,20 @@ func UserSig(sdkappid, userId, expire, userbuf, key string) (token string) {
 }
 ```
 - 以上就是一个很典型的 prompt `[输入，处理过程，输出]` 的例子, 因为 copilot 受到 code 的影响最深，所以你把代码的思路写出来，它负责生成代码
+
+#### Google 的平替
+
+```txt
+# 提出问题，如何在 markdown 中引入上标与下标，并与参考链接一起使用？
+# --- 以下为 copilot 生成的代码 ---
+<sup><a href="#fn1" id="ref1">1</a></sup>
+
+# 并给出解释
+# --- 以下为 copilot 生成的代码 ---
+<sup><a href="#fn1" id="ref1">1</a></sup> 这是一个上标，用于引用参考链接，如 [^1]
+```
+
+以上部分提问之后，copilot 会给出一个答案，这样就避免了你去查阅文档的过程，保证了开发过程中的专注力。
 
 ### 单元测试
 
@@ -309,11 +326,12 @@ components:
 
 ## 总结
 
-本篇 blog 就是我在使用 copilot 快一年的一些感受，copilot 除了价格有一点点偏贵，有些时候会让你抓狂以外，在偏向于业务开发的场景是非常好用。  
+这就是我在使用 copilot 快一年的一些感受，copilot 在 写注释，函数，单元测试，生成文档，帮助优化代码，处理错误异常等等方面都有一定的帮助，除了价格有一点点偏贵，在偏向于业务开发的场景是非常好用。  
+
 本篇 blog 的内容部分也是 copilot 生成，在未来，类似的专业工具会越来越多，我们需要做的就是学会如何使用它们，你要面对的竞争对手不仅仅是人类，还有机器，学会如何与机器协作，而不是与机器竞争。
 
 ## 参考资料
-- [github copilot](https://copilot.github.com/)
-- [2023-06-20-how-to-write-better-prompts-for-github-copilot](https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/)
-- [2023-05-17-how-github-copilot-is-getting-better-at-understanding-your-code](https://github.blog/2023-05-17-how-github-copilot-is-getting-better-at-understanding-your-code)
-- [GitHub Copilot：做出一个划时代的产品，只需要 6 个人](https://mp.weixin.qq.com/s/dxowVu3BIbNG70C8Yn-D_A)
+1. [github copilot](https://copilot.github.com/)
+2. [2023-06-20-how-to-write-better-prompts-for-github-copilot](https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/)
+3. [2023-05-17-how-github-copilot-is-getting-better-at-understanding-your-code](https://github.blog/2023-05-17-how-github-copilot-is-getting-better-at-understanding-your-code)
+4. [GitHub Copilot：做出一个划时代的产品，只需要 6 个人](https://mp.weixin.qq.com/s/dxowVu3BIbNG70C8Yn-D_A#:~:text=Copilot%20%E5%9B%A2%E9%98%9F%E6%94%B6%E9%9B%86%E4%BA%86%E4%B8%80%E5%A4%A7%E5%A0%86%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E6%84%8F%E8%AF%86%E5%88%B0%E9%80%9F%E5%BA%A6%E5%9C%A8%E4%BB%BB%E4%BD%95%E7%BE%A4%E4%BD%93%E4%B8%AD%E9%83%BD%E6%98%AF%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%8C%87%E6%A0%87%E3%80%82%E2%80%9C%E6%88%91%E4%BB%AC%E5%8F%91%E7%8E%B0%E5%BB%B6%E8%BF%9F%E6%AF%8F%E5%A2%9E%E5%8A%A0%2010%20%E6%AF%AB%E7%A7%92%EF%BC%8C%E5%B0%B1%E4%BC%9A%E6%9C%89%201%25%20%E7%9A%84%E7%94%A8%E6%88%B7%E6%94%BE%E5%BC%83%E8%BF%99%E9%A1%B9%E5%8A%9F%E8%83%BD%E3%80%82%E5%8F%A6%E5%A4%96%E5%9C%A8%E6%96%B0%E5%8A%9F%E8%83%BD%E5%85%AC%E5%BC%80%E5%8F%91%E5%B8%83%E7%9A%84%E5%A4%B4%E5%87%A0%E4%B8%AA%E6%9C%88%EF%BC%8C%E5%8D%B0%E5%BA%A6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%AE%8C%E6%88%90%E7%8E%87%E6%98%AF%E6%9C%80%E4%BD%8E%E7%9A%84%E2%80%94%E2%80%94%E4%B8%8D%E7%A1%AE%E5%AE%9A%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%8C%E4%BD%86%E5%AE%8C%E6%88%90%E7%8E%87%E7%A1%AE%E5%AE%9E%E6%98%8E%E6%98%BE%E4%BD%8E%E4%BA%8E%E6%AC%A7%E6%B4%B2%E3%80%82%E2%80%9D)

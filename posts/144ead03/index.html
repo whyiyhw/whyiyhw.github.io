@@ -85,7 +85,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.0.0"></head>
 
 
 <body>
@@ -313,7 +313,7 @@
 <p>比如</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># tcp socket 的方式</span><br><span class="hljs-attribute">fastcgi_pass</span>  <span class="hljs-number">127.0.0.1:9000</span><br><span class="hljs-comment"># unix socket 的方式</span><br>fastcgi_pass  /usr/run/php-fpm.sock <br></code></pre></td></tr></table></figure>
 
-<h2 id="对比-UNIX-Domain-Socket-与-TCP-x2F-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-x2F-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket"></a>对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
+<h2 id="对比-UNIX-Domain-Socket-与-TCP-IP-Socket"><a href="#对比-UNIX-Domain-Socket-与-TCP-IP-Socket" class="headerlink" title="对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket"></a>对比 UNIX Domain Socket 与 TCP&#x2F;IP Socket</h2><p><code>socket api</code> 原本是为 网络通讯设计的，后来在socket 上发展出一种 <code>IPC(Inter-Process Communication 进程间通信)</code> 机制， 就是<code>unix socket</code> ，当然 <code>socket</code> 也可以进行 本机通信（通过 <code>loopback</code> 地址<code>127.0.0.1</code>），<code>unix socket</code>对比 <code>tcp socket</code> 效率更高，不需要经过网络协议栈，不需要打包 拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。<code>IPC</code> 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。</p>
 <ul>
 <li><p><code>UNIX Socket</code> （同一服务器上不同进程间的通信机制）</p>
 <ul>

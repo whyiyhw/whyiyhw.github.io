@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+    <meta name="description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&#123;	re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php8.1新特性与部分使用实践">
 <meta property="og:url" content="https://blogxy.cn/posts/10bdb4de/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+<meta property="og:description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&#123;	re">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blogxy.cn/img/05.png">
 <meta property="article:published_time" content="2022-01-20T04:57:04.000Z">
@@ -87,7 +87,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.0.0"></head>
 
 
 <body>
@@ -324,7 +324,7 @@
 </ul>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$user</span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-comment">// php7</span><br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$user</span>)&#123;<br>	<span class="hljs-variable">$order</span> = <span class="hljs-variable">$user</span>-&gt;<span class="hljs-title function_ invoke__">lastOrder</span>();<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$order</span>)&#123;<br>        <span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$order</span>-&gt;<span class="hljs-title function_ invoke__">getDiscountAmount</span>();	<br>    &#125;<br>&#125;<br><span class="hljs-comment">//对于参数对象可能为 null 并且会执行方法的情况 ?? 就没法去处理了</span><br><br><span class="hljs-comment">// php8 以后 </span><br><span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$user</span>?-&gt;<span class="hljs-title function_ invoke__">lastOrder</span>()?-&gt;<span class="hljs-title function_ invoke__">getDiscountAmount</span>();<br></code></pre></td></tr></table></figure>
 
-<h3 id="枚举类型-amp-match-表达式"><a href="#枚举类型-amp-match-表达式" class="headerlink" title="枚举类型 &amp; match 表达式"></a>枚举类型 &amp; <code>match</code> 表达式</h3><ul>
+<h3 id="枚举类型-match-表达式"><a href="#枚举类型-match-表达式" class="headerlink" title="枚举类型 &amp; match 表达式"></a>枚举类型 &amp; <code>match</code> 表达式</h3><ul>
 <li>枚举类型 可以替换原来 常量定义码的作用，并且更加灵活，以下是一种使用的方式</li>
 <li><code>match</code> 替换 <code>switch</code> 可以减少 因为弱类型比较转换，带来的 <code>bug</code></li>
 </ul>

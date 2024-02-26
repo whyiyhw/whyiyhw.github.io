@@ -16,12 +16,12 @@
   <meta name="author" content="YI">
   <meta name="keywords" content="blog&amp;life">
   
-    <meta name="description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+    <meta name="description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&#123;	re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php8.1新特性与部分使用实践">
 <meta property="og:url" content="https://blogxy.cn/posts/10bdb4de/index.html">
 <meta property="og:site_name" content="积木成楼">
-<meta property="og:description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&amp;#123;	re">
+<meta property="og:description" content="php8.x 的实用特性与使用php8 中的实用特性命名参数 1 可以指定参数传入，跳过可选参数 ； 2 指定参数是无需遵循传入顺序。  看例子把 解释起来 比较 费劲   12345678910public function response(array $data &#x3D; [],int $code &#x3D; 200,string $msg &#x3D; &quot;&quot;) : array&#123;	re">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blogxy.cn/img/05.png">
 <meta property="article:published_time" content="2022-01-20T04:57:04.000Z">
@@ -74,7 +74,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blogxy.cn","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -87,7 +87,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.1.1"></head>
 
 
 <body>
@@ -118,7 +118,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -130,7 +130,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -142,7 +142,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -154,7 +154,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -166,7 +166,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -188,7 +188,7 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/categories/golang-web/">
+                  <a class="dropdown-item" href="/categories/golang-web/" target="_self">
                     <i class="iconfont icon-book"></i>
                     <span>golang-web框架解析</span>
                   </a>
@@ -250,7 +250,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.7k 字
+          1.4k 字
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          31 分钟
+          13 分钟
         
       </span>
     
@@ -306,8 +306,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">php8.1新特性与部分使用实践</h1>
+            <h1 id="seo-header">php8.1新特性与部分使用实践</h1>
             
             
               <div class="markdown-body">
@@ -325,7 +324,7 @@
 </ul>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$user</span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-comment">// php7</span><br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$user</span>)&#123;<br>	<span class="hljs-variable">$order</span> = <span class="hljs-variable">$user</span>-&gt;<span class="hljs-title function_ invoke__">lastOrder</span>();<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$order</span>)&#123;<br>        <span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$order</span>-&gt;<span class="hljs-title function_ invoke__">getDiscountAmount</span>();	<br>    &#125;<br>&#125;<br><span class="hljs-comment">//对于参数对象可能为 null 并且会执行方法的情况 ?? 就没法去处理了</span><br><br><span class="hljs-comment">// php8 以后 </span><br><span class="hljs-variable">$discountAmount</span> = <span class="hljs-variable">$user</span>?-&gt;<span class="hljs-title function_ invoke__">lastOrder</span>()?-&gt;<span class="hljs-title function_ invoke__">getDiscountAmount</span>();<br></code></pre></td></tr></table></figure>
 
-<h3 id="枚举类型-amp-match-表达式"><a href="#枚举类型-amp-match-表达式" class="headerlink" title="枚举类型 &amp; match 表达式"></a>枚举类型 &amp; <code>match</code> 表达式</h3><ul>
+<h3 id="枚举类型-match-表达式"><a href="#枚举类型-match-表达式" class="headerlink" title="枚举类型 &amp; match 表达式"></a>枚举类型 &amp; <code>match</code> 表达式</h3><ul>
 <li>枚举类型 可以替换原来 常量定义码的作用，并且更加灵活，以下是一种使用的方式</li>
 <li><code>match</code> 替换 <code>switch</code> 可以减少 因为弱类型比较转换，带来的 <code>bug</code></li>
 </ul>
@@ -460,9 +459,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/jit/">#jit</a>
+        <a href="/tags/jit/" class="print-no-link">#jit</a>
       
-        <a href="/tags/php8/">#php8</a>
+        <a href="/tags/php8/" class="print-no-link">#php8</a>
       
     </div>
   
@@ -498,7 +497,7 @@
             
               
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
                     <i class="iconfont icon-by"></i>
                   </span>

@@ -6,6 +6,7 @@ tags:
   - laravel
   - horizon
 categories: laravel
+index_img: /img/post/ComfyUI_00008_.png
 ---
 
 > 基于 `laravel10`，`laravel-horizon 5.21.4` 与 `php8.1`  得到的结论,（2023-11-30）

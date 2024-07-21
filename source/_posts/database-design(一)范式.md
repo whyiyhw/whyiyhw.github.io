@@ -1,7 +1,9 @@
 ---
-title: 数据库设计范式与要点
+title: database design（一）范式
 categories: 数据库设计
-tags: 数据库
+tags: 
+ - 数据库
+ - mysql
 abbrlink: 53433fc6
 date: 2019-06-13 21:46:29
 ---

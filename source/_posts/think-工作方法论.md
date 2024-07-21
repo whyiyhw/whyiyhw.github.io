@@ -1,6 +1,6 @@
 ---
-title: 工作中的方法论
-categories: 效率
+title: think-工作方法论
+categories: 思想
 tags: 方法论
 abbrlink: 344cac0c
 date: 2019-06-16 22:53:52
